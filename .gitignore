@@ -3,3 +3,6 @@ build
 
 # Vim
 *.swp
+
+# VsCode
+.vscode
