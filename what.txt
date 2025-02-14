@@ -1,0 +1,43 @@
+g++ -c -I. -std=c++17 -O2 -MMD -MP -pedantic -Wall -Wextra -Wcast-align -Wcast-qual -Wctor-dtor-privacy -Wdisabled-optimization -Wformat=2 -Winit-self -Wlogical-op -Wmissing-include-dirs -Wnoexcept -Wold-style-cast -Woverloaded-virtual -Wredundant-decls -Wshadow -Wsign-conversion -Wsign-promo -Wstrict-null-sentinel -Wstrict-overflow=5 -Wswitch-default -Wundef -Werror -Wno-unused BigInt/tests/big_int_tester.cpp -o BigInt/tests/big_int_tester.o
+g++ -I. -std=c++17 -O2 -MMD -MP -pedantic -Wall -Wextra -Wcast-align -Wcast-qual -Wctor-dtor-privacy -Wdisabled-optimization -Wformat=2 -Winit-self -Wlogical-op -Wmissing-include-dirs -Wnoexcept -Wold-style-cast -Woverloaded-virtual -Wredundant-decls -Wshadow -Wsign-conversion -Wsign-promo -Wstrict-null-sentinel -Wstrict-overflow=5 -Wswitch-default -Wundef -Werror -Wno-unused BigInt/src/big_int.o BigInt/tests/big_int_tester.o -o testing
+yea let's multiply 2 and 3
+J
+yea let's multiply 12345678901234567890 and 98765432109876543210
+A
+A = 12345678901
+B = 234567890
+C = 98765432109
+D = 876543210
+B
+sums: 111111111010
+111111100
+C
+D
+E
+F
+G
+H
+I
+J
+yea let's multiply 123 and -1
+J
+yea let's multiply -123 and 1
+J
+yea let's multiply -123 and -1
+J
+yea let's multiply 31415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679 and 27182818284590452353602874713526624977572470936999595749669676277240766303535945713821785251664274
+A
+A = 27182818284590452353602874713526624977572470
+B = 936999595749669676277240766303535945713821785251664274
+C = 31415926535897932384626433832795028841971693993
+D = 751058209749445923078164062862089986280348253421170679
+B
+sums: 31443109354182522836980036707508555466949266463
+688057805499115599355404829165625931994170038672834953
+C
+D
+E
+F
+G
+H
+I
