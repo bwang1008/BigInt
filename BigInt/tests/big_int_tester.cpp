@@ -1,8 +1,4 @@
-#include <exception>
 #include <iostream>
-#include <list>
-#include <map>
-#include <sstream>
 #include <string>
 
 #define CATCH_CONFIG_MAIN  // Catch2 will generate the main function
@@ -103,9 +99,7 @@ TEST_CASE("Literal 03", "[literal]") {
 
 TEST_CASE("Print 00", "[print]") {
     BigInt x{"123"};
-    std::cout << "Testing printing from " << __func__ << std::endl;
     std::cout << x << std::endl;
-    std::cout << "------" << std::endl;
     REQUIRE(true);
 }
 
