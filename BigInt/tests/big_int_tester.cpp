@@ -1,21 +1,20 @@
 #include <iostream>
 #include <string>
 
-#define CATCH_CONFIG_MAIN  // Catch2 will generate the main function
+#define CATCH_CONFIG_MAIN // Catch2 will generate the main function
 #include <catch2/catch_test_macros.hpp>
 
 #include "BigInt/src/big_int.hpp"
 
-
 TEST_CASE("Constructor 00", "[constructor]") {
-	std::string digits = "-3051029301904293";
+    std::string digits = "-3051029301904293";
     BigInt x(digits);
 
-	REQUIRE(x.str() == digits);
+    REQUIRE(x.str() == digits);
 }
 
 TEST_CASE("Constructor 01", "[constructor]") {
-	std::string digits = "-0";
+    std::string digits = "-0";
     BigInt x(digits);
 
     REQUIRE(x.str() == "0");
@@ -211,7 +210,8 @@ TEST_CASE("Add 06", "[add]") {
     BigInt y{"751058209749445923078164062862089986280348253421170679"};
     BigInt z = x + y;
 
-    REQUIRE(z.str() == "1688057805499115599355404829165625931994170038672834953");
+    REQUIRE(z.str() ==
+            "1688057805499115599355404829165625931994170038672834953");
 }
 
 TEST_CASE("Sub 00", "[sub]") {
@@ -337,10 +337,11 @@ TEST_CASE("mul 07", "[mul]") {
              "240766303535945713821785251664274"};
     BigInt z = x * y;
 
-    REQUIRE(z.str() ==
-           "8539734222673567065463550869546574495034888535765114961879601130179"
-           "2286111574783895762507500032728659347816207067867304373545360378584"
-           "8133094851462428844661315312664336578255202869537848950160622046");
+    REQUIRE(
+        z.str() ==
+        "8539734222673567065463550869546574495034888535765114961879601130179"
+        "2286111574783895762507500032728659347816207067867304373545360378584"
+        "8133094851462428844661315312664336578255202869537848950160622046");
 }
 
 TEST_CASE("Equality 00", "[equality]") {
