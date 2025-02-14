@@ -1,4 +1,4 @@
-#include <iostream>
+#include <sstream>
 #include <string>
 
 #define CATCH_CONFIG_MAIN // Catch2 will generate the main function
@@ -98,8 +98,10 @@ TEST_CASE("Literal 03", "[literal]") {
 
 TEST_CASE("Print 00", "[print]") {
     BigInt x{"123"};
-    std::cout << x << std::endl;
-    REQUIRE(true);
+    std::stringstream ss;
+    ss << x;
+    const std::string printed_representation = ss.str();
+    REQUIRE(printed_representation == "123");
 }
 
 TEST_CASE("Negate 00", "[negate]") {
