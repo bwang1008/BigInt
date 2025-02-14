@@ -6,7 +6,7 @@
 #include <string>
 
 #define CATCH_CONFIG_MAIN  // Catch2 will generate the main function
-#include <catch2/catch.hpp>
+#include <catch2/catch_test_macros.hpp>
 
 #include "BigInt/src/big_int.hpp"
 
@@ -346,7 +346,7 @@ TEST_CASE("mul 07", "[mul]") {
     REQUIRE(z.str() ==
            "8539734222673567065463550869546574495034888535765114961879601130179"
            "2286111574783895762507500032728659347816207067867304373545360378584"
-           "8133094851462428844661315312664336578255202869537848950160622046");
+           "8133094851462428844661315312664336578255202869537848950160622046");
 }
 
 TEST_CASE("Equality 00", "[equality]") {
