@@ -1,6 +1,7 @@
 #include "big_int.hpp"
 
 #include <algorithm>
+#include <cstdint>
 #include <iostream>
 #include <ostream>
 #include <sstream>
@@ -30,7 +31,7 @@ BigInt::BigInt(const std::string &num) {
     normalizeDigits();
 }
 
-BigInt::BigInt(const long long num) {
+BigInt::BigInt(const int64_t num) {
     if(num == 0) {
         this->negative = false;
         this->digits.push_back(0);
