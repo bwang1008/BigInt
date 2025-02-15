@@ -7,4 +7,4 @@ set -euo pipefail
 # Example:
 # $ ./lint.sh main.hpp
 
-clang-tidy "$1" -config='' -- -std=c++20
+clang-tidy -p build "$1" -config=''

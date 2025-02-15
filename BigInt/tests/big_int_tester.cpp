@@ -1,7 +1,6 @@
 #include <sstream>
 #include <string>
 
-#define CATCH_CONFIG_MAIN // Catch2 will generate the main function
 #include <catch2/catch_test_macros.hpp>
 
 #include "BigInt/src/big_int.hpp"
@@ -64,12 +63,14 @@ TEST_CASE("Constructor of Large Positive Number", "[constructor]") {
 }
 
 TEST_CASE("Constructor from int", "[constructor]") {
-    BigInt x{-103};
+    const int negative_value = -103;
+    BigInt x{negative_value};
     REQUIRE(x.str() == "-103");
 }
 
 TEST_CASE("Constructor via assignment", "[constructor]") {
-    BigInt x = -103;
+    const int negative_value = -103;
+    BigInt x = negative_value;
     REQUIRE(x.str() == "-103");
 }
 

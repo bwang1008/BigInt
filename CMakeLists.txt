@@ -18,6 +18,10 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(Catch2)
 
+# from https://github.com/catchorg/Catch2/issues/2927
+get_target_property(catch2_includes Catch2 INTERFACE_INCLUDE_DIRECTORIES)
+target_include_directories(Catch2 SYSTEM INTERFACE ${catch2_includes})
+
 ####################
 ### Main targets ###
 ####################
@@ -79,6 +83,10 @@ TARGET_COMPILE_FEATURES(BigIntLib PUBLIC cxx_std_20)
 SET_TARGET_PROPERTIES(BigIntLib PROPERTIES CXX_EXTENSIONS OFF)
 TARGET_COMPILE_OPTIONS(BigIntLib PRIVATE "${WARNINGS}")
 
-TARGET_INCLUDE_DIRECTORIES(tests PUBLIC ${CMAKE_SOURCE_DIR})
-TARGET_LINK_LIBRARIES(tests PUBLIC Catch2::Catch2WithMain BigIntLib)
+TARGET_COMPILE_FEATURES(tests PUBLIC cxx_std_20)
+SET_TARGET_PROPERTIES(tests PROPERTIES CXX_EXTENSIONS OFF)
+TARGET_COMPILE_OPTIONS(tests PRIVATE "${WARNINGS}")
+
+TARGET_INCLUDE_DIRECTORIES(tests PRIVATE ${CMAKE_SOURCE_DIR})
+TARGET_LINK_LIBRARIES(tests PRIVATE Catch2::Catch2WithMain BigIntLib)
 TARGET_LINK_OPTIONS(tests PRIVATE "-fsanitize=address")
