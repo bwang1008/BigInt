@@ -8,6 +8,7 @@
 #include <ostream>
 #include <sstream> // std::stringstream
 #include <string>  // std::stoi, std::to_string
+#include <utility> // std::move
 #include <vector>
 
 BigInt::BigInt(const std::string &num) {
@@ -215,7 +216,7 @@ auto BigInt::print_internal() const -> void {
 
 BigInt::BigInt(bool negative_, std::vector<int> digits_) {
     this->negative = negative_;
-    this->digits = digits_;
+    this->digits = std::move(digits_);
 
     this->normalize_digits();
 }
