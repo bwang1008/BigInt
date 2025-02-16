@@ -43,6 +43,12 @@ class BigInt {
 
     // -1 if left < right; 0 if left == right, and 1 if left > right
     static auto compare(const BigInt &left, const BigInt &right) -> int;
+    // grade-school multiplication
+    static auto multiply_grade_school(const BigInt &left, const BigInt &right)
+        -> BigInt;
+    // Karatsuba multiplication
+    static auto multiply_karatsuba(const BigInt &left, const BigInt &right)
+        -> BigInt;
 
   private:
     bool negative;
@@ -61,12 +67,6 @@ class BigInt {
     static auto half_add(const BigInt &left, const BigInt &right) -> BigInt;
     // subtract smaller from bigger
     static auto half_subtract(const BigInt &left, const BigInt &right)
-        -> BigInt;
-    // grade-school multiplication
-    static auto multiply_grade_school(const BigInt &left, const BigInt &right)
-        -> BigInt;
-    // Karatsuba multiplication
-    static auto multiply_karatsuba(const BigInt &left, const BigInt &right)
         -> BigInt;
     // Karatsuba multiplication
     static auto multiply_karatsuba_helper(const BigInt &left,
