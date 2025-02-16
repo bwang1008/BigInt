@@ -5,7 +5,7 @@
 #include <iostream>
 #include <ostream>
 #include <sstream>
-#include <string> // std::stoi, std::string
+#include <string> // std::stoi, std::string, std::to_string
 #include <vector>
 
 BigInt::BigInt(const std::string &num) {
@@ -32,28 +32,7 @@ BigInt::BigInt(const std::string &num) {
     normalizeDigits();
 }
 
-BigInt::BigInt(const int64_t num) {
-    if(num == 0) {
-        this->negative = false;
-        this->digits.push_back(0);
-        normalizeDigits();
-        return;
-    }
-
-    this->negative = (num < 0);
-    int64_t N = num;
-
-    // can't do abs on num: abs doesn't return a positive number of
-    // LONG_LONG_MIN
-
-    while(N != 0) {
-        int64_t tempDigits = std::abs(N % BigInt::bucketMod);
-        this->digits.push_back(static_cast<int>(tempDigits));
-        N /= BigInt::bucketMod;
-    }
-
-    normalizeDigits();
-}
+BigInt::BigInt(const int64_t num) : BigInt(std::to_string(num)) {}
 
 auto BigInt::operator-() const -> BigInt {
     if(!isZero()) {
