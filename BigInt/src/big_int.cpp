@@ -1,31 +1,32 @@
 #include "big_int.hpp"
 
-#include <algorithm>
-#include <cstdint> // int64_t
+#include <algorithm> // std::max
+#include <cstdint>   // int64_t
 #include <iostream>
 #include <ostream>
 #include <sstream>
-#include <string>
+#include <string> // std::stoi, std::string
 #include <vector>
 
 BigInt::BigInt(const std::string &num) {
-    int start = 0;
-    if(num[0] == '-') {
-        this->negative = true;
-        start = 1;
-    } else {
+    if(num.empty()) {
         this->negative = false;
+        this->digits.push_back(0);
+        return;
     }
 
-    for(int sectionEnd = static_cast<int>(num.size()),
-            sectionStart =
-                std::max(sectionEnd - BigInt::digitsPerBucket, start);
-        sectionEnd != start; sectionEnd = sectionStart,
-            sectionStart = std::max(sectionEnd - BigInt::digitsPerBucket,
-                                    start)) {
-        this->digits.push_back(std::stoi(
-            num.substr(static_cast<size_t>(sectionStart),
-                       static_cast<size_t>(sectionEnd - sectionStart))));
+    this->negative = (num[0] == '-');
+    const std::size_t digit_start = (this->negative ? 1 : 0);
+
+    std::size_t chunk_end = num.size();
+    while(chunk_end != digit_start) {
+        const std::size_t chunk_start =
+            (chunk_end < digit_start + BigInt::digitsPerBucket)
+                ? digit_start
+                : chunk_end - BigInt::digitsPerBucket;
+        this->digits.push_back(
+            std::stoi(num.substr(chunk_start, chunk_end - chunk_start)));
+        chunk_end = chunk_start;
     }
 
     normalizeDigits();
