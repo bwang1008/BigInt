@@ -36,7 +36,7 @@ ADD_LIBRARY(
 
 ADD_EXECUTABLE(
 	tests
-	BigInt/tests/big_int_tester.cpp
+	BigInt/tests/test_big_int.cpp
 )
 
 ADD_TEST(NAME tests COMMAND tests)

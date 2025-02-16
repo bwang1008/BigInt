@@ -23,7 +23,7 @@ using `ctest` version `3.16.3`.
 View coverage results with 
 
 ```sh
-gcov --display-progress --function-summaries --human-readable --use-colors CMakeFiles/tests.dir/BigInt/tests/big_int_tester.cpp.o --stdout
+gcov --display-progress --function-summaries --human-readable --use-colors CMakeFiles/tests.dir/BigInt/tests/test_big_int.cpp.o --stdout
 ```
 
 .clang-tidy generated via

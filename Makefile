@@ -3,7 +3,7 @@ CPPFLAGS += -I.
 CXXFLAGS += -std=c++17 -O2 -MMD -MP
 CXXFLAGS += -pedantic -Wall -Wextra -Wcast-align -Wcast-qual -Wctor-dtor-privacy -Wdisabled-optimization -Wformat=2 -Winit-self -Wlogical-op -Wmissing-include-dirs -Wnoexcept -Wold-style-cast -Woverloaded-virtual -Wredundant-decls -Wshadow -Wsign-conversion -Wsign-promo -Wstrict-null-sentinel -Wstrict-overflow=5 -Wswitch-default -Wundef -Werror -Wno-unused
 
-SOURCES = BigInt/src/big_int.cpp BigInt/tests/big_int_tester.cpp
+SOURCES = BigInt/src/big_int.cpp BigInt/tests/test_big_int.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
 
 .PHONY: clean all
