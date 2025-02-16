@@ -1,12 +1,13 @@
 #include "big_int.hpp"
 
 #include <algorithm> // std::max
+#include <cstddef>   // std::size_t
 #include <cstdint>   // int64_t
-#include <iostream>
-#include <iterator> // std::advance
+#include <iostream>  // std::cout, std::endl
+#include <iterator>  // std::advance
 #include <ostream>
-#include <sstream>
-#include <string> // std::stoi, std::string, std::to_string
+#include <sstream> // std::stringstream
+#include <string>  // std::stoi, std::to_string
 #include <vector>
 
 BigInt::BigInt(const std::string &num) {
