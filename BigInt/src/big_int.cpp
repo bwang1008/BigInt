@@ -21,9 +21,9 @@ BigInt::BigInt(const std::string &num) {
     std::size_t chunk_end = num.size();
     while(chunk_end != digit_start) {
         const std::size_t chunk_start =
-            (chunk_end < digit_start + BigInt::digitsPerBucket)
+            (chunk_end < digit_start + BigInt::digits_per_bucket)
                 ? digit_start
-                : chunk_end - BigInt::digitsPerBucket;
+                : chunk_end - BigInt::digits_per_bucket;
         this->digits.push_back(
             std::stoi(num.substr(chunk_start, chunk_end - chunk_start)));
         chunk_end = chunk_start;
@@ -67,7 +67,7 @@ auto operator<<(std::ostream &out, const BigInt &integer) -> std::ostream & {
 
         // pad with 0 so 0 -> "000000000" if not most significant
         if(it != integer.digits.crbegin()) {
-            for(size_t i = 0; i < BigInt::digitsPerBucket - size; ++i) {
+            for(size_t i = 0; i < BigInt::digits_per_bucket - size; ++i) {
                 out << "0";
             }
         }
@@ -263,8 +263,8 @@ auto BigInt::half_add(const BigInt &left, const BigInt &right) -> BigInt {
         int op2 = (i < right.digits.size()) ? right.digits[i] : 0;
 
         const int bucketSum = op1 + op2 + carry;
-        carry = bucketSum / BigInt::bucketMod;
-        summedDigits.push_back(bucketSum % BigInt::bucketMod);
+        carry = bucketSum / BigInt::bucket_mod;
+        summedDigits.push_back(bucketSum % BigInt::bucket_mod);
     }
 
     summedDigits.push_back(carry);
@@ -290,7 +290,7 @@ auto BigInt::half_subtract(const BigInt &left, const BigInt &right) -> BigInt {
 
         if(op1 < op2) {
             borrow = true;
-            op1 += BigInt::bucketMod;
+            op1 += BigInt::bucket_mod;
         }
 
         subtractedDigits.push_back(op1 - op2);
@@ -312,17 +312,17 @@ auto BigInt::multiply_naive(const BigInt &left, const BigInt &right) -> BigInt {
             int64_t val2 = right.digits[j];
 
             int64_t prod = val1 * val2;
-            product[i + j] += (prod % BigInt::bucketMod);
-            product[i + j + 1] += (prod / BigInt::bucketMod);
+            product[i + j] += (prod % BigInt::bucket_mod);
+            product[i + j + 1] += (prod / BigInt::bucket_mod);
 
-            product[i + j + 1] += (product[i + j] / BigInt::bucketMod);
-            product[i + j] %= BigInt::bucketMod;
+            product[i + j + 1] += (product[i + j] / BigInt::bucket_mod);
+            product[i + j] %= BigInt::bucket_mod;
         }
     }
 
     for(size_t i = 0; i + 1 < product.size(); ++i) {
-        product[i + 1] += (product[i] / BigInt::bucketMod);
-        product[i] %= BigInt::bucketMod;
+        product[i + 1] += (product[i] / BigInt::bucket_mod);
+        product[i] %= BigInt::bucket_mod;
     }
 
     std::vector<int> digits(product.size());
@@ -406,8 +406,8 @@ auto BigInt::multiply_karatsuba_helper(const BigInt &left, const BigInt &right)
 
     // do carry-overs
     for(size_t i = 0; i + 1 < product.size(); ++i) {
-        product[i + 1] += (product[i] / BigInt::bucketMod);
-        product[i] %= BigInt::bucketMod;
+        product[i + 1] += (product[i] / BigInt::bucket_mod);
+        product[i] %= BigInt::bucket_mod;
     }
 
     // convert to ints

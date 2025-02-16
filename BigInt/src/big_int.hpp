@@ -46,8 +46,8 @@ class BigInt {
   private:
     bool negative;
     std::vector<int> digits;
-    const static int digitsPerBucket = 9;
-    const static int bucketMod = 1000000000;
+    const static int digits_per_bucket = 9;
+    const static int bucket_mod = 1000000000;
 
     BigInt(bool negative_, std::vector<int> digits_);
 
