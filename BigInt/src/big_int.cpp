@@ -3,6 +3,7 @@
 #include <algorithm> // std::max
 #include <cstdint>   // int64_t
 #include <iostream>
+#include <iterator> // std::advance
 #include <ostream>
 #include <sstream>
 #include <string> // std::stoi, std::string, std::to_string
@@ -34,15 +35,17 @@ BigInt::BigInt(const std::string &num) {
 
 BigInt::BigInt(const int64_t num) : BigInt(std::to_string(num)) {}
 
-auto BigInt::operator-() const -> BigInt {
-    if(!is_zero()) {
-        BigInt clone = this->clone();
-        clone.negative = !clone.negative;
+BigInt::BigInt() : negative(false), digits{0} {}
 
-        return clone;
+auto BigInt::operator-() const -> BigInt {
+    if(is_zero()) {
+        return BigInt();
     }
 
-    return BigInt("0");
+    BigInt clone = this->clone();
+    clone.negative = !clone.negative;
+
+    return clone;
 }
 
 auto BigInt::clone() const -> BigInt {
@@ -62,12 +65,12 @@ auto operator<<(std::ostream &out, const BigInt &integer) -> std::ostream & {
 
     for(auto it = integer.digits.crbegin(); it != integer.digits.crend();
         ++it) {
-        int bucket = *it;
-        size_t size = std::to_string(bucket).size();
+        const int bucket = *it;
+        const std::size_t size = std::to_string(bucket).size();
 
         // pad with 0 so 0 -> "000000000" if not most significant
         if(it != integer.digits.crbegin()) {
-            for(size_t i = 0; i < BigInt::digits_per_bucket - size; ++i) {
+            for(size_t i = size; i < BigInt::digits_per_bucket; ++i) {
                 out << "0";
             }
         }
@@ -82,10 +85,10 @@ auto operator"" _b(const char *s) -> BigInt { return BigInt(s); }
 
 auto operator+(const BigInt &left, const BigInt &right) -> BigInt {
     if(left.is_zero()) {
-        return right.clone();
+        return right;
     }
     if(right.is_zero()) {
-        return left.clone();
+        return left;
     }
 
     if(left.is_positive()) {
@@ -113,7 +116,7 @@ auto operator-(const BigInt &left, const BigInt &right) -> BigInt {
     }
 
     if(right.is_zero()) {
-        return left.clone();
+        return left;
     }
 
     if(left.is_positive()) {
@@ -127,8 +130,6 @@ auto operator-(const BigInt &left, const BigInt &right) -> BigInt {
         }
         // right negative
         // 3 - (-5) => 3 + 5
-        // 5 - (-3) => 5 + 3
-        // 5 - (-5) => 5 + 5
         return left + (-right);
     }
 
@@ -139,12 +140,6 @@ auto operator-(const BigInt &left, const BigInt &right) -> BigInt {
     }
 
     // right is negative
-    if(left < right) {
-        // -5 - (-3) => -5 + 3 => 3 - 5
-        return ((-right) - (-left));
-    }
-
-    // left >= right
     // -3 - (-5) => -3 + 5 => 5 - 3
     return ((-right) - (-left));
 }
@@ -191,8 +186,8 @@ auto BigInt::compare(const BigInt &left, const BigInt &right) -> int {
     auto it2 = right.digits.crbegin();
 
     while(it1 != left.digits.crend() && it2 != right.digits.crend()) {
-        int valLeft = *it1;
-        int valRight = *it2;
+        const int valLeft = *it1;
+        const int valRight = *it2;
 
         if(valLeft < valRight) {
             return -1;
@@ -211,7 +206,7 @@ auto BigInt::compare(const BigInt &left, const BigInt &right) -> int {
 auto BigInt::print_internal() const -> void {
     std::cout << "Is negative? " << this->negative << std::endl;
     std::cout << "digits list: ";
-    for(int i : this->digits) {
+    for(const int i : this->digits) {
         std::cout << i << " ";
     }
     std::cout << std::endl;
@@ -254,34 +249,33 @@ auto BigInt::is_negative() const -> bool {
 }
 
 auto BigInt::half_add(const BigInt &left, const BigInt &right) -> BigInt {
-    std::vector<int> summedDigits;
+    std::vector<int> summed_digits;
 
     int carry = 0;
     for(size_t i = 0; i < std::max(left.digits.size(), right.digits.size());
         ++i) {
-        int op1 = (i < left.digits.size()) ? left.digits[i] : 0;
-        int op2 = (i < right.digits.size()) ? right.digits[i] : 0;
+        const int op1 = (i < left.digits.size()) ? left.digits[i] : 0;
+        const int op2 = (i < right.digits.size()) ? right.digits[i] : 0;
 
         const int bucketSum = op1 + op2 + carry;
         carry = bucketSum / BigInt::bucket_mod;
-        summedDigits.push_back(bucketSum % BigInt::bucket_mod);
+        summed_digits.push_back(bucketSum % BigInt::bucket_mod);
     }
 
-    summedDigits.push_back(carry);
-
-    return BigInt(false, summedDigits);
+    summed_digits.push_back(carry);
+    return BigInt(false, summed_digits);
 }
 
 auto BigInt::half_subtract(const BigInt &left, const BigInt &right) -> BigInt {
     // assume left >= right >= 0
 
-    std::vector<int> subtractedDigits;
+    std::vector<int> subtracted_digits;
     bool borrow = false;
 
     for(size_t i = 0; i < std::max(left.digits.size(), right.digits.size());
         ++i) {
         int op1 = (i < left.digits.size()) ? left.digits[i] : 0;
-        int op2 = (i < right.digits.size()) ? right.digits[i] : 0;
+        const int op2 = (i < right.digits.size()) ? right.digits[i] : 0;
 
         if(borrow) {
             --op1;
@@ -293,28 +287,30 @@ auto BigInt::half_subtract(const BigInt &left, const BigInt &right) -> BigInt {
             op1 += BigInt::bucket_mod;
         }
 
-        subtractedDigits.push_back(op1 - op2);
+        subtracted_digits.push_back(op1 - op2);
     }
 
-    return BigInt(false, subtractedDigits);
+    return BigInt(false, subtracted_digits);
 }
 
-auto BigInt::multiply_naive(const BigInt &left, const BigInt &right) -> BigInt {
+auto BigInt::multiply_grade_school(const BigInt &left, const BigInt &right)
+    -> BigInt {
     if(left.is_zero() || right.is_zero()) {
-        return 0_b;
+        return BigInt();
     }
 
     std::vector<int64_t> product(left.digits.size() + right.digits.size() + 2);
 
     for(size_t i = 0; i < left.digits.size(); ++i) {
         for(size_t j = 0; j < right.digits.size(); ++j) {
-            int64_t val1 = left.digits[i];
-            int64_t val2 = right.digits[j];
+            const int64_t val1 = left.digits[i];
+            const int64_t val2 = right.digits[j];
+            const int64_t prod = val1 * val2;
 
-            int64_t prod = val1 * val2;
             product[i + j] += (prod % BigInt::bucket_mod);
             product[i + j + 1] += (prod / BigInt::bucket_mod);
 
+            // resolve carries
             product[i + j + 1] += (product[i + j] / BigInt::bucket_mod);
             product[i + j] %= BigInt::bucket_mod;
         }
@@ -336,14 +332,12 @@ auto BigInt::multiply_naive(const BigInt &left, const BigInt &right) -> BigInt {
 auto BigInt::multiply_karatsuba(const BigInt &left, const BigInt &right)
     -> BigInt {
     if(left.is_zero() || right.is_zero()) {
-        return 0_b;
+        return BigInt();
     }
 
     // convert both to the same lengths
-    BigInt smaller = left;
-    BigInt bigger = right;
-    smaller.negative = false;
-    bigger.negative = false;
+    BigInt smaller = BigInt(false, left.digits);
+    BigInt bigger = BigInt(false, right.digits);
 
     if(smaller.digits.size() > bigger.digits.size()) {
         BigInt temp = smaller;
@@ -363,57 +357,56 @@ auto BigInt::multiply_karatsuba(const BigInt &left, const BigInt &right)
 
 auto BigInt::multiply_karatsuba_helper(const BigInt &left, const BigInt &right)
     -> BigInt {
-    size_t size = left.digits.size();
+    const std::size_t size = left.digits.size();
     if(size == 1) {
-        return BigInt::multiply_naive(left, right);
+        return BigInt::multiply_grade_school(left, right);
     }
 
     // split both left and right
-    long splitPoint = static_cast<long>(size / 2);
+    const std::size_t split_point = size / 2;
 
-    BigInt A(false, std::vector<int>(left.digits.begin() + splitPoint,
-                                     left.digits.end()));
-    BigInt B(false, std::vector<int>(left.digits.begin(),
-                                     left.digits.begin() + splitPoint));
-    BigInt C(false, std::vector<int>(right.digits.begin() + splitPoint,
-                                     right.digits.end()));
-    BigInt D(false, std::vector<int>(right.digits.begin(),
-                                     right.digits.begin() + splitPoint));
+    auto left_mid = left.digits.begin();
+    std::advance(left_mid, split_point);
+    auto right_mid = right.digits.begin();
+    std::advance(right_mid, split_point);
 
-    BigInt aPlusB = A + B;
-    BigInt cPlusD = C + D;
+    const BigInt a(false, std::vector<int>(left_mid, left.digits.end()));
+    const BigInt b(false, std::vector<int>(left.digits.begin(), left_mid));
+    const BigInt c(false, std::vector<int>(right_mid, right.digits.end()));
+    const BigInt d(false, std::vector<int>(right.digits.begin(), right_mid));
 
-    BigInt H = BigInt::multiply_karatsuba_helper(aPlusB, cPlusD);
-    BigInt F = BigInt::multiply_karatsuba_helper(A, C);
-    BigInt G = BigInt::multiply_karatsuba_helper(B, D);
+    const BigInt a_plus_b = a + b;
+    const BigInt c_plus_d = c + d;
 
-    BigInt K = H - F - G;
+    const BigInt h = BigInt::multiply_karatsuba_helper(a_plus_b, c_plus_d);
+    const BigInt f = BigInt::multiply_karatsuba_helper(a, c);
+    const BigInt g = BigInt::multiply_karatsuba_helper(b, d);
+
+    const BigInt k = h - f - g;
 
     std::vector<int64_t> product(2 * size + 2);
 
-    // F is most significant, K is middle, G is least significant
-    for(size_t i = 0; i < F.digits.size(); ++i) {
-        product[2 * (size / 2) + i] += F.digits[i];
+    // f is most significant, k is middle, g is least significant
+    for(std::size_t i = 0; i < f.digits.size(); ++i) {
+        product[2 * (size / 2) + i] += f.digits[i];
     }
-
-    for(size_t i = 0; i < K.digits.size(); ++i) {
-        product[(size / 2) + i] += K.digits[i];
+    for(std::size_t i = 0; i < k.digits.size(); ++i) {
+        product[(size / 2) + i] += k.digits[i];
     }
-
-    for(size_t i = 0; i < G.digits.size(); ++i) {
-        product[i] += G.digits[i];
+    for(std::size_t i = 0; i < g.digits.size(); ++i) {
+        product[i] += g.digits[i];
     }
 
     // do carry-overs
-    for(size_t i = 0; i + 1 < product.size(); ++i) {
+    for(std::size_t i = 0; i + 1 < product.size(); ++i) {
         product[i + 1] += (product[i] / BigInt::bucket_mod);
         product[i] %= BigInt::bucket_mod;
     }
 
     // convert to ints
     std::vector<int> digits(product.size());
-    for(size_t i = 0; i < product.size(); ++i) {
-        digits[i] = product[i];
+    for(std::size_t i = 0; i < product.size(); ++i) {
+        digits[i] = static_cast<int>(product[i]);
     }
 
     return BigInt(false, digits);

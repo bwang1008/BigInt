@@ -13,6 +13,7 @@ class BigInt {
     // takes in a string of digits in base 10 with optional negative sign
     explicit BigInt(const std::string &num);
     BigInt(int64_t num);
+    BigInt();
 
     // Overloaded unary operators
 
@@ -46,8 +47,8 @@ class BigInt {
   private:
     bool negative;
     std::vector<int> digits;
-    const static int digits_per_bucket = 9;
-    const static int bucket_mod = 1000000000;
+    constexpr static int digits_per_bucket = 9;
+    constexpr static int bucket_mod = 1000000000;
 
     BigInt(bool negative_, std::vector<int> digits_);
 
@@ -62,7 +63,7 @@ class BigInt {
     static auto half_subtract(const BigInt &left, const BigInt &right)
         -> BigInt;
     // grade-school multiplication
-    static auto multiply_naive(const BigInt &left, const BigInt &right)
+    static auto multiply_grade_school(const BigInt &left, const BigInt &right)
         -> BigInt;
     // Karatsuba multiplication
     static auto multiply_karatsuba(const BigInt &left, const BigInt &right)
