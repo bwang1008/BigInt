@@ -53,8 +53,8 @@ class BigInt {
   private:
     bool negative;
     std::vector<int> digits;
-    constexpr static int digits_per_bucket = 9;
-    constexpr static int bucket_mod = 1000000000;
+    static constexpr int digits_per_bucket = 9;
+    static constexpr int bucket_mod = 1000000000;
 
     BigInt(bool negative_, std::vector<int> digits_);
 
