@@ -9,14 +9,21 @@ Starting from the root of the repository,
 ```sh
 mkdir build
 cd build
-cmake -S .. -B .
+cmake -S .. -B . -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 make
 ```
 
-## Running tests
+## Running tests with coverage:
 
 ```sh
-./tests
+ctest -T test -T coverage
+```
+using `ctest` version `3.16.3`.
+
+View coverage results with 
+
+```sh
+gcov --display-progress --function-summaries --human-readable --use-colors CMakeFiles/tests.dir/BigInt/tests/big_int_tester.cpp.o --stdout
 ```
 
 .clang-tidy generated via
