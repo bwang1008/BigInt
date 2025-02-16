@@ -13,12 +13,15 @@ TEST_CASE("Multiplication with 0", "[mul]") {
     REQUIRE(z.str() == "0");
 }
 
-TEST_CASE("Multiplication of small positives", "[mul]") {
-    BigInt x = 2_b;
-    BigInt y = 3_b;
+TEST_CASE("Multiplication of lots of positives", "[mul]") {
+    auto i = GENERATE(range(0, 11));
+    auto j = GENERATE(range(0, 11));
+
+    BigInt x(i);
+    BigInt y(j);
     BigInt z = x * y;
 
-    REQUIRE(z.str() == "6");
+    REQUIRE(z.str() == std::to_string(i * j));
 }
 
 TEST_CASE("Multiplication of medium-sized positives", "[mul]") {
