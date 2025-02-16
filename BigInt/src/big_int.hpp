@@ -46,22 +46,25 @@ class BigInt {
 
     BigInt(bool negative_, std::vector<int> digits_);
 
-    void normalizeDigits(); // Remove leading 0's; if no digits, initialize as
-                            // 0; change -0 to 0
-    [[nodiscard]] auto isZero() const -> bool; // check if number is 0
-    [[nodiscard]] auto isPos() const -> bool;  // check if number is positive
-    [[nodiscard]] auto isNeg() const -> bool;  // check if number is negative
-    static auto halfAdd(const BigInt &left, const BigInt &right)
+    void normalize_digits(); // Remove leading 0's; if no digits, initialize as
+                             // 0; change -0 to 0
+    [[nodiscard]] auto is_zero() const -> bool; // check if number is 0
+    [[nodiscard]] auto is_positive() const
+        -> bool; // check if number is positive
+    [[nodiscard]] auto is_negative() const
+        -> bool; // check if number is negative
+    static auto half_add(const BigInt &left, const BigInt &right)
         -> BigInt; // add two non-negative bigints
-    static auto halfSubtract(const BigInt &left, const BigInt &right)
+    static auto half_subtract(const BigInt &left, const BigInt &right)
         -> BigInt; // subtract smaller from bigger
-    static auto multiplyNaive(const BigInt &left, const BigInt &right)
+    static auto multiply_naive(const BigInt &left, const BigInt &right)
         -> BigInt; // grade-school multiplication
-    static auto multiplyKaratsuba(const BigInt &left, const BigInt &right)
+    static auto multiply_karatsuba(const BigInt &left, const BigInt &right)
         -> BigInt; // Karatsuba multiplication
-    static auto multiplyKaratsubaHelper(const BigInt &left, const BigInt &right)
+    static auto multiply_karatsuba_helper(const BigInt &left,
+                                          const BigInt &right)
         -> BigInt; // Karatsuba multiplication
-    auto printInternal() const
+    auto print_internal() const
         -> void; // show internal information for debugging
 };
 

@@ -29,13 +29,13 @@ BigInt::BigInt(const std::string &num) {
         chunk_end = chunk_start;
     }
 
-    normalizeDigits();
+    normalize_digits();
 }
 
 BigInt::BigInt(const int64_t num) : BigInt(std::to_string(num)) {}
 
 auto BigInt::operator-() const -> BigInt {
-    if(!isZero()) {
+    if(!is_zero()) {
         BigInt clone = this->clone();
         clone.negative = !clone.negative;
 
@@ -81,23 +81,23 @@ auto operator<<(std::ostream &out, const BigInt &integer) -> std::ostream & {
 auto operator"" _b(const char *s) -> BigInt { return BigInt(s); }
 
 auto operator+(const BigInt &left, const BigInt &right) -> BigInt {
-    if(left.isZero()) {
+    if(left.is_zero()) {
         return right.clone();
     }
-    if(right.isZero()) {
+    if(right.is_zero()) {
         return left.clone();
     }
 
-    if(left.isPos()) {
-        if(right.isPos()) {
-            return BigInt::halfAdd(left, right);
+    if(left.is_positive()) {
+        if(right.is_positive()) {
+            return BigInt::half_add(left, right);
         }
         // 3 + (-5) => 3 - 5
         return left - (-right);
     }
 
     // left is negative
-    if(right.isPos()) {
+    if(right.is_positive()) {
         // (-3) + (5) => (5) - (3)
         return right - (-left);
     }
@@ -108,22 +108,22 @@ auto operator+(const BigInt &left, const BigInt &right) -> BigInt {
 }
 
 auto operator-(const BigInt &left, const BigInt &right) -> BigInt {
-    if(left.isZero()) {
+    if(left.is_zero()) {
         return -right;
     }
 
-    if(right.isZero()) {
+    if(right.is_zero()) {
         return left.clone();
     }
 
-    if(left.isPos()) {
-        if(right.isPos()) {
+    if(left.is_positive()) {
+        if(right.is_positive()) {
             if(left < right) {
                 // 3 - 5 => -(5 - 3)
                 return -(right - left);
             }
             // 5 - 3  OR  5 - 5
-            return BigInt::halfSubtract(left, right);
+            return BigInt::half_subtract(left, right);
         }
         // right negative
         // 3 - (-5) => 3 + 5
@@ -133,7 +133,7 @@ auto operator-(const BigInt &left, const BigInt &right) -> BigInt {
     }
 
     // left is negative
-    if(right.isPos()) {
+    if(right.is_positive()) {
         // -3 - (5) => -(3 + 5)
         return -((-left) + right);
     }
@@ -151,30 +151,30 @@ auto operator-(const BigInt &left, const BigInt &right) -> BigInt {
 
 auto operator*(const BigInt &left, const BigInt &right) -> BigInt {
     // return BigInt::multiplyNaive(left, right);
-    return BigInt::multiplyKaratsuba(left, right);
+    return BigInt::multiply_karatsuba(left, right);
 }
 
 auto BigInt::compare(const BigInt &left, const BigInt &right) -> int {
-    if(left.isNeg()) {
-        if(!right.isNeg()) {
+    if(left.is_negative()) {
+        if(!right.is_negative()) {
             return -1;
         }
 
         return compare(-right, -left);
     }
 
-    if(left.isZero()) {
-        if(right.isNeg()) {
+    if(left.is_zero()) {
+        if(right.is_negative()) {
             return 1;
         }
-        if(right.isZero()) {
+        if(right.is_zero()) {
             return 0;
         }
         return -1;
     }
 
     // left is positive
-    if(!right.isPos()) {
+    if(!right.is_positive()) {
         return 1;
     }
 
@@ -208,7 +208,7 @@ auto BigInt::compare(const BigInt &left, const BigInt &right) -> int {
     return 0;
 }
 
-auto BigInt::printInternal() const -> void {
+auto BigInt::print_internal() const -> void {
     std::cout << "Is negative? " << this->negative << std::endl;
     std::cout << "digits list: ";
     for(int i : this->digits) {
@@ -221,10 +221,10 @@ BigInt::BigInt(bool negative_, std::vector<int> digits_) {
     this->negative = negative_;
     this->digits = digits_;
 
-    this->normalizeDigits();
+    this->normalize_digits();
 }
 
-auto BigInt::normalizeDigits() -> void {
+auto BigInt::normalize_digits() -> void {
     // remove leading 0's
     while(!this->digits.empty() && this->digits.back() == 0) {
         this->digits.pop_back();
@@ -241,17 +241,19 @@ auto BigInt::normalizeDigits() -> void {
     }
 }
 
-auto BigInt::isZero() const -> bool {
+auto BigInt::is_zero() const -> bool {
     return this->digits.size() == 1 && this->digits[0] == 0;
 }
 
-auto BigInt::isPos() const -> bool {
-    return !this->isZero() && !this->negative;
+auto BigInt::is_positive() const -> bool {
+    return !this->is_zero() && !this->negative;
 }
 
-auto BigInt::isNeg() const -> bool { return !this->isZero() && this->negative; }
+auto BigInt::is_negative() const -> bool {
+    return !this->is_zero() && this->negative;
+}
 
-auto BigInt::halfAdd(const BigInt &left, const BigInt &right) -> BigInt {
+auto BigInt::half_add(const BigInt &left, const BigInt &right) -> BigInt {
     std::vector<int> summedDigits;
 
     int carry = 0;
@@ -270,7 +272,7 @@ auto BigInt::halfAdd(const BigInt &left, const BigInt &right) -> BigInt {
     return BigInt(false, summedDigits);
 }
 
-auto BigInt::halfSubtract(const BigInt &left, const BigInt &right) -> BigInt {
+auto BigInt::half_subtract(const BigInt &left, const BigInt &right) -> BigInt {
     // assume left >= right >= 0
 
     std::vector<int> subtractedDigits;
@@ -297,8 +299,8 @@ auto BigInt::halfSubtract(const BigInt &left, const BigInt &right) -> BigInt {
     return BigInt(false, subtractedDigits);
 }
 
-auto BigInt::multiplyNaive(const BigInt &left, const BigInt &right) -> BigInt {
-    if(left.isZero() || right.isZero()) {
+auto BigInt::multiply_naive(const BigInt &left, const BigInt &right) -> BigInt {
+    if(left.is_zero() || right.is_zero()) {
         return 0_b;
     }
 
@@ -331,9 +333,9 @@ auto BigInt::multiplyNaive(const BigInt &left, const BigInt &right) -> BigInt {
     return BigInt(left.negative ^ right.negative, digits);
 }
 
-auto BigInt::multiplyKaratsuba(const BigInt &left, const BigInt &right)
+auto BigInt::multiply_karatsuba(const BigInt &left, const BigInt &right)
     -> BigInt {
-    if(left.isZero() || right.isZero()) {
+    if(left.is_zero() || right.is_zero()) {
         return 0_b;
     }
 
@@ -353,17 +355,17 @@ auto BigInt::multiplyKaratsuba(const BigInt &left, const BigInt &right)
         smaller.digits.push_back(0);
     }
 
-    BigInt product = BigInt::multiplyKaratsubaHelper(smaller, bigger);
+    BigInt product = BigInt::multiply_karatsuba_helper(smaller, bigger);
     product.negative = left.negative ^ right.negative;
 
     return product;
 }
 
-auto BigInt::multiplyKaratsubaHelper(const BigInt &left, const BigInt &right)
+auto BigInt::multiply_karatsuba_helper(const BigInt &left, const BigInt &right)
     -> BigInt {
     size_t size = left.digits.size();
     if(size == 1) {
-        return BigInt::multiplyNaive(left, right);
+        return BigInt::multiply_naive(left, right);
     }
 
     // split both left and right
@@ -381,9 +383,9 @@ auto BigInt::multiplyKaratsubaHelper(const BigInt &left, const BigInt &right)
     BigInt aPlusB = A + B;
     BigInt cPlusD = C + D;
 
-    BigInt H = BigInt::multiplyKaratsubaHelper(aPlusB, cPlusD);
-    BigInt F = BigInt::multiplyKaratsubaHelper(A, C);
-    BigInt G = BigInt::multiplyKaratsubaHelper(B, D);
+    BigInt H = BigInt::multiply_karatsuba_helper(aPlusB, cPlusD);
+    BigInt F = BigInt::multiply_karatsuba_helper(A, C);
+    BigInt G = BigInt::multiply_karatsuba_helper(B, D);
 
     BigInt K = H - F - G;
 
