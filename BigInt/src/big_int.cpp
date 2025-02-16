@@ -54,7 +54,7 @@ BigInt::BigInt(const int64_t num) {
     normalizeDigits();
 }
 
-BigInt BigInt::operator-() const {
+auto BigInt::operator-() const -> BigInt {
     if(!isZero()) {
         BigInt clone = this->clone();
         clone.negative = !clone.negative;
@@ -65,15 +65,15 @@ BigInt BigInt::operator-() const {
     return BigInt("0");
 }
 
-BigInt BigInt::clone() const { return BigInt(this->negative, this->digits); }
+auto BigInt::clone() const -> BigInt { return BigInt(this->negative, this->digits); }
 
-std::string BigInt::str() const {
+auto BigInt::str() const -> std::string {
     std::stringstream ss;
     ss << *this;
     return ss.str();
 }
 
-std::ostream &operator<<(std::ostream &out, const BigInt &integer) {
+auto operator<<(std::ostream &out, const BigInt &integer) -> std::ostream& {
     if(integer.negative) {
         out << "-";
     }
@@ -96,9 +96,9 @@ std::ostream &operator<<(std::ostream &out, const BigInt &integer) {
     return out;
 }
 
-BigInt operator"" _b(const char *s) { return BigInt(s); }
+auto operator"" _b(const char *s) -> BigInt { return BigInt(s); }
 
-BigInt operator+(const BigInt &left, const BigInt &right) {
+auto operator+(const BigInt &left, const BigInt &right) -> BigInt {
     if(left.isZero()) {
         return right.clone();
     }
@@ -126,7 +126,7 @@ BigInt operator+(const BigInt &left, const BigInt &right) {
     return -((-left) + (-right));
 }
 
-BigInt operator-(const BigInt &left, const BigInt &right) {
+auto operator-(const BigInt &left, const BigInt &right) -> BigInt {
     if(left.isZero()) {
         return -right;
     }
@@ -170,12 +170,12 @@ BigInt operator-(const BigInt &left, const BigInt &right) {
     return ((-right) - (-left));
 }
 
-BigInt operator*(const BigInt &left, const BigInt &right) {
+auto operator*(const BigInt &left, const BigInt &right) -> BigInt {
     // return BigInt::multiplyNaive(left, right);
     return BigInt::multiplyKaratsuba(left, right);
 }
 
-int BigInt::compare(const BigInt &left, const BigInt &right) {
+auto BigInt::compare(const BigInt &left, const BigInt &right) -> int {
     if(left.isNeg()) {
         if(!right.isNeg()) {
             return -1;
@@ -225,7 +225,7 @@ int BigInt::compare(const BigInt &left, const BigInt &right) {
     return 0;
 }
 
-void BigInt::printInternal() const {
+auto BigInt::printInternal() const -> void {
     std::cout << "Is negative? " << this->negative << std::endl;
     std::cout << "digits list: ";
     for(int i : this->digits) {
@@ -241,7 +241,7 @@ BigInt::BigInt(bool negative_, std::vector<int> digits_) {
     this->normalizeDigits();
 }
 
-void BigInt::normalizeDigits() {
+auto BigInt::normalizeDigits() -> void {
     // remove leading 0's
     while(this->digits.size() > 0 && this->digits.back() == 0) {
         this->digits.pop_back();
@@ -257,15 +257,16 @@ void BigInt::normalizeDigits() {
         this->negative = false;
     }
 }
-bool BigInt::isZero() const {
+
+auto BigInt::isZero() const -> bool {
     return this->digits.size() == 1 && this->digits[0] == 0;
 }
 
-bool BigInt::isPos() const { return !this->isZero() && !this->negative; }
+auto BigInt::isPos() const -> bool { return !this->isZero() && !this->negative; }
 
-bool BigInt::isNeg() const { return !this->isZero() && this->negative; }
+auto BigInt::isNeg() const -> bool { return !this->isZero() && this->negative; }
 
-BigInt BigInt::halfAdd(const BigInt &left, const BigInt &right) {
+auto BigInt::halfAdd(const BigInt &left, const BigInt &right) -> BigInt {
     std::vector<int> summedDigits;
 
     int carry = 0;
@@ -284,7 +285,7 @@ BigInt BigInt::halfAdd(const BigInt &left, const BigInt &right) {
     return BigInt(false, summedDigits);
 }
 
-BigInt BigInt::halfSubtract(const BigInt &left, const BigInt &right) {
+auto BigInt::halfSubtract(const BigInt &left, const BigInt &right) -> BigInt {
     // assume left >= right >= 0
 
     std::vector<int> subtractedDigits;
@@ -311,7 +312,7 @@ BigInt BigInt::halfSubtract(const BigInt &left, const BigInt &right) {
     return BigInt(false, subtractedDigits);
 }
 
-BigInt BigInt::multiplyNaive(const BigInt &left, const BigInt &right) {
+auto BigInt::multiplyNaive(const BigInt &left, const BigInt &right) -> BigInt {
     if(left.isZero() || right.isZero()) {
         return 0_b;
     }
@@ -346,7 +347,7 @@ BigInt BigInt::multiplyNaive(const BigInt &left, const BigInt &right) {
     return BigInt(left.negative ^ right.negative, digits);
 }
 
-BigInt BigInt::multiplyKaratsuba(const BigInt &left, const BigInt &right) {
+auto BigInt::multiplyKaratsuba(const BigInt &left, const BigInt &right) -> BigInt {
     if(left.isZero() || right.isZero()) {
         return 0_b;
     }
@@ -373,8 +374,8 @@ BigInt BigInt::multiplyKaratsuba(const BigInt &left, const BigInt &right) {
     return product;
 }
 
-BigInt BigInt::multiplyKaratsubaHelper(const BigInt &left,
-                                       const BigInt &right) {
+auto BigInt::multiplyKaratsubaHelper(const BigInt &left,
+                                       const BigInt &right) -> BigInt {
     size_t size = left.digits.size();
     if(size == 1) {
         return BigInt::multiplyNaive(left, right);
@@ -431,26 +432,26 @@ BigInt BigInt::multiplyKaratsubaHelper(const BigInt &left,
     return BigInt(false, digits);
 }
 
-bool operator==(const BigInt &left, const BigInt &right) {
+auto operator==(const BigInt &left, const BigInt &right) -> bool {
     return BigInt::compare(left, right) == 0;
 }
 
-bool operator!=(const BigInt &left, const BigInt &right) {
+auto operator!=(const BigInt &left, const BigInt &right) -> bool {
     return !(left == right);
 }
 
-bool operator<(const BigInt &left, const BigInt &right) {
+auto operator<(const BigInt &left, const BigInt &right) -> bool {
     return BigInt::compare(left, right) < 0;
 }
 
-bool operator>(const BigInt &left, const BigInt &right) {
+auto operator>(const BigInt &left, const BigInt &right) -> bool {
     return BigInt::compare(left, right) > 0;
 }
 
-bool operator<=(const BigInt &left, const BigInt &right) {
+auto operator<=(const BigInt &left, const BigInt &right) -> bool {
     return BigInt::compare(left, right) <= 0;
 }
 
-bool operator>=(const BigInt &left, const BigInt &right) {
+auto operator>=(const BigInt &left, const BigInt &right) -> bool {
     return BigInt::compare(left, right) >= 0;
 }
