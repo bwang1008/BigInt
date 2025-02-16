@@ -1,7 +1,7 @@
 #include "big_int.hpp"
 
 #include <algorithm>
-#include <cstdint>
+#include <cstdint> // int64_t
 #include <iostream>
 #include <ostream>
 #include <sstream>
@@ -40,13 +40,13 @@ BigInt::BigInt(const int64_t num) {
     }
 
     this->negative = (num < 0);
-    long long N = num;
+    int64_t N = num;
 
     // can't do abs on num: abs doesn't return a positive number of
     // LONG_LONG_MIN
 
     while(N != 0) {
-        long long tempDigits = std::abs(N % BigInt::bucketMod);
+        int64_t tempDigits = std::abs(N % BigInt::bucketMod);
         this->digits.push_back(static_cast<int>(tempDigits));
         N /= BigInt::bucketMod;
     }
@@ -65,7 +65,9 @@ auto BigInt::operator-() const -> BigInt {
     return BigInt("0");
 }
 
-auto BigInt::clone() const -> BigInt { return BigInt(this->negative, this->digits); }
+auto BigInt::clone() const -> BigInt {
+    return BigInt(this->negative, this->digits);
+}
 
 auto BigInt::str() const -> std::string {
     std::stringstream ss;
@@ -73,13 +75,13 @@ auto BigInt::str() const -> std::string {
     return ss.str();
 }
 
-auto operator<<(std::ostream &out, const BigInt &integer) -> std::ostream& {
+auto operator<<(std::ostream &out, const BigInt &integer) -> std::ostream & {
     if(integer.negative) {
         out << "-";
     }
 
-    for(std::vector<int>::const_reverse_iterator it = integer.digits.crbegin();
-        it != integer.digits.crend(); ++it) {
+    for(auto it = integer.digits.crbegin(); it != integer.digits.crend();
+        ++it) {
         int bucket = *it;
         size_t size = std::to_string(bucket).size();
 
@@ -109,10 +111,9 @@ auto operator+(const BigInt &left, const BigInt &right) -> BigInt {
     if(left.isPos()) {
         if(right.isPos()) {
             return BigInt::halfAdd(left, right);
-        } else {
-            // 3 + (-5) => 3 - 5
-            return left - (-right);
         }
+        // 3 + (-5) => 3 - 5
+        return left - (-right);
     }
 
     // left is negative
@@ -140,17 +141,15 @@ auto operator-(const BigInt &left, const BigInt &right) -> BigInt {
             if(left < right) {
                 // 3 - 5 => -(5 - 3)
                 return -(right - left);
-            } else {
-                // 5 - 3  OR  5 - 5
-                return BigInt::halfSubtract(left, right);
             }
-        } else {
-            // right negative
-            // 3 - (-5) => 3 + 5
-            // 5 - (-3) => 5 + 3
-            // 5 - (-5) => 5 + 5
-            return left + (-right);
+            // 5 - 3  OR  5 - 5
+            return BigInt::halfSubtract(left, right);
         }
+        // right negative
+        // 3 - (-5) => 3 + 5
+        // 5 - (-3) => 5 + 3
+        // 5 - (-5) => 5 + 5
+        return left + (-right);
     }
 
     // left is negative
@@ -182,14 +181,16 @@ auto BigInt::compare(const BigInt &left, const BigInt &right) -> int {
         }
 
         return compare(-right, -left);
-    } else if(left.isZero()) {
+    }
+
+    if(left.isZero()) {
         if(right.isNeg()) {
             return 1;
-        } else if(right.isZero()) {
-            return 0;
-        } else {
-            return -1;
         }
+        if(right.isZero()) {
+            return 0;
+        }
+        return -1;
     }
 
     // left is positive
@@ -200,13 +201,14 @@ auto BigInt::compare(const BigInt &left, const BigInt &right) -> int {
     // right is positive
     if(left.digits.size() < right.digits.size()) {
         return -1;
-    } else if(left.digits.size() > right.digits.size()) {
+    }
+    if(left.digits.size() > right.digits.size()) {
         return 1;
     }
 
     // compare from most significant digits down
-    std::vector<int>::const_reverse_iterator it1 = left.digits.crbegin();
-    std::vector<int>::const_reverse_iterator it2 = right.digits.crbegin();
+    auto it1 = left.digits.crbegin();
+    auto it2 = right.digits.crbegin();
 
     while(it1 != left.digits.crend() && it2 != right.digits.crend()) {
         int valLeft = *it1;
@@ -214,7 +216,8 @@ auto BigInt::compare(const BigInt &left, const BigInt &right) -> int {
 
         if(valLeft < valRight) {
             return -1;
-        } else if(valLeft > valRight) {
+        }
+        if(valLeft > valRight) {
             return 1;
         }
 
@@ -243,12 +246,12 @@ BigInt::BigInt(bool negative_, std::vector<int> digits_) {
 
 auto BigInt::normalizeDigits() -> void {
     // remove leading 0's
-    while(this->digits.size() > 0 && this->digits.back() == 0) {
+    while(!this->digits.empty() && this->digits.back() == 0) {
         this->digits.pop_back();
     }
 
     // if no digits, initiailize with one 0
-    if(this->digits.size() == 0) {
+    if(this->digits.empty()) {
         this->digits.push_back(0);
     }
 
@@ -262,7 +265,9 @@ auto BigInt::isZero() const -> bool {
     return this->digits.size() == 1 && this->digits[0] == 0;
 }
 
-auto BigInt::isPos() const -> bool { return !this->isZero() && !this->negative; }
+auto BigInt::isPos() const -> bool {
+    return !this->isZero() && !this->negative;
+}
 
 auto BigInt::isNeg() const -> bool { return !this->isZero() && this->negative; }
 
@@ -317,15 +322,14 @@ auto BigInt::multiplyNaive(const BigInt &left, const BigInt &right) -> BigInt {
         return 0_b;
     }
 
-    std::vector<long long> product(left.digits.size() + right.digits.size() +
-                                   2);
+    std::vector<int64_t> product(left.digits.size() + right.digits.size() + 2);
 
     for(size_t i = 0; i < left.digits.size(); ++i) {
         for(size_t j = 0; j < right.digits.size(); ++j) {
-            long long val1 = left.digits[i];
-            long long val2 = right.digits[j];
+            int64_t val1 = left.digits[i];
+            int64_t val2 = right.digits[j];
 
-            long long prod = val1 * val2;
+            int64_t prod = val1 * val2;
             product[i + j] += (prod % BigInt::bucketMod);
             product[i + j + 1] += (prod / BigInt::bucketMod);
 
@@ -347,7 +351,8 @@ auto BigInt::multiplyNaive(const BigInt &left, const BigInt &right) -> BigInt {
     return BigInt(left.negative ^ right.negative, digits);
 }
 
-auto BigInt::multiplyKaratsuba(const BigInt &left, const BigInt &right) -> BigInt {
+auto BigInt::multiplyKaratsuba(const BigInt &left, const BigInt &right)
+    -> BigInt {
     if(left.isZero() || right.isZero()) {
         return 0_b;
     }
@@ -374,8 +379,8 @@ auto BigInt::multiplyKaratsuba(const BigInt &left, const BigInt &right) -> BigIn
     return product;
 }
 
-auto BigInt::multiplyKaratsubaHelper(const BigInt &left,
-                                       const BigInt &right) -> BigInt {
+auto BigInt::multiplyKaratsubaHelper(const BigInt &left, const BigInt &right)
+    -> BigInt {
     size_t size = left.digits.size();
     if(size == 1) {
         return BigInt::multiplyNaive(left, right);
@@ -402,7 +407,7 @@ auto BigInt::multiplyKaratsubaHelper(const BigInt &left,
 
     BigInt K = H - F - G;
 
-    std::vector<long long> product(2 * size + 2);
+    std::vector<int64_t> product(2 * size + 2);
 
     // F is most significant, K is middle, G is least significant
     for(size_t i = 0; i < F.digits.size(); ++i) {
