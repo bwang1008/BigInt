@@ -39,16 +39,7 @@ BigInt::BigInt(const int64_t num) : BigInt(std::to_string(num)) {}
 
 BigInt::BigInt() : negative(false), digits{0} {}
 
-auto BigInt::operator-() const -> BigInt {
-    if(is_zero()) {
-        return BigInt();
-    }
-
-    BigInt clone = this->clone();
-    clone.negative = !clone.negative;
-
-    return clone;
-}
+auto BigInt::operator-() const -> BigInt { return BigInt(!negative, digits); }
 
 auto BigInt::clone() const -> BigInt {
     return BigInt(this->negative, this->digits);
