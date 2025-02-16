@@ -12,7 +12,7 @@ class BigInt {
 
     // takes in a string of digits in base 10 with optional negative sign
     explicit BigInt(const std::string &num);
-    BigInt(int64_t num);
+    explicit BigInt(int64_t num);
     BigInt();
 
     // Overloaded unary operators

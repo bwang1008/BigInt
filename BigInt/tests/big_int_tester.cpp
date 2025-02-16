@@ -68,14 +68,8 @@ TEST_CASE("Constructor from int", "[constructor]") {
     REQUIRE(x.str() == "-103");
 }
 
-TEST_CASE("Constructor via assignment", "[constructor]") {
-    const int negative_value = -103;
-    BigInt x = negative_value;
-    REQUIRE(x.str() == "-103");
-}
-
-TEST_CASE("Constructor via assignment of 0", "[constructor]") {
-    BigInt x = 0;
+TEST_CASE("Default Constructor", "[constructor]") {
+    BigInt x;
     REQUIRE(x.str() == "0");
 }
 
