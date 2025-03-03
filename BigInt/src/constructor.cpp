@@ -1,7 +1,7 @@
 #include "BigInt/include/big_int.hpp"
 
-#include <cstddef>   // std::size_t
-#include <cstdint>   // int64_t
+#include <cstddef> // std::size_t
+#include <cstdint> // int64_t
 #include <string>  // std::stoi, std::to_string
 #include <vector>
 

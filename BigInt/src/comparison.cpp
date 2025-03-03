@@ -68,7 +68,6 @@ auto BigInt::is_negative() const -> bool {
     return !this->is_zero() && this->negative;
 }
 
-
 auto operator==(const BigInt &left, const BigInt &right) -> bool {
     return BigInt::compare(left, right) == 0;
 }
@@ -92,6 +91,5 @@ auto operator<=(const BigInt &left, const BigInt &right) -> bool {
 auto operator>=(const BigInt &left, const BigInt &right) -> bool {
     return BigInt::compare(left, right) >= 0;
 }
-
 
 } // namespace BigInt
