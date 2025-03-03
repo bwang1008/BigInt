@@ -34,6 +34,9 @@ ADD_LIBRARY(
 	BigInt/src/big_int.cpp
 	BigInt/src/comparison.cpp
 	BigInt/src/constructor.cpp
+	BigInt/src/arithmetic/add_subtract.cpp
+	BigInt/src/arithmetic/multiplication/grade_school.cpp
+	BigInt/src/arithmetic/multiplication/karatsuba.cpp
 )
 
 ADD_EXECUTABLE(
