@@ -44,8 +44,8 @@ ADD_EXECUTABLE(
 	BigInt/tests/test_big_int.cpp
 	BigInt/tests/test_comparison.cpp
 	BigInt/tests/test_constructor.cpp
-	BigInt/tests/test_multiplication.cpp
 	BigInt/tests/arithmetic/test_add_subtract.cpp
+	BigInt/tests/arithmetic/multiplication/test_karatsuba.cpp
 )
 
 ADD_TEST(NAME tests COMMAND tests)
