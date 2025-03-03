@@ -1,7 +1,7 @@
 #ifndef BIG_INT_H
 #define BIG_INT_H // NOLINT(clang-diagnostic-unused-macros)
 
-#include <cstdint>
+#include <cstdint> // int64_t
 #include <ostream>
 #include <string>
 #include <vector>

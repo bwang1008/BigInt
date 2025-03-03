@@ -1,14 +1,10 @@
 #include "BigInt/include/big_int.hpp"
 
-#include <algorithm> // std::max
-#include <cstddef>   // std::size_t
-#include <cstdint>   // int64_t
-#include <iostream>  // std::cout, std::endl
-#include <iterator>  // std::advance
+#include <cstddef>  // std::size_t
+#include <iostream> // std::cout, std::endl
 #include <ostream>
 #include <sstream> // std::stringstream
 #include <string>  // std::to_string
-#include <vector>
 
 namespace BigInt {
 
