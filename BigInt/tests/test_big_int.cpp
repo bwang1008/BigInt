@@ -51,20 +51,14 @@ TEST_CASE("Negation of long negative", "[negate]") {
     REQUIRE(y.str() == digits.substr(1, digits.size() - 1));
 }
 
-TEST_CASE("Clone", "[clone]") {
-    BigInt::BigInt x{"003"};
-    BigInt::BigInt y = x.clone();
+TEST_CASE("Copy", "[copy]") {
+    BigInt::BigInt x{"3"};
+    BigInt::BigInt y = x; // NOLINT(performance-unnecessary-copy-initialization)
     REQUIRE(y.str() == x.str());
 }
 
-TEST_CASE("Clone of negative zero", "[clone]") {
-    BigInt::BigInt x{"-0"};
-    BigInt::BigInt y = x.clone();
-    REQUIRE(y.str() == x.str());
-}
-
-TEST_CASE("Clone of large number", "[clone]") {
+TEST_CASE("Copy of large number", "[copy]") {
     BigInt::BigInt x{"12345678901234567890234568790"};
-    BigInt::BigInt y = x.clone();
+    BigInt::BigInt y = x; // NOLINT(performance-unnecessary-copy-initialization)
     REQUIRE(y.str() == x.str());
 }

@@ -23,8 +23,6 @@ class BigInt {
 
     // helper functions
 
-    // return a copy
-    [[nodiscard]] auto clone() const -> BigInt;
     // return string representation of the BigInt
     [[nodiscard]] auto str() const -> std::string;
 

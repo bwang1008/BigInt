@@ -10,10 +10,6 @@ namespace BigInt {
 
 auto BigInt::operator-() const -> BigInt { return BigInt(!negative, digits); }
 
-auto BigInt::clone() const -> BigInt {
-    return BigInt(this->negative, this->digits);
-}
-
 auto BigInt::str() const -> std::string {
     std::stringstream ss;
     ss << *this;
