@@ -42,6 +42,7 @@ ADD_LIBRARY(
 ADD_EXECUTABLE(
 	tests
 	BigInt/tests/test_big_int.cpp
+	BigInt/tests/test_comparison.cpp
 	BigInt/tests/test_multiplication.cpp
 )
 
