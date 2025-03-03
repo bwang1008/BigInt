@@ -13,34 +13,6 @@
 
 namespace BigInt {
 
-BigInt::BigInt(const std::string &num) {
-    if(num.empty()) {
-        this->negative = false;
-        this->digits.push_back(0);
-        return;
-    }
-
-    this->negative = (num[0] == '-');
-    const std::size_t digit_start = (this->negative ? 1 : 0);
-
-    std::size_t chunk_end = num.size();
-    while(chunk_end != digit_start) {
-        const std::size_t chunk_start =
-            (chunk_end < digit_start + BigInt::digits_per_bucket)
-                ? digit_start
-                : chunk_end - BigInt::digits_per_bucket;
-        this->digits.push_back(
-            std::stoi(num.substr(chunk_start, chunk_end - chunk_start)));
-        chunk_end = chunk_start;
-    }
-
-    normalize_digits();
-}
-
-BigInt::BigInt(const int64_t num) : BigInt(std::to_string(num)) {}
-
-BigInt::BigInt() : negative(false), digits{0} {}
-
 auto BigInt::operator-() const -> BigInt { return BigInt(!negative, digits); }
 
 auto BigInt::clone() const -> BigInt {
@@ -146,60 +118,6 @@ auto operator*(const BigInt &left, const BigInt &right) -> BigInt {
     return BigInt::multiply_karatsuba(left, right);
 }
 
-auto BigInt::compare(const BigInt &left, const BigInt &right) -> int {
-    if(left.is_negative()) {
-        if(!right.is_negative()) {
-            return -1;
-        }
-
-        return compare(-right, -left);
-    }
-
-    if(left.is_zero()) {
-        if(right.is_negative()) {
-            return 1;
-        }
-        if(right.is_zero()) {
-            return 0;
-        }
-        return -1;
-    }
-
-    // left is positive
-    if(!right.is_positive()) {
-        return 1;
-    }
-
-    // right is positive
-    if(left.digits.size() < right.digits.size()) {
-        return -1;
-    }
-    if(left.digits.size() > right.digits.size()) {
-        return 1;
-    }
-
-    // compare from most significant digits down
-    auto it1 = left.digits.crbegin();
-    auto it2 = right.digits.crbegin();
-
-    while(it1 != left.digits.crend() && it2 != right.digits.crend()) {
-        const int valLeft = *it1;
-        const int valRight = *it2;
-
-        if(valLeft < valRight) {
-            return -1;
-        }
-        if(valLeft > valRight) {
-            return 1;
-        }
-
-        ++it1;
-        ++it2;
-    }
-
-    return 0;
-}
-
 auto BigInt::print_internal() const -> void {
     std::cout << "Is negative? " << this->negative << std::endl;
     std::cout << "digits list: ";
@@ -207,13 +125,6 @@ auto BigInt::print_internal() const -> void {
         std::cout << i << " ";
     }
     std::cout << std::endl;
-}
-
-BigInt::BigInt(bool negative_, std::vector<int> digits_) {
-    this->negative = negative_;
-    this->digits = std::move(digits_);
-
-    this->normalize_digits();
 }
 
 auto BigInt::normalize_digits() -> void {
@@ -231,18 +142,6 @@ auto BigInt::normalize_digits() -> void {
     if(this->digits.size() == 1 && this->digits[0] == 0) {
         this->negative = false;
     }
-}
-
-auto BigInt::is_zero() const -> bool {
-    return this->digits.size() == 1 && this->digits[0] == 0;
-}
-
-auto BigInt::is_positive() const -> bool {
-    return !this->is_zero() && !this->negative;
-}
-
-auto BigInt::is_negative() const -> bool {
-    return !this->is_zero() && this->negative;
 }
 
 auto BigInt::half_add(const BigInt &left, const BigInt &right) -> BigInt {
@@ -407,30 +306,6 @@ auto BigInt::multiply_karatsuba_helper(const BigInt &left, const BigInt &right)
     }
 
     return BigInt(false, digits);
-}
-
-auto operator==(const BigInt &left, const BigInt &right) -> bool {
-    return BigInt::compare(left, right) == 0;
-}
-
-auto operator!=(const BigInt &left, const BigInt &right) -> bool {
-    return !(left == right);
-}
-
-auto operator<(const BigInt &left, const BigInt &right) -> bool {
-    return BigInt::compare(left, right) < 0;
-}
-
-auto operator>(const BigInt &left, const BigInt &right) -> bool {
-    return BigInt::compare(left, right) > 0;
-}
-
-auto operator<=(const BigInt &left, const BigInt &right) -> bool {
-    return BigInt::compare(left, right) <= 0;
-}
-
-auto operator>=(const BigInt &left, const BigInt &right) -> bool {
-    return BigInt::compare(left, right) >= 0;
 }
 
 }; // namespace BigInt

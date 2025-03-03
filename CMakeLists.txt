@@ -30,8 +30,8 @@ include(CTest)
 
 ADD_LIBRARY(
 	BigIntLib SHARED
+	BigInt/include/big_int.hpp
 	BigInt/src/big_int.cpp
-	BigInt/src/big_int.hpp
 )
 
 ADD_EXECUTABLE(
