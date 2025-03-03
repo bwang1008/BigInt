@@ -11,6 +11,8 @@
 #include <utility> // std::move
 #include <vector>
 
+namespace BigInt {
+
 BigInt::BigInt(const std::string &num) {
     if(num.empty()) {
         this->negative = false;
@@ -74,7 +76,9 @@ auto operator<<(std::ostream &out, const BigInt &integer) -> std::ostream & {
     return out;
 }
 
+inline namespace literals {
 auto operator"" _b(const char *s) -> BigInt { return BigInt(s); }
+}; // namespace literals
 
 auto operator+(const BigInt &left, const BigInt &right) -> BigInt {
     if(left.is_zero()) {
@@ -428,3 +432,5 @@ auto operator<=(const BigInt &left, const BigInt &right) -> bool {
 auto operator>=(const BigInt &left, const BigInt &right) -> bool {
     return BigInt::compare(left, right) >= 0;
 }
+
+}; // namespace BigInt

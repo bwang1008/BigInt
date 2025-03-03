@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 
+namespace BigInt {
 class BigInt {
   public:
     // Constructors
@@ -85,7 +86,14 @@ auto operator<(const BigInt &left, const BigInt &right) -> bool;
 auto operator>(const BigInt &left, const BigInt &right) -> bool;
 auto operator<=(const BigInt &left, const BigInt &right) -> bool;
 auto operator>=(const BigInt &left, const BigInt &right) -> bool;
+
+inline namespace literals {
 // user defined literal: can use as "BigInt num = 123_b;"
+// see
+// https://stackoverflow.com/questions/49054477/how-to-refer-to-user-defined-literal-operator-inside-a-namespace
 auto operator"" _b(const char *s) -> BigInt;
+}; // namespace literals
+
+}; // namespace BigInt
 
 #endif
