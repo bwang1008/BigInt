@@ -7,8 +7,7 @@
 #include <iterator>  // std::advance
 #include <ostream>
 #include <sstream> // std::stringstream
-#include <string>  // std::stoi, std::to_string
-#include <utility> // std::move
+#include <string>  // std::to_string
 #include <vector>
 
 namespace BigInt {
