@@ -42,4 +42,8 @@ BigInt::BigInt(bool negative_, std::vector<int> digits_) {
     this->normalize_digits();
 }
 
+inline namespace literals {
+auto operator"" _b(const char *s) -> BigInt { return BigInt(s); }
+} // namespace literals
+
 } // namespace BigInt

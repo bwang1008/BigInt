@@ -43,10 +43,6 @@ auto operator<<(std::ostream &out, const BigInt &integer) -> std::ostream & {
     return out;
 }
 
-inline namespace literals {
-auto operator"" _b(const char *s) -> BigInt { return BigInt(s); }
-} // namespace literals
-
 auto BigInt::print_internal() const -> void {
     std::cout << "Is negative? " << this->negative << std::endl;
     std::cout << "digits list: ";
