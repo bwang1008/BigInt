@@ -3,7 +3,7 @@
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/generators/catch_generators_range.hpp>
 
-#include "BigInt/src/big_int.hpp"
+#include "BigInt/include/big_int.hpp"
 
 TEST_CASE("Multiplication with 0", "[mul]") {
     BigInt x = 0_b;

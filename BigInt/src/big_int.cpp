@@ -1,4 +1,4 @@
-#include "big_int.hpp"
+#include "BigInt/include/big_int.hpp"
 
 #include <algorithm> // std::max
 #include <cstddef>   // std::size_t
@@ -50,7 +50,7 @@ auto operator<<(std::ostream &out, const BigInt &integer) -> std::ostream & {
 
 inline namespace literals {
 auto operator"" _b(const char *s) -> BigInt { return BigInt(s); }
-}; // namespace literals
+} // namespace literals
 
 auto operator+(const BigInt &left, const BigInt &right) -> BigInt {
     if(left.is_zero()) {
@@ -308,4 +308,4 @@ auto BigInt::multiply_karatsuba_helper(const BigInt &left, const BigInt &right)
     return BigInt(false, digits);
 }
 
-}; // namespace BigInt
+} // namespace BigInt

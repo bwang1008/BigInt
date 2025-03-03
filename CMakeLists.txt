@@ -32,6 +32,8 @@ ADD_LIBRARY(
 	BigIntLib SHARED
 	BigInt/include/big_int.hpp
 	BigInt/src/big_int.cpp
+	BigInt/src/comparison.cpp
+	BigInt/src/constructor.cpp
 )
 
 ADD_EXECUTABLE(
@@ -87,6 +89,8 @@ FOREACH(TARG BigIntLib tests)
   SET_TARGET_PROPERTIES(${TARG} PROPERTIES CXX_EXTENSIONS OFF)
   TARGET_COMPILE_OPTIONS(${TARG} PRIVATE "${WARNINGS}")
 ENDFOREACH()
+
+TARGET_INCLUDE_DIRECTORIES(BigIntLib PRIVATE ${CMAKE_SOURCE_DIR})
 
 TARGET_INCLUDE_DIRECTORIES(tests PRIVATE ${CMAKE_SOURCE_DIR})
 # test coverage: see https://danielsieger.com/blog/2024/08/03/code-coverage-with-cmake.html

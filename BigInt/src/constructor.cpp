@@ -42,4 +42,4 @@ BigInt::BigInt(bool negative_, std::vector<int> digits_) {
     this->normalize_digits();
 }
 
-}; // namespace BigInt
+} // namespace BigInt

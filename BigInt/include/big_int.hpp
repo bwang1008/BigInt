@@ -92,8 +92,8 @@ inline namespace literals {
 // see
 // https://stackoverflow.com/questions/49054477/how-to-refer-to-user-defined-literal-operator-inside-a-namespace
 auto operator"" _b(const char *s) -> BigInt;
-}; // namespace literals
+} // namespace literals
 
-}; // namespace BigInt
+} // namespace BigInt
 
 #endif

@@ -94,4 +94,4 @@ auto operator>=(const BigInt &left, const BigInt &right) -> bool {
 }
 
 
-}; // namespace BigInt
+} // namespace BigInt
