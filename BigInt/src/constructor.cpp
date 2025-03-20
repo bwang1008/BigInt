@@ -7,9 +7,8 @@
 
 namespace BigInt {
 
-BigInt::BigInt(const std::string &num) {
+BigInt::BigInt(const std::string &num) : negative(false) {
     if(num.empty()) {
-        this->negative = false;
         this->digits.push_back(0);
         return;
     }
@@ -35,10 +34,8 @@ BigInt::BigInt(const int64_t num) : BigInt(std::to_string(num)) {}
 
 BigInt::BigInt() : negative(false), digits{0} {}
 
-BigInt::BigInt(bool negative_, std::vector<int> digits_) {
-    this->negative = negative_;
-    this->digits = std::move(digits_);
-
+BigInt::BigInt(bool negative_, std::vector<int> digits_)
+    : negative(negative_), digits(std::move(digits_)) {
     this->normalize_digits();
 }
 

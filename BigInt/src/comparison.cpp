@@ -56,15 +56,15 @@ auto BigInt::compare(const BigInt &left, const BigInt &right) -> int {
     return 0;
 }
 
-auto BigInt::is_zero() const -> bool {
+[[nodiscard]] [[gnu::pure]] auto BigInt::is_zero() const -> bool {
     return this->digits.size() == 1 && this->digits[0] == 0;
 }
 
-auto BigInt::is_positive() const -> bool {
+[[nodiscard]] [[gnu::pure]] auto BigInt::is_positive() const -> bool {
     return !this->is_zero() && !this->negative;
 }
 
-auto BigInt::is_negative() const -> bool {
+[[nodiscard]] [[gnu::pure]] auto BigInt::is_negative() const -> bool {
     return !this->is_zero() && this->negative;
 }
 

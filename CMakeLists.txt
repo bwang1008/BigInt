@@ -95,7 +95,6 @@ SET(WARNINGS
 	-Wpacked
 	-Wpacked-not-aligned
 	-Wno-padded
-	-Wno-pedantic-ms-format
 	-Wredundant-decls             # warn when multiple declarations
 	-Wshadow=global               # prevent shadowing of other variables
 	-Wshift-overflow=2

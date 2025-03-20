@@ -51,7 +51,7 @@ class BigInt {
 
   private:
     bool negative;
-    std::vector<int> digits;
+    std::vector<int> digits{};
     static constexpr int digits_per_bucket = 9;
     static constexpr int bucket_mod = 1000000000;
 
@@ -59,9 +59,9 @@ class BigInt {
 
     // Remove leading 0's; if no digits, initialize as 0; change -0 to 0
     void normalize_digits();
-    [[nodiscard]] auto is_zero() const -> bool;
-    [[nodiscard]] auto is_positive() const -> bool;
-    [[nodiscard]] auto is_negative() const -> bool;
+    [[nodiscard]] [[gnu::pure]] auto is_zero() const -> bool;
+    [[nodiscard]] [[gnu::pure]] auto is_positive() const -> bool;
+    [[nodiscard]] [[gnu::pure]] auto is_negative() const -> bool;
     // add two non-negative bigints
     static auto half_add(const BigInt &left, const BigInt &right) -> BigInt;
     // subtract smaller from bigger
