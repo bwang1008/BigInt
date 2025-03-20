@@ -54,6 +54,11 @@ ADD_TEST(NAME tests COMMAND tests)
 ### Compile and link flags ###
 ##############################
 
+# Warnings for gcc version "Ubuntu 9.4.0-1ubuntu1~20.04.2"
+# Found supported warning flags by looking in "info gcc"
+# and subtracting out the flags enabled by -Wall, -Wextra, -Wpedantic
+# by checking "gcc -Q -x c++ -Wall --help=warnings" (and for other warnings)
+
 SET(WARNINGS
 	-Wall                         # enable many other warnings
 	-Wextra                       # more warnings
