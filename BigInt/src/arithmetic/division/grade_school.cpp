@@ -15,18 +15,22 @@ auto BigInt::quotient_and_remainder_grade_school(const BigInt &left,
 
     BigInt minuend(false, left.digits);
     std::vector<BigInt> subtrahends{BigInt(false, right.digits)};
+    std::vector<BigInt> bases{BigInt(1)};
     BigInt next(0);
-    while((next = subtrahends.back() * BigInt(2)) < minuend) {
+    while((next = subtrahends.back() * BigInt(2)) <= minuend) {
         subtrahends.push_back(next);
+        bases.push_back(bases.back() * BigInt(2));
     }
 
     BigInt total(0);
     while(!subtrahends.empty()) {
         const BigInt subtrahend = subtrahends.back();
         subtrahends.pop_back();
-        if(subtrahend < minuend) {
-            total = total + subtrahend;
-            minuend = minuend - total;
+        const BigInt base = bases.back();
+        bases.pop_back();
+        if(subtrahend <= minuend) {
+            total = total + base;
+            minuend = minuend - subtrahend;
         }
     }
 
