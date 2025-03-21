@@ -13,21 +13,7 @@ auto BigInt::multiply_karatsuba(const BigInt &left, const BigInt &right)
         return BigInt();
     }
 
-    // convert both to the same lengths
-    BigInt smaller = BigInt(false, left.digits);
-    BigInt bigger = BigInt(false, right.digits);
-
-    if(smaller.digits.size() > bigger.digits.size()) {
-        BigInt temp = smaller;
-        smaller = bigger;
-        bigger = temp;
-    }
-
-    while(smaller.digits.size() < bigger.digits.size()) {
-        smaller.digits.push_back(0);
-    }
-
-    BigInt product = BigInt::multiply_karatsuba_helper(smaller, bigger);
+    BigInt product = BigInt::multiply_karatsuba_helper(left, right);
     product.negative = left.negative ^ right.negative;
 
     return product;
@@ -35,23 +21,36 @@ auto BigInt::multiply_karatsuba(const BigInt &left, const BigInt &right)
 
 auto BigInt::multiply_karatsuba_helper(const BigInt &left, const BigInt &right)
     -> BigInt {
-    const std::size_t size = left.digits.size();
+    BigInt smaller = left;
+    BigInt bigger = right;
+    if(smaller.digits.size() > bigger.digits.size()) {
+        const BigInt temp = smaller;
+        smaller = bigger;
+        bigger = temp;
+    }
+    // convert both to the same lengths
+    while(smaller.digits.size() < bigger.digits.size()) {
+        smaller.digits.push_back(0);
+    }
+
+    const std::size_t size = smaller.digits.size();
     if(size == 1) {
-        return BigInt::multiply_grade_school(left, right);
+        return BigInt::multiply_grade_school(smaller, bigger);
     }
 
     // split both left and right
     const std::size_t split_point = size / 2;
 
-    auto left_mid = left.digits.begin();
-    std::advance(left_mid, split_point);
-    auto right_mid = right.digits.begin();
-    std::advance(right_mid, split_point);
+    auto smaller_mid = smaller.digits.begin();
+    std::advance(smaller_mid, split_point);
+    auto bigger_mid = bigger.digits.begin();
+    std::advance(bigger_mid, split_point);
 
-    const BigInt a(false, std::vector<int>(left_mid, left.digits.end()));
-    const BigInt b(false, std::vector<int>(left.digits.begin(), left_mid));
-    const BigInt c(false, std::vector<int>(right_mid, right.digits.end()));
-    const BigInt d(false, std::vector<int>(right.digits.begin(), right_mid));
+    const BigInt a(false, std::vector<int>(smaller_mid, smaller.digits.end()));
+    const BigInt b(false,
+                   std::vector<int>(smaller.digits.begin(), smaller_mid));
+    const BigInt c(false, std::vector<int>(bigger_mid, bigger.digits.end()));
+    const BigInt d(false, std::vector<int>(bigger.digits.begin(), bigger_mid));
 
     const BigInt a_plus_b = a + b;
     const BigInt c_plus_d = c + d;
