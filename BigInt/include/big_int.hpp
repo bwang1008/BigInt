@@ -4,6 +4,7 @@
 #include <cstdint> // int64_t
 #include <ostream>
 #include <string>
+#include <utility> // std::pair
 #include <vector>
 
 namespace BigInt {
@@ -47,6 +48,13 @@ class BigInt {
         -> BigInt;
     // Karatsuba multiplication
     static auto multiply_karatsuba(const BigInt &left, const BigInt &right)
+        -> BigInt;
+
+    static auto quotient_and_remainder_grade_school(const BigInt &left,
+                                                    const BigInt &right)
+        -> std::pair<BigInt, BigInt>;
+
+    static auto divide_grade_school(const BigInt &left, const BigInt &right)
         -> BigInt;
 
   private:
