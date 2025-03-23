@@ -6,3 +6,6 @@ build
 
 # VsCode
 .vscode
+
+# Python virtual environment
+.venv
