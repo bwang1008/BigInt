@@ -1,6 +1,6 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.16)
+cmake_minimum_required(VERSION 3.16)
 
-PROJECT(BigInt
+project(BigInt
 	VERSION 0.0
 	DESCRIPTION "Big-integer library for C++"
 	LANGUAGES CXX
@@ -10,7 +10,7 @@ PROJECT(BigInt
 ### Dependencies ###
 ####################
 
-INCLUDE(FetchContent)
+include(FetchContent)
 FetchContent_Declare(
 	Catch2
 	GIT_REPOSITORY https://github.com/catchorg/Catch2.git
@@ -28,7 +28,7 @@ target_include_directories(Catch2 SYSTEM INTERFACE ${catch2_includes})
 
 include(CTest)
 
-ADD_LIBRARY(
+add_library(
 	BigIntLib STATIC
 	BigInt/include/big_int.hpp
 	BigInt/src/big_int.cpp
@@ -40,7 +40,7 @@ ADD_LIBRARY(
 	BigInt/src/arithmetic/multiplication/karatsuba.cpp
 )
 
-ADD_EXECUTABLE(
+add_executable(
 	tests
 	BigInt/tests/test_big_int.cpp
 	BigInt/tests/test_comparison.cpp
@@ -50,7 +50,7 @@ ADD_EXECUTABLE(
 	BigInt/tests/arithmetic/multiplication/test_karatsuba.cpp
 )
 
-ADD_TEST(NAME tests COMMAND tests)
+add_test(NAME tests COMMAND tests)
 
 ##############################
 ### Compile and link flags ###
@@ -61,7 +61,7 @@ ADD_TEST(NAME tests COMMAND tests)
 # and subtracting out the flags enabled by -Wall, -Wextra, -Wpedantic
 # by checking "gcc -Q -x c++ -Wall --help=warnings" (and for other warnings)
 
-SET(WARNINGS
+set(WARNINGS
 	-Wall                         # enable many other warnings
 	-Wextra                       # more warnings
 	-Wpedantic                    # strict ISO C++
@@ -150,22 +150,22 @@ SET(WARNINGS
 )
 
 # build types have different flags
-SET(CMAKE_CXX_FLAGS_DEBUG "-O0 -g -fsanitize=address --coverage")
-SET(CMAKE_CXX_FLAGS_RELEASE "-DNDEBUG -O2")
+set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g -fsanitize=address --coverage")
+set(CMAKE_CXX_FLAGS_RELEASE "-DNDEBUG -O2")
 
-FOREACH(TARG BigIntLib tests)
-  TARGET_COMPILE_FEATURES(${TARG} PUBLIC cxx_std_20)
-  SET_TARGET_PROPERTIES(${TARG} PROPERTIES CXX_EXTENSIONS OFF)
-  TARGET_COMPILE_OPTIONS(${TARG} PRIVATE "${WARNINGS}")
-ENDFOREACH()
+foreach(TARG BigIntLib tests)
+  target_compile_features(${TARG} PUBLIC cxx_std_20)
+  set_target_properties(${TARG} PROPERTIES CXX_EXTENSIONS OFF)
+  target_compile_options(${TARG} PRIVATE "${WARNINGS}")
+endforeach()
 
-TARGET_INCLUDE_DIRECTORIES(BigIntLib PRIVATE ${CMAKE_SOURCE_DIR})
+target_include_directories(BigIntLib PRIVATE ${CMAKE_SOURCE_DIR})
 
-TARGET_INCLUDE_DIRECTORIES(tests PRIVATE ${CMAKE_SOURCE_DIR})
+target_include_directories(tests PRIVATE ${CMAKE_SOURCE_DIR})
 # test coverage: see https://danielsieger.com/blog/2024/08/03/code-coverage-with-cmake.html
-TARGET_LINK_OPTIONS(tests PRIVATE
+target_link_options(tests PRIVATE
     $<$<CONFIG:Debug>:
         "-fsanitize=address" "--coverage"
     >
 )
-TARGET_LINK_LIBRARIES(tests PRIVATE Catch2::Catch2WithMain BigIntLib)
+target_link_libraries(tests PRIVATE Catch2::Catch2WithMain BigIntLib)
