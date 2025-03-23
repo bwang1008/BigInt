@@ -146,12 +146,12 @@ SET(WARNINGS
 	-Wmissing-declarations
 	-fno-operator-names           # do not use "and", "or", and "xor" (and others) as keywords
 	-fno-common                   # prevent tentative definitions
-	-fsanitize=address            # detect memory access errors
 	-fstack-protector-all         # stack protection
-	-O0
-	-g
-	--coverage
 )
+
+# build types have different flags
+SET(CMAKE_CXX_FLAGS_DEBUG "-O0 -g -fsanitize=address --coverage")
+SET(CMAKE_CXX_FLAGS_RELEASE "-DNDEBUG -O2")
 
 FOREACH(TARG BigIntLib tests)
   TARGET_COMPILE_FEATURES(${TARG} PUBLIC cxx_std_20)
@@ -163,5 +163,9 @@ TARGET_INCLUDE_DIRECTORIES(BigIntLib PRIVATE ${CMAKE_SOURCE_DIR})
 
 TARGET_INCLUDE_DIRECTORIES(tests PRIVATE ${CMAKE_SOURCE_DIR})
 # test coverage: see https://danielsieger.com/blog/2024/08/03/code-coverage-with-cmake.html
-TARGET_LINK_OPTIONS(tests PRIVATE "-fsanitize=address" "--coverage")
+TARGET_LINK_OPTIONS(tests PRIVATE
+    $<$<CONFIG:Debug>:
+        "-fsanitize=address" "--coverage"
+    >
+)
 TARGET_LINK_LIBRARIES(tests PRIVATE Catch2::Catch2WithMain BigIntLib)

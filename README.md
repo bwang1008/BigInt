@@ -7,11 +7,14 @@ Big-integer library for C++. This is a personal project for practicing C++.
 Starting from the root of the repository,
 
 ```sh
-mkdir build
-cd build
-cmake -S .. -B . -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+mkdir debug
+cd debug
+cmake -S .. -B . -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug
 make
 ```
+
+Change `debug` to `release` and `-DCMAKE_BUILD_TYPE=Debug` to `-DCMAKE_BUILD_TYPE=Release` for release version.
+
 
 ## Running tests with coverage:
 
@@ -20,7 +23,7 @@ ctest -T test -T coverage
 ```
 using `ctest` version `3.16.3`.
 
-View coverage results with 
+View coverage results with
 
 ```sh
 gcov --display-progress --function-summaries --human-readable --use-colors CMakeFiles/tests.dir/BigInt/tests/test_big_int.cpp.o --stdout
@@ -37,7 +40,7 @@ pip3 install gcovr==8.2  # Last version that supports Python 3.8
 ```
 
 ```sh
-cd build
+cd debug
 gcovr -r .. --object-directory . --exclude _deps/catch2-src --html-theme github.dark-blue --html-details --output example_html.details.html
 ```
 then open file `example_html.details.html` in a browser.
