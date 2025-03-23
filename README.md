@@ -26,6 +26,25 @@ View coverage results with
 gcov --display-progress --function-summaries --human-readable --use-colors CMakeFiles/tests.dir/BigInt/tests/test_big_int.cpp.o --stdout
 ```
 
+View coverage results with `gcovr` library:
+
+First install it:
+
+```sh
+python3 -m venv .venv
+source .venv/bin/activate
+pip3 install gcovr==8.2  # Last version that supports Python 3.8
+```
+
+```sh
+cd build
+gcovr -r .. --object-directory . --exclude _deps/catch2-src --html-theme github.dark-blue --html-details --output example_html.details.html
+```
+then open file `example_html.details.html` in a browser.
+
+Branch coverage doesn't really mean anything: https://stackoverflow.com/questions/42003783/lcov-gcov-branch-coverage-with-c-producing-branches-all-over-the-place
+
+
 .clang-tidy generated via
 
 ```sh

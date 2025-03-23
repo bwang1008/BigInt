@@ -29,7 +29,7 @@ target_include_directories(Catch2 SYSTEM INTERFACE ${catch2_includes})
 include(CTest)
 
 ADD_LIBRARY(
-	BigIntLib SHARED
+	BigIntLib STATIC
 	BigInt/include/big_int.hpp
 	BigInt/src/big_int.cpp
 	BigInt/src/comparison.cpp
@@ -148,6 +148,9 @@ SET(WARNINGS
 	-fno-common                   # prevent tentative definitions
 	-fsanitize=address            # detect memory access errors
 	-fstack-protector-all         # stack protection
+	-O0
+	-g
+	--coverage
 )
 
 FOREACH(TARG BigIntLib tests)
@@ -160,6 +163,5 @@ TARGET_INCLUDE_DIRECTORIES(BigIntLib PRIVATE ${CMAKE_SOURCE_DIR})
 
 TARGET_INCLUDE_DIRECTORIES(tests PRIVATE ${CMAKE_SOURCE_DIR})
 # test coverage: see https://danielsieger.com/blog/2024/08/03/code-coverage-with-cmake.html
-TARGET_COMPILE_OPTIONS(tests PRIVATE "-coverage")
 TARGET_LINK_OPTIONS(tests PRIVATE "-fsanitize=address" "--coverage")
 TARGET_LINK_LIBRARIES(tests PRIVATE Catch2::Catch2WithMain BigIntLib)
