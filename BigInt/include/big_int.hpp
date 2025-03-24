@@ -32,12 +32,12 @@ class BigInt {
     // Outputting a BigInt
     friend auto operator<<(std::ostream &out, const BigInt &integer)
         -> std::ostream &;
-    // add two bigints
+
+    // arithmetic operations
     friend auto operator+(const BigInt &left, const BigInt &right) -> BigInt;
-    // subtract two bigints
     friend auto operator-(const BigInt &left, const BigInt &right) -> BigInt;
-    // multiply two bigints
     friend auto operator*(const BigInt &left, const BigInt &right) -> BigInt;
+    friend auto operator/(const BigInt &left, const BigInt &right) -> BigInt;
 
     // static functions
 

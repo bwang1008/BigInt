@@ -36,6 +36,7 @@ add_library(
 	BigInt/src/constructor.cpp
 	BigInt/src/arithmetic/add_subtract.cpp
 	BigInt/src/arithmetic/division/grade_school.cpp
+	BigInt/src/arithmetic/division/operators.cpp
 	BigInt/src/arithmetic/multiplication/grade_school.cpp
 	BigInt/src/arithmetic/multiplication/karatsuba.cpp
 	BigInt/src/arithmetic/multiplication/operators.cpp
