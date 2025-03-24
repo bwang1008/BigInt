@@ -159,7 +159,12 @@ foreach(TARG BigIntLib tests)
   target_compile_options(${TARG} PRIVATE "${WARNINGS}")
 endforeach()
 
-target_include_directories(BigIntLib PUBLIC ${CMAKE_SOURCE_DIR})
+target_include_directories(
+    BigIntLib
+    PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/include>
+)
 
 # test coverage: see https://danielsieger.com/blog/2024/08/03/code-coverage-with-cmake.html
 target_link_options(tests PRIVATE
