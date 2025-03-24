@@ -44,4 +44,9 @@ auto BigInt::divide_grade_school(const BigInt &left, const BigInt &right)
     return quotient_and_remainder_grade_school(left, right).first;
 }
 
+auto BigInt::remainder_grade_school(const BigInt &left, const BigInt &right)
+    -> BigInt {
+    return quotient_and_remainder_grade_school(left, right).second;
+}
+
 } // namespace BigInt

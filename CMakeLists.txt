@@ -49,6 +49,7 @@ add_executable(
 	BigInt/tests/test_constructor.cpp
 	BigInt/tests/arithmetic/test_add_subtract.cpp
 	BigInt/tests/arithmetic/division/test_division.cpp
+	BigInt/tests/arithmetic/division/test_remainder.cpp
 	BigInt/tests/arithmetic/multiplication/test_karatsuba.cpp
 )
 

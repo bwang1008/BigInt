@@ -38,6 +38,7 @@ class BigInt {
     friend auto operator-(const BigInt &left, const BigInt &right) -> BigInt;
     friend auto operator*(const BigInt &left, const BigInt &right) -> BigInt;
     friend auto operator/(const BigInt &left, const BigInt &right) -> BigInt;
+    friend auto operator%(const BigInt &left, const BigInt &right) -> BigInt;
 
     // static functions
 
@@ -55,6 +56,8 @@ class BigInt {
         -> std::pair<BigInt, BigInt>;
 
     static auto divide_grade_school(const BigInt &left, const BigInt &right)
+        -> BigInt;
+    static auto remainder_grade_school(const BigInt &left, const BigInt &right)
         -> BigInt;
 
   private:
