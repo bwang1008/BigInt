@@ -39,6 +39,27 @@ TEST_CASE("Addition with negative", "[add]") {
     REQUIRE(z.str() == "2");
 }
 
+TEST_CASE("Addition with zero", "[add]") {
+    BigInt::BigInt x{5};
+    BigInt::BigInt y{0};
+    BigInt::BigInt z = x + y;
+    REQUIRE(z.str() == "5");
+}
+
+TEST_CASE("Addition of negative with positive", "[add]") {
+    BigInt::BigInt x{"-3"};
+    BigInt::BigInt y{"5"};
+    BigInt::BigInt z = x + y;
+    REQUIRE(z.str() == "2");
+}
+
+TEST_CASE("Addition of negative with negative", "[add]") {
+    BigInt::BigInt x{"-3"};
+    BigInt::BigInt y{"-5"};
+    BigInt::BigInt z = x + y;
+    REQUIRE(z.str() == "-8");
+}
+
 TEST_CASE("Addition with negative flipped", "[add]") {
     BigInt::BigInt x{"3"};
     BigInt::BigInt y{"-5"};
@@ -120,4 +141,25 @@ TEST_CASE("Subtraction of large value", "[sub]") {
     BigInt::BigInt y{"100000000000000000000"};
     BigInt::BigInt z = x - y;
     REQUIRE(z.str() == "-99999999999999999999");
+}
+
+TEST_CASE("Subtraction: negative with positive", "[sub]") {
+    BigInt::BigInt x{-3};
+    BigInt::BigInt y{5};
+    BigInt::BigInt z = x - y;
+    REQUIRE(z.str() == "-8");
+}
+
+TEST_CASE("Subtraction: negative with negative", "[sub]") {
+    BigInt::BigInt x{-3};
+    BigInt::BigInt y{-5};
+    BigInt::BigInt z = x - y;
+    REQUIRE(z.str() == "2");
+}
+
+TEST_CASE("Subtraction from zero", "[sub]") {
+    BigInt::BigInt x{0};
+    BigInt::BigInt y{5};
+    BigInt::BigInt z = x - y;
+    REQUIRE(z.str() == "-5");
 }
