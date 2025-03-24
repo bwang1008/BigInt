@@ -1,7 +1,5 @@
 # CMake
-build
-debug
-release
+build*
 
 # Vim
 *.swp

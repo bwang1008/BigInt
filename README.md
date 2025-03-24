@@ -7,13 +7,13 @@ Big-integer library for C++. This is a personal project for practicing C++.
 Starting from the root of the repository,
 
 ```sh
-mkdir debug
-cd debug
+mkdir build-debug
+cd build-debug
 cmake -S .. -B . -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug
 make
 ```
 
-Change `debug` to `release` and `-DCMAKE_BUILD_TYPE=Debug` to `-DCMAKE_BUILD_TYPE=Release` for release version.
+Change `build-debug` to `build-release` and `-DCMAKE_BUILD_TYPE=Debug` to `-DCMAKE_BUILD_TYPE=Release` for release version.
 
 
 ## Running tests with coverage:
@@ -40,7 +40,7 @@ pip3 install gcovr==8.2  # Last version that supports Python 3.8
 ```
 
 ```sh
-cd debug
+cd build-debug
 gcovr -r .. --object-directory . --exclude _deps/catch2-src --html-theme github.dark-blue --html-details --output example_html.details.html
 ```
 then open file `example_html.details.html` in a browser.
