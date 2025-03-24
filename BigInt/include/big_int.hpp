@@ -78,8 +78,6 @@ class BigInt {
     // Karatsuba multiplication
     static auto multiply_karatsuba_helper(const BigInt &left,
                                           const BigInt &right) -> BigInt;
-    // show internal information for debugging
-    auto print_internal() const -> void;
 };
 
 // declare function so any file that uses this header can see it

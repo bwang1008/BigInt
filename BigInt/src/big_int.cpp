@@ -39,15 +39,6 @@ auto operator<<(std::ostream &out, const BigInt &integer) -> std::ostream & {
     return out;
 }
 
-auto BigInt::print_internal() const -> void {
-    std::cout << "Is negative? " << this->negative << std::endl;
-    std::cout << "digits list: ";
-    for(const int i : this->digits) {
-        std::cout << i << " ";
-    }
-    std::cout << std::endl;
-}
-
 auto BigInt::normalize_digits() -> void {
     // remove leading 0's
     while(!this->digits.empty() && this->digits.back() == 0) {
