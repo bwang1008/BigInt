@@ -411,4 +411,3 @@ CheckOptions:
   - key:             zircon-temporary-objects.Names
     value:           ''
 ...
-
