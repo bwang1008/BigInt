@@ -27,6 +27,11 @@ TEST_CASE("Constructor of Zero", "[constructor]") {
     REQUIRE(x.str() == digits);
 }
 
+TEST_CASE("Constructor of Zero Via Empty String", "[constructor]") {
+    BigInt::BigInt x("");
+    REQUIRE(x.str() == "0");
+}
+
 TEST_CASE("Constructor of Negative Number with Leading Zero", "[constructor]") {
     std::string digits = "-03";
     BigInt::BigInt x(digits);
