@@ -38,6 +38,7 @@ add_library(
 	BigInt/src/arithmetic/division/grade_school.cpp
 	BigInt/src/arithmetic/multiplication/grade_school.cpp
 	BigInt/src/arithmetic/multiplication/karatsuba.cpp
+	BigInt/src/arithmetic/multiplication/operators.cpp
 )
 
 add_executable(
