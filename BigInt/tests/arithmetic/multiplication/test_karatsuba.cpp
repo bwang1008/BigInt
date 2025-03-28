@@ -81,3 +81,11 @@ TEST_CASE("Multiplication of large positives", "[mul]") {
         "2286111574783895762507500032728659347816207067867304373545360378584"
         "8133094851462428844661315312664336578255202869537848950160622046");
 }
+
+TEST_CASE("Multiplication equals", "[mul]") {
+    BigInt::BigInt x = -123_b;
+    const BigInt::BigInt y = -5_b;
+    x *= y;
+
+    REQUIRE(x.str() == "615");
+}

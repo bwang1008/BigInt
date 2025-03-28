@@ -42,6 +42,7 @@ class BigInt {
 
     auto operator+=(const BigInt &right) -> BigInt &;
     auto operator-=(const BigInt &right) -> BigInt &;
+    auto operator*=(const BigInt &right) -> BigInt &;
 
     // static functions
 
