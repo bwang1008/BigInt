@@ -6,6 +6,28 @@
 namespace BigInt {
 
 auto operator+(const BigInt &left, const BigInt &right) -> BigInt {
+    return BigInt::add_helper(left, right);
+}
+
+auto BigInt::operator+=(const BigInt &right) -> BigInt & {
+    const BigInt sum = BigInt::add_helper(*this, right);
+    this->negative = sum.negative;
+    this->digits = sum.digits;
+    return *this;
+}
+
+auto operator-(const BigInt &left, const BigInt &right) -> BigInt {
+    return BigInt::subtract_helper(left, right);
+}
+
+auto BigInt::operator-=(const BigInt &right) -> BigInt & {
+    const BigInt difference = BigInt::subtract_helper(*this, right);
+    this->negative = difference.negative;
+    this->digits = difference.digits;
+    return *this;
+}
+
+auto BigInt::add_helper(const BigInt &left, const BigInt &right) -> BigInt {
     if(left.is_zero()) {
         return right;
     }
@@ -18,21 +40,23 @@ auto operator+(const BigInt &left, const BigInt &right) -> BigInt {
             return BigInt::half_add(left, right);
         }
         // 3 + (-5) => 3 - 5
-        return left - (-right);
+        return BigInt::subtract_helper(left, (-right));
     }
 
     // left is negative
     if(right.is_positive()) {
         // (-3) + (5) => (5) - (3)
         return right - (-left);
+        return BigInt::subtract_helper(right, -left);
     }
 
     // right is negative
     // (-3) + (-5) => -(3 + 5)
-    return -((-left) + (-right));
+    return -BigInt::add_helper(-left, -right);
 }
 
-auto operator-(const BigInt &left, const BigInt &right) -> BigInt {
+auto BigInt::subtract_helper(const BigInt &left, const BigInt &right)
+    -> BigInt {
     if(left.is_zero()) {
         return -right;
     }
@@ -45,25 +69,25 @@ auto operator-(const BigInt &left, const BigInt &right) -> BigInt {
         if(right.is_positive()) {
             if(left < right) {
                 // 3 - 5 => -(5 - 3)
-                return -(right - left);
+                return -BigInt::subtract_helper(right, left);
             }
             // 5 - 3  OR  5 - 5
             return BigInt::half_subtract(left, right);
         }
         // right negative
         // 3 - (-5) => 3 + 5
-        return left + (-right);
+        return BigInt::add_helper(left, -right);
     }
 
     // left is negative
     if(right.is_positive()) {
         // -3 - (5) => -(3 + 5)
-        return -((-left) + right);
+        return -BigInt::add_helper(-left, right);
     }
 
     // right is negative
     // -3 - (-5) => -3 + 5 => 5 - 3
-    return ((-right) - (-left));
+    return BigInt::subtract_helper(-right, -left);
 }
 
 auto BigInt::half_add(const BigInt &left, const BigInt &right) -> BigInt {

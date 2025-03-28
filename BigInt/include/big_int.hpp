@@ -40,6 +40,9 @@ class BigInt {
     friend auto operator/(const BigInt &left, const BigInt &right) -> BigInt;
     friend auto operator%(const BigInt &left, const BigInt &right) -> BigInt;
 
+    auto operator+=(const BigInt &right) -> BigInt &;
+    auto operator-=(const BigInt &right) -> BigInt &;
+
     // static functions
 
     // -1 if left < right; 0 if left == right, and 1 if left > right
@@ -75,9 +78,13 @@ class BigInt {
     [[nodiscard]] [[gnu::pure]] auto is_negative() const -> bool;
     // add two non-negative bigints
     static auto half_add(const BigInt &left, const BigInt &right) -> BigInt;
+    static auto add_helper(const BigInt &left, const BigInt &right) -> BigInt;
     // subtract smaller from bigger
     static auto half_subtract(const BigInt &left, const BigInt &right)
         -> BigInt;
+    static auto subtract_helper(const BigInt &left, const BigInt &right)
+        -> BigInt;
+
     // Karatsuba multiplication
     static auto multiply_karatsuba_helper(const BigInt &left,
                                           const BigInt &right) -> BigInt;
