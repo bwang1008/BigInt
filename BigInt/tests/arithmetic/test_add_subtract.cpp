@@ -165,3 +165,17 @@ TEST_CASE("Subtraction from zero", "[sub]") {
     const BigInt::BigInt z = x - y;
     REQUIRE(z.str() == "-5");
 }
+
+TEST_CASE("Plus equals", "[add]") {
+    BigInt::BigInt x{"-5"};
+    const BigInt::BigInt y(7);
+    x += y;
+    REQUIRE(x.str() == "2");
+}
+
+TEST_CASE("Subtract equals", "[add]") {
+    BigInt::BigInt x{"5"};
+    const BigInt::BigInt y(7);
+    x -= y;
+    REQUIRE(x.str() == "-2");
+}
