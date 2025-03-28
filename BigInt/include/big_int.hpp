@@ -66,6 +66,9 @@ class BigInt {
     static auto remainder_grade_school(const BigInt &left, const BigInt &right)
         -> BigInt;
 
+    auto abs() const -> BigInt;
+    static auto gcd(const BigInt &left, const BigInt &right) -> BigInt;
+
   private:
     bool negative;
     std::vector<int> digits{};
@@ -91,6 +94,8 @@ class BigInt {
     // Karatsuba multiplication
     static auto multiply_karatsuba_helper(const BigInt &left,
                                           const BigInt &right) -> BigInt;
+
+    static auto gcd_helper(const BigInt &left, const BigInt &right) -> BigInt;
 };
 
 // declare function so any file that uses this header can see it

@@ -37,6 +37,7 @@ add_library(
 	BigInt/src/arithmetic/add_subtract.cpp
 	BigInt/src/arithmetic/division/grade_school.cpp
 	BigInt/src/arithmetic/division/operators.cpp
+	BigInt/src/arithmetic/misc.cpp
 	BigInt/src/arithmetic/multiplication/grade_school.cpp
 	BigInt/src/arithmetic/multiplication/karatsuba.cpp
 	BigInt/src/arithmetic/multiplication/operators.cpp
@@ -47,10 +48,11 @@ add_executable(
 	BigInt/tests/test_big_int.cpp
 	BigInt/tests/test_comparison.cpp
 	BigInt/tests/test_constructor.cpp
-	BigInt/tests/arithmetic/test_add_subtract.cpp
 	BigInt/tests/arithmetic/division/test_division.cpp
 	BigInt/tests/arithmetic/division/test_remainder.cpp
 	BigInt/tests/arithmetic/multiplication/test_karatsuba.cpp
+	BigInt/tests/arithmetic/test_add_subtract.cpp
+	BigInt/tests/arithmetic/test_misc.cpp
 )
 
 add_test(NAME tests COMMAND tests)
