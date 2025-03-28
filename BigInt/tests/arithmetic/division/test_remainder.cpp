@@ -42,3 +42,10 @@ TEST_CASE("Remainder by zero", "[remainder]") {
     REQUIRE_THROWS_MATCHES(x % y, std::invalid_argument,
                            Catch::Matchers::Message("Cannot divide by 0"));
 }
+
+TEST_CASE("Remainder equals", "[remainder]") {
+    BigInt::BigInt x("5");
+    const BigInt::BigInt y(-2);
+    x %= y;
+    REQUIRE(x == BigInt::BigInt(5 % -2));
+}

@@ -29,8 +29,8 @@ auto BigInt::quotient_and_remainder_grade_school(const BigInt &left,
         const BigInt base = bases.back();
         bases.pop_back();
         if(subtrahend <= minuend) {
-            total = total + base;
-            minuend = minuend - subtrahend;
+            total += base;
+            minuend -= subtrahend;
         }
     }
 

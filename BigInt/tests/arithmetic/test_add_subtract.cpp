@@ -173,7 +173,7 @@ TEST_CASE("Plus equals", "[add]") {
     REQUIRE(x.str() == "2");
 }
 
-TEST_CASE("Subtract equals", "[add]") {
+TEST_CASE("Subtract equals", "[sub]") {
     BigInt::BigInt x{"5"};
     const BigInt::BigInt y(7);
     x -= y;
