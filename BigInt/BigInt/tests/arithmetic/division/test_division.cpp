@@ -6,7 +6,7 @@
 #include <catch2/matchers/catch_matchers.hpp>
 #include <catch2/matchers/catch_matchers_exception.hpp>
 
-#include "BigInt/include/big_int.hpp"
+#include "BigInt/BigInt/include/big_int.hpp"
 
 TEST_CASE("Division of lots of positives", "[div]") {
     auto i = GENERATE(range(0, 11));

@@ -3,7 +3,7 @@
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/generators/catch_generators_range.hpp>
 
-#include "BigInt/include/big_int.hpp"
+#include "BigInt/BigInt/include/big_int.hpp"
 
 using BigInt::operator""_b;
 

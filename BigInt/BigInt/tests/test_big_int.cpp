@@ -3,7 +3,7 @@
 
 #include <catch2/catch_test_macros.hpp>
 
-#include "BigInt/include/big_int.hpp"
+#include "BigInt/BigInt/include/big_int.hpp"
 
 TEST_CASE("Check output representation", "[print]") {
     const BigInt::BigInt x{"123"};

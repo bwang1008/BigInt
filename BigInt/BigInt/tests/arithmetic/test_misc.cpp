@@ -1,6 +1,6 @@
 #include <catch2/catch_test_macros.hpp>
 
-#include "BigInt/include/big_int.hpp"
+#include "BigInt/BigInt/include/big_int.hpp"
 
 TEST_CASE("Abs of positive", "[abs]") {
     const BigInt::BigInt x("1");

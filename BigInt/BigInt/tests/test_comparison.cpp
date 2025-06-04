@@ -2,7 +2,7 @@
 
 #include <catch2/catch_test_macros.hpp>
 
-#include "BigInt/include/big_int.hpp"
+#include "BigInt/BigInt/include/big_int.hpp"
 
 TEST_CASE("Equality from same constructor", "[equality]") {
     const std::string digits = "-1234567890123456789";

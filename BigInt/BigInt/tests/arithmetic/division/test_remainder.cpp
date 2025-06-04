@@ -6,7 +6,7 @@
 #include <catch2/matchers/catch_matchers.hpp>
 #include <catch2/matchers/catch_matchers_exception.hpp>
 
-#include "BigInt/include/big_int.hpp"
+#include "BigInt/BigInt/include/big_int.hpp"
 
 TEST_CASE("Remainder operator", "[remainder]") {
     const BigInt::BigInt x(5);

@@ -25,6 +25,13 @@ ctest -T test -T coverage
 ```
 using `ctest` version `3.16.3`.
 
+Alteratively,
+
+```sh
+cd build-debug
+./BigInt/BigInt/tests
+```
+
 View coverage results with
 
 ```sh
