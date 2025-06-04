@@ -2,8 +2,6 @@
 
 namespace BigInt {
 
-auto BigInt::operator-() const -> BigInt { return BigInt(!negative, digits); }
-
 auto BigInt::normalize_digits() -> void {
     // remove leading 0's
     while(!this->digits.empty() && this->digits.back() == 0) {

@@ -16,6 +16,8 @@ auto BigInt::operator+=(const BigInt &right) -> BigInt & {
     return *this;
 }
 
+auto BigInt::operator-() const -> BigInt { return BigInt(!negative, digits); }
+
 auto operator-(const BigInt &left, const BigInt &right) -> BigInt {
     return BigInt::subtract_helper(left, right);
 }
