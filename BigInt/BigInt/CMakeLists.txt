@@ -5,6 +5,7 @@ add_library(
 	src/big_int.cpp
 	src/comparison.cpp
 	src/constructor.cpp
+	src/output.cpp
 	src/arithmetic/add_subtract.cpp
 	src/arithmetic/division/grade_school.cpp
 	src/arithmetic/division/operators.cpp
@@ -19,6 +20,7 @@ add_executable(
 	tests/test_big_int.cpp
 	tests/test_comparison.cpp
 	tests/test_constructor.cpp
+	tests/test_output.cpp
 	tests/arithmetic/division/test_division.cpp
 	tests/arithmetic/division/test_remainder.cpp
 	tests/arithmetic/multiplication/test_karatsuba.cpp

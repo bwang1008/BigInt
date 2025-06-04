@@ -1,17 +1,8 @@
-#include <sstream> // std::stringstream
 #include <string>
 
 #include <catch2/catch_test_macros.hpp>
 
 #include "BigInt/BigInt/include/big_int.hpp"
-
-TEST_CASE("Check output representation", "[print]") {
-    const BigInt::BigInt x{"123"};
-    std::stringstream ss;
-    ss << x;
-    const std::string printed_representation = ss.str();
-    REQUIRE(printed_representation == "123");
-}
 
 TEST_CASE("Negation of positive", "[negate]") {
     const BigInt::BigInt x("3");
@@ -53,14 +44,14 @@ TEST_CASE("Negation of long negative", "[negate]") {
 
 TEST_CASE("Copy", "[copy]") {
     const BigInt::BigInt x{"3"};
-    const BigInt::BigInt y =
-        x; // NOLINT(performance-unnecessary-copy-initialization)
+    // NOLINTNEXTLINE(performance-unnecessary-copy-initialization)
+    const BigInt::BigInt y = x;
     REQUIRE(y.str() == x.str());
 }
 
 TEST_CASE("Copy of large number", "[copy]") {
     const BigInt::BigInt x{"12345678901234567890234568790"};
-    const BigInt::BigInt y =
-        x; // NOLINT(performance-unnecessary-copy-initialization)
+    // NOLINTNEXTLINE(performance-unnecessary-copy-initialization)
+    const BigInt::BigInt y = x;
     REQUIRE(y.str() == x.str());
 }
