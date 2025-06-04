@@ -98,3 +98,17 @@ TEST_CASE("Constructor via big literal", "[literal]") {
     const BigInt::BigInt x = 99999999999999999999999999999999999999999_b;
     REQUIRE(x.str() == "99999999999999999999999999999999999999999");
 }
+
+TEST_CASE("Copy", "[copy]") {
+    const BigInt::BigInt x{"3"};
+    // NOLINTNEXTLINE(performance-unnecessary-copy-initialization)
+    const BigInt::BigInt y = x;
+    REQUIRE(y.str() == x.str());
+}
+
+TEST_CASE("Copy of large number", "[copy]") {
+    const BigInt::BigInt x{"12345678901234567890234568790"};
+    // NOLINTNEXTLINE(performance-unnecessary-copy-initialization)
+    const BigInt::BigInt y = x;
+    REQUIRE(y.str() == x.str());
+}
