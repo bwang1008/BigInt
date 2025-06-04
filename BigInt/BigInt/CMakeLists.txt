@@ -2,7 +2,6 @@ include(CTest)
 
 add_library(
 	BigIntLib STATIC
-	src/big_int.cpp
 	src/comparison.cpp
 	src/constructor.cpp
 	src/output.cpp
@@ -17,7 +16,6 @@ add_library(
 
 add_executable(
 	tests
-	tests/test_big_int.cpp
 	tests/test_comparison.cpp
 	tests/test_constructor.cpp
 	tests/test_output.cpp
