@@ -2,9 +2,6 @@ include(CTest)
 
 add_library(
 	BigIntLib STATIC
-	src/comparison.cpp
-	src/constructor.cpp
-	src/output.cpp
 	src/arithmetic/add_subtract.cpp
 	src/arithmetic/division/grade_school.cpp
 	src/arithmetic/division/operators.cpp
@@ -12,18 +9,21 @@ add_library(
 	src/arithmetic/multiplication/grade_school.cpp
 	src/arithmetic/multiplication/karatsuba.cpp
 	src/arithmetic/multiplication/operators.cpp
+	src/comparison.cpp
+	src/constructor.cpp
+	src/output.cpp
 )
 
 add_executable(
 	tests
-	tests/test_comparison.cpp
-	tests/test_constructor.cpp
-	tests/test_output.cpp
 	tests/arithmetic/division/test_division.cpp
 	tests/arithmetic/division/test_remainder.cpp
 	tests/arithmetic/multiplication/test_karatsuba.cpp
 	tests/arithmetic/test_add_subtract.cpp
 	tests/arithmetic/test_misc.cpp
+	tests/test_comparison.cpp
+	tests/test_constructor.cpp
+	tests/test_output.cpp
 )
 
 add_test(NAME tests COMMAND tests)
