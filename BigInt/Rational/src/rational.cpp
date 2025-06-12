@@ -5,8 +5,8 @@
 
 namespace BigInt {
 
-auto operator<<(std::ostream &out, const Rational &num) -> std::ostream & {
-    out << num.numerator << " / " << num.denominator;
+auto operator<<(std::ostream &out, const Rational &r) -> std::ostream & {
+    out << r.numerator << " / " << r.denominator;
     return out;
 }
 
