@@ -31,6 +31,13 @@ class Rational {
     auto operator*=(const Rational &right) -> Rational &;
     auto operator/=(const Rational &right) -> Rational &;
 
+    static auto add(const Rational &left, const Rational &right) -> Rational;
+    static auto subtract(const Rational &left, const Rational &right)
+        -> Rational;
+    static auto multiply(const Rational &left, const Rational &right)
+        -> Rational;
+    static auto divide(const Rational &left, const Rational &right) -> Rational;
+
   private:
     BigInt numerator;
     BigInt denominator;
