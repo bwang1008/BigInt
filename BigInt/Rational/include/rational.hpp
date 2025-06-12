@@ -12,7 +12,10 @@ class Rational {
     Rational(int numerator_, int denominator_);
     Rational(const BigInt &numerator_, const BigInt &denominator);
 
-    friend auto operator<<(std::ostream &os, const Rational &r)
+    [[nodiscard]] auto get_numerator() const -> BigInt;
+    [[nodiscard]] auto get_denominator() const -> BigInt;
+
+    friend auto operator<<(std::ostream &out, const Rational &r)
         -> std::ostream &;
     friend auto operator+(const Rational &left, const Rational &right)
         -> Rational;
@@ -27,9 +30,6 @@ class Rational {
     auto operator-=(const Rational &right) -> Rational &;
     auto operator*=(const Rational &right) -> Rational &;
     auto operator/=(const Rational &right) -> Rational &;
-
-    [[nodiscard]] auto get_numerator() const -> BigInt;
-    [[nodiscard]] auto get_denominator() const -> BigInt;
 
   private:
     BigInt numerator;
