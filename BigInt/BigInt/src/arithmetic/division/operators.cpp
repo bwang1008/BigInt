@@ -7,9 +7,8 @@ auto operator/(const BigInt &left, const BigInt &right) -> BigInt {
 }
 
 auto BigInt::operator/=(const BigInt &right) -> BigInt & {
-    const BigInt division = BigInt::divide_grade_school(*this, right);
-    this->negative = division.negative;
-    this->digits = division.digits;
+    BigInt division = BigInt::divide_grade_school(*this, right);
+    swap(division);
     return *this;
 }
 
@@ -18,9 +17,8 @@ auto operator%(const BigInt &left, const BigInt &right) -> BigInt {
 }
 
 auto BigInt::operator%=(const BigInt &right) -> BigInt & {
-    const BigInt remainder = BigInt::remainder_grade_school(*this, right);
-    this->negative = remainder.negative;
-    this->digits = remainder.digits;
+    BigInt remainder = BigInt::remainder_grade_school(*this, right);
+    swap(remainder);
     return *this;
 }
 

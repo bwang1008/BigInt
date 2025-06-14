@@ -7,9 +7,8 @@ auto operator*(const BigInt &left, const BigInt &right) -> BigInt {
 }
 
 auto BigInt::operator*=(const BigInt &right) -> BigInt & {
-    const BigInt product = BigInt::multiply_karatsuba(*this, right);
-    this->negative = product.negative;
-    this->digits = product.digits;
+    BigInt product = BigInt::multiply_karatsuba(*this, right);
+    swap(product);
     return *this;
 }
 

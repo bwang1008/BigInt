@@ -66,8 +66,10 @@ class BigInt {
     static auto remainder_grade_school(const BigInt &left, const BigInt &right)
         -> BigInt;
 
-    auto abs() const -> BigInt;
+    [[nodiscard]] auto abs() const -> BigInt;
     static auto gcd(const BigInt &left, const BigInt &right) -> BigInt;
+
+    auto swap(BigInt &other) -> void;
 
   private:
     bool negative;

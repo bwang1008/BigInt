@@ -10,9 +10,8 @@ auto operator+(const BigInt &left, const BigInt &right) -> BigInt {
 }
 
 auto BigInt::operator+=(const BigInt &right) -> BigInt & {
-    const BigInt sum = BigInt::add_helper(*this, right);
-    this->negative = sum.negative;
-    this->digits = sum.digits;
+    BigInt sum = BigInt::add_helper(*this, right);
+    swap(sum);
     return *this;
 }
 
@@ -23,9 +22,8 @@ auto operator-(const BigInt &left, const BigInt &right) -> BigInt {
 }
 
 auto BigInt::operator-=(const BigInt &right) -> BigInt & {
-    const BigInt difference = BigInt::subtract_helper(*this, right);
-    this->negative = difference.negative;
-    this->digits = difference.digits;
+    BigInt difference = BigInt::subtract_helper(*this, right);
+    swap(difference);
     return *this;
 }
 
