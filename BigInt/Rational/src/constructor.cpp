@@ -5,6 +5,10 @@
 #include <utility>   // std::pair
 
 namespace BigInt {
+
+auto reduce(const BigInt &numerator, const BigInt &denominator)
+    -> std::pair<BigInt, BigInt>;
+
 auto reduce(const BigInt &numerator, const BigInt &denominator)
     -> std::pair<BigInt, BigInt> {
     if(denominator == BigInt()) {

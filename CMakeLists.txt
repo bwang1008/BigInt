@@ -42,7 +42,7 @@ add_subdirectory(BigInt)
 
 include("cmake/warnings.cmake")
 
-foreach(TARG BigIntLib tests)
+foreach(TARG BigIntLib tests RationalLib test_rational)
   target_compile_features(${TARG} PUBLIC cxx_std_20)
   set_target_properties(${TARG} PROPERTIES CXX_EXTENSIONS OFF)
   target_compile_options(${TARG} PRIVATE "${WARNINGS}")
