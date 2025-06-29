@@ -15,7 +15,7 @@ class Rational {
 
     [[nodiscard]] auto get_numerator() const -> BigInt;
     [[nodiscard]] auto get_denominator() const -> BigInt;
-    auto str() const -> std::string;
+    [[nodiscard]] auto str() const -> std::string;
 
     friend auto operator<<(std::ostream &out, const Rational &r)
         -> std::ostream &;
@@ -32,6 +32,13 @@ class Rational {
     auto operator-=(const Rational &right) -> Rational &;
     auto operator*=(const Rational &right) -> Rational &;
     auto operator/=(const Rational &right) -> Rational &;
+
+    friend auto operator<(const Rational &r1, const Rational &r2) -> bool;
+    friend auto operator<=(const Rational &r1, const Rational &r2) -> bool;
+    friend auto operator>(const Rational &r1, const Rational &r2) -> bool;
+    friend auto operator>=(const Rational &r1, const Rational &r2) -> bool;
+    friend auto operator==(const Rational &r1, const Rational &r2) -> bool;
+    friend auto operator!=(const Rational &r1, const Rational &r2) -> bool;
 
     static auto add(const Rational &left, const Rational &right) -> Rational;
     static auto subtract(const Rational &left, const Rational &right)

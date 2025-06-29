@@ -3,6 +3,7 @@ include(CTest)
 add_library(
     RationalLib STATIC
     src/arithmetic.cpp
+    src/comparison.cpp
     src/constructor.cpp
     src/output.cpp
 )
