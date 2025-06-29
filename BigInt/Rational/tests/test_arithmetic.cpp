@@ -51,3 +51,48 @@ TEST_CASE("division", "[arithmetic]") {
                            std::invalid_argument,
                            Catch::Matchers::Message("Cannot divide by 0"));
 }
+
+TEST_CASE("inplace-addition", "[arithmetic]") {
+    const int numerator = 3;
+    const int denominator = 5;
+    BigInt::Rational r(numerator, denominator);
+    r += BigInt::Rational();
+    REQUIRE(r == BigInt::Rational(3, 5));
+    r += BigInt::Rational(1, 2);
+    REQUIRE(r == BigInt::Rational(11, 10));
+}
+
+TEST_CASE("inplace-subtraction", "[arithmetic]") {
+    const int numerator = 3;
+    const int denominator = 5;
+    BigInt::Rational r(numerator, denominator);
+    r -= BigInt::Rational();
+    REQUIRE(r == BigInt::Rational(3, 5));
+    r -= BigInt::Rational(1, 2);
+    REQUIRE(r == BigInt::Rational(1, 10));
+}
+
+TEST_CASE("inplace-multiplication", "[arithmetic]") {
+    const int numerator = 3;
+    const int denominator = 5;
+    BigInt::Rational r(numerator, denominator);
+    r *= BigInt::Rational(1);
+    REQUIRE(r == BigInt::Rational(3, 5));
+    r *= BigInt::Rational(1, 2);
+    REQUIRE(r == BigInt::Rational(3, 10));
+    r *= BigInt::Rational();
+    REQUIRE(r == BigInt::Rational());
+}
+
+TEST_CASE("inplace-division", "[arithmetic]") {
+    const int numerator = 3;
+    const int denominator = 5;
+    BigInt::Rational r(numerator, denominator);
+    r /= BigInt::Rational(1);
+    REQUIRE(r == BigInt::Rational(3, 5));
+    r /= BigInt::Rational(1, 2);
+    REQUIRE(r == BigInt::Rational(6, 5));
+
+    REQUIRE_THROWS_MATCHES(r /= BigInt::Rational(), std::invalid_argument,
+                           Catch::Matchers::Message("Cannot divide by 0"));
+}
