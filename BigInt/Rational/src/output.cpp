@@ -1,5 +1,5 @@
-#include "BigInt/Rational/include/rational.hpp"
 #include "BigInt/BigInt/include/big_int.hpp"
+#include "BigInt/Rational/include/rational.hpp"
 
 #include <ostream>
 
