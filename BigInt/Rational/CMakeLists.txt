@@ -10,6 +10,7 @@ add_library(
 
 add_executable(
     test_rational
+    tests/test_comparison.cpp
     tests/test_constructor.cpp
     tests/test_output.cpp
 )
