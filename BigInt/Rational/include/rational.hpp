@@ -1,3 +1,6 @@
+#ifndef RATIONAL_HPP
+#define RATIONAL_HPP // NOLINT(clang-diagnostic-unused-macros)
+
 #include "BigInt/BigInt/include/big_int.hpp"
 
 #include <ostream>
@@ -53,3 +56,5 @@ class Rational {
 };
 
 } // namespace BigInt
+
+#endif
