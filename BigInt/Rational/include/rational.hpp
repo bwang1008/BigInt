@@ -1,6 +1,7 @@
 #include "BigInt/BigInt/include/big_int.hpp"
 
 #include <ostream>
+#include <string>
 
 namespace BigInt {
 
@@ -14,6 +15,7 @@ class Rational {
 
     [[nodiscard]] auto get_numerator() const -> BigInt;
     [[nodiscard]] auto get_denominator() const -> BigInt;
+    auto str() const -> std::string;
 
     friend auto operator<<(std::ostream &out, const Rational &r)
         -> std::ostream &;

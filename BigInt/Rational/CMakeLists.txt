@@ -10,6 +10,7 @@ add_library(
 add_executable(
     test_rational
     tests/test_constructor.cpp
+    tests/test_output.cpp
 )
 
 add_test(NAME test_rational COMMAND test_rational)
