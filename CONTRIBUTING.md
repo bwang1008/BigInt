@@ -24,6 +24,7 @@ Alteratively,
 ```sh
 cd build-debug
 ./BigInt/BigInt/tests
+./BigInt/Rational/test_rational
 ```
 
 View coverage results with
