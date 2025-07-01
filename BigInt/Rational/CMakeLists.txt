@@ -20,7 +20,9 @@ add_test(NAME test_rational COMMAND test_rational)
 
 target_include_directories(
     RationalLib
-    PUBLIC ${CMAKE_SOURCE_DIR}
+    PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/include>
 )
 target_link_libraries(
     RationalLib PUBLIC BigIntLib

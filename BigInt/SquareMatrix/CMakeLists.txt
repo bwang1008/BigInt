@@ -14,7 +14,10 @@ add_executable(
 add_test(NAME test_square_matrix COMMAND test_square_matrix)
 
 target_include_directories(
-    SquareMatrixLib PUBLIC ${CMAKE_SOURCE_DIR}
+    SquareMatrixLib
+    PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/include>
 )
 target_link_libraries(
     SquareMatrixLib PUBLIC RationalLib

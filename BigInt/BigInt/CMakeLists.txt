@@ -36,10 +36,4 @@ target_include_directories(
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/include>
 )
 
-# test coverage: see https://danielsieger.com/blog/2024/08/03/code-coverage-with-cmake.html
-target_link_options(test_bigint PRIVATE
-    $<$<CONFIG:Debug>:
-        "-fsanitize=address" "--coverage"
-    >
-)
 target_link_libraries(test_bigint PRIVATE Catch2::Catch2WithMain BigIntLib)

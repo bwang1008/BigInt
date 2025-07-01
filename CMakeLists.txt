@@ -27,6 +27,7 @@ target_include_directories(Catch2 SYSTEM INTERFACE ${catch2_includes})
 ###################
 
 # build types have different flags
+# test coverage: see https://danielsieger.com/blog/2024/08/03/code-coverage-with-cmake.html
 set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g -fsanitize=address --coverage")
 set(CMAKE_CXX_FLAGS_RELEASE "-DNDEBUG -O2")
 
