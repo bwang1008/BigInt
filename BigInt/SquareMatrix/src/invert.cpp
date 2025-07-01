@@ -1,0 +1,47 @@
+#include "BigInt/SquareMatrix/include/square_matrix.hpp"
+
+#include "BigInt/Rational/include/rational.hpp"
+
+#include <cstdint>   // std::size_t
+#include <stdexcept> // std::runtime_error
+#include <utility>   // std::swap
+
+namespace BigInt {
+
+auto SquareMatrix::invert() -> SquareMatrix {
+    SquareMatrix inverse = identity(this->length);
+
+    for(std::size_t row = 0; row < this->length; ++row) {
+        const std::size_t pivot_row = find_pivot(row);
+        std::swap(this->data[row], this->data[pivot_row]);
+        std::swap(inverse.data[row], inverse.data[pivot_row]);
+
+        const Rational scalar = this->data[row][row];
+        for(std::size_t col = 0; col < this->length; ++col) {
+            this->data[row][col] /= scalar;
+            inverse.data[row][col] /= scalar;
+        }
+
+        for(std::size_t row2 = row + 1; row2 < this->length; ++row2) {
+            const Rational scalar2 = this->data[row2][row];
+            for(std::size_t col = 0; col < this->length; ++col) {
+                this->data[row2][col] -= scalar2 * this->data[row][col];
+                inverse.data[row2][col] -= scalar2 * inverse.data[row][col];
+            }
+        }
+    }
+
+    return inverse;
+}
+
+auto SquareMatrix::find_pivot(const std::size_t current_row) const
+    -> std::size_t {
+    for(std::size_t i = current_row; i < this->length; ++i) {
+        if(this->data[i][i] != Rational()) {
+            return i;
+        }
+    }
+    throw std::runtime_error("Matrix is not invertible");
+}
+
+} // namespace BigInt

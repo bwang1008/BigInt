@@ -20,6 +20,8 @@ class SquareMatrix {
   private:
     std::size_t length;
     std::vector<std::vector<Rational>> data;
+
+    [[nodiscard]] auto find_pivot(std::size_t current_row) const -> std::size_t;
 };
 
 } // namespace BigInt
