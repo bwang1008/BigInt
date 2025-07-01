@@ -55,7 +55,7 @@ Branch coverage doesn't really mean anything: https://stackoverflow.com/question
 .clang-tidy generated via
 
 ```sh
-clang-tidy --dump-config --checks=*,-fuchsia-default-arguments-calls,-fuchsia-trailing-return,-llvm-header-guard,-google-runtime-references -- --std=c++20 > .clang-tidy
+clang-tidy --dump-config --checks=*,-fuchsia-default-arguments-calls,-fuchsia-trailing-return,-llvm-header-guard,-google-runtime-references,-fuchsia-overloaded-operator -- --std=c++20 > .clang-tidy
 ```
 
 Ignored checks:
@@ -64,6 +64,7 @@ Ignored checks:
 - `fuchsia-trailing-return`: conflicts with modernize-use-trailing-return-type
 - `llvm-header-guard`: do not want to expose full path of file
 - `google-runtime-references`: want to pass in a non-const object by reference
+- `fuchsia-overloaded-operator`: BigInt class should be able to overload arithmetic operators
 
 .clang-format generated via
 
