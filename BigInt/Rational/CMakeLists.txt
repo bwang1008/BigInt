@@ -22,7 +22,10 @@ target_include_directories(
     RationalLib
     PUBLIC ${CMAKE_SOURCE_DIR}
 )
+target_link_libraries(
+    RationalLib PUBLIC BigIntLib
+)
 
 target_link_libraries(
-    test_rational PRIVATE RationalLib BigIntLib Catch2::Catch2WithMain
+    test_rational PRIVATE Catch2::Catch2WithMain RationalLib
 )
