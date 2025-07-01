@@ -10,6 +10,7 @@ namespace BigInt {
 
 class SquareMatrix {
   public:
+    explicit SquareMatrix(std::size_t N);
     explicit SquareMatrix(const std::vector<std::vector<Rational>> &input_data);
 
     [[nodiscard]] auto get(std::size_t row, std::size_t col) const -> Rational;

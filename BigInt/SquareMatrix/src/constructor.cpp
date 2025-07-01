@@ -7,6 +7,10 @@
 
 namespace BigInt {
 
+SquareMatrix::SquareMatrix(const std::size_t N)
+    : length(N), data(std::vector<std::vector<Rational>>(
+                     N, std::vector<Rational>(N, Rational()))) {}
+
 SquareMatrix::SquareMatrix(const std::vector<std::vector<Rational>> &input_data)
     : length(input_data.size()), data(input_data) {}
 

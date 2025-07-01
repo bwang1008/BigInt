@@ -6,6 +6,14 @@
 
 #include <vector>
 
+TEST_CASE("zero", "[constructor]") {
+    const BigInt::SquareMatrix mat(2);
+    REQUIRE(mat.get(0, 0) == BigInt::Rational());
+    REQUIRE(mat.get(0, 1) == BigInt::Rational());
+    REQUIRE(mat.get(1, 0) == BigInt::Rational());
+    REQUIRE(mat.get(1, 1) == BigInt::Rational());
+}
+
 TEST_CASE("custom data", "[constructor]") {
     const std::vector<std::vector<BigInt::Rational>> data({
         {BigInt::Rational(3, 5), BigInt::Rational(7, 1)},
