@@ -4,12 +4,14 @@ add_library(
     SquareMatrixLib
     src/constructor.cpp
     src/invert.cpp
+    src/multiply.cpp
     src/output.cpp
 )
 
 add_executable(
     test_square_matrix
     tests/test_constructor.cpp
+    tests/test_multiply.cpp
 )
 
 add_test(NAME test_square_matrix COMMAND test_square_matrix)

@@ -14,7 +14,12 @@ class SquareMatrix {
     explicit SquareMatrix(const std::vector<std::vector<Rational>> &input_data);
 
     [[nodiscard]] auto get(std::size_t row, std::size_t col) const -> Rational;
+    [[nodiscard]] auto multiply(const SquareMatrix &right) const
+        -> SquareMatrix;
     auto invert() -> SquareMatrix;
+
+    friend auto operator*(const SquareMatrix &left, const SquareMatrix &right)
+        -> SquareMatrix;
 
     static auto identity(std::size_t N) -> SquareMatrix;
 
