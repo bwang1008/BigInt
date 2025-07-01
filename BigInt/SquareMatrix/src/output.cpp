@@ -3,12 +3,12 @@
 #include "BigInt/Rational/include/rational.hpp"
 
 #include <cstdint> // std::size_t
-#include <vector>
 
 namespace BigInt {
 
-auto SquareMatrix::operator[](const std::size_t row) -> std::vector<Rational> {
-    return this->data[row];
+auto SquareMatrix::get(const std::size_t row, const std::size_t col) const
+    -> Rational {
+    return this->data[row][col];
 }
 
 } // namespace BigInt
