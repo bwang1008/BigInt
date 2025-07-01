@@ -25,6 +25,7 @@ Alteratively,
 cd build-debug
 ./BigInt/BigInt/test_bigint
 ./BigInt/Rational/test_rational
+./BigInt/SquareMatrix/test_square_matrix
 ```
 
 View coverage results with
