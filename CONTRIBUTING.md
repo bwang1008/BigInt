@@ -23,7 +23,7 @@ Alteratively,
 
 ```sh
 cd build-debug
-./BigInt/BigInt/tests
+./BigInt/BigInt/test_bigint
 ./BigInt/Rational/test_rational
 ```
 
