@@ -23,7 +23,10 @@ auto SquareMatrix::inverse() const -> SquareMatrix {
             inverse.data[row][col] /= scalar;
         }
 
-        for(std::size_t row2 = row + 1; row2 < this->length; ++row2) {
+        for(std::size_t row2 = 0; row2 < this->length; ++row2) {
+            if(row2 == row) {
+                continue;
+            }
             const Rational scalar2 = copy.data[row2][row];
             for(std::size_t col = 0; col < this->length; ++col) {
                 copy.data[row2][col] -= scalar2 * copy.data[row][col];
