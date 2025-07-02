@@ -8,24 +8,25 @@
 
 namespace BigInt {
 
-auto SquareMatrix::invert() -> SquareMatrix {
+auto SquareMatrix::invert() const -> SquareMatrix {
+    SquareMatrix copy = *this;
     SquareMatrix inverse = identity(this->length);
 
     for(std::size_t row = 0; row < this->length; ++row) {
         const std::size_t pivot_row = find_pivot(row);
-        std::swap(this->data[row], this->data[pivot_row]);
+        std::swap(copy.data[row], copy.data[pivot_row]);
         std::swap(inverse.data[row], inverse.data[pivot_row]);
 
-        const Rational scalar = this->data[row][row];
+        const Rational scalar = copy.data[row][row];
         for(std::size_t col = 0; col < this->length; ++col) {
-            this->data[row][col] /= scalar;
+            copy.data[row][col] /= scalar;
             inverse.data[row][col] /= scalar;
         }
 
         for(std::size_t row2 = row + 1; row2 < this->length; ++row2) {
-            const Rational scalar2 = this->data[row2][row];
+            const Rational scalar2 = copy.data[row2][row];
             for(std::size_t col = 0; col < this->length; ++col) {
-                this->data[row2][col] -= scalar2 * this->data[row][col];
+                copy.data[row2][col] -= scalar2 * copy.data[row][col];
                 inverse.data[row2][col] -= scalar2 * inverse.data[row][col];
             }
         }

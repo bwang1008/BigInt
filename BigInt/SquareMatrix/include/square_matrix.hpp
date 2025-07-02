@@ -16,7 +16,7 @@ class SquareMatrix {
     [[nodiscard]] auto get(std::size_t row, std::size_t col) const -> Rational;
     [[nodiscard]] auto multiply(const SquareMatrix &right) const
         -> SquareMatrix;
-    auto invert() -> SquareMatrix;
+    [[nodiscard]] auto invert() const -> SquareMatrix;
 
     friend auto operator*(const SquareMatrix &left, const SquareMatrix &right)
         -> SquareMatrix;
