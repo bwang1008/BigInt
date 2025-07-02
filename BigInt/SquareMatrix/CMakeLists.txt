@@ -3,7 +3,7 @@ include (CTest)
 add_library(
     SquareMatrixLib
     src/constructor.cpp
-    src/invert.cpp
+    src/inverse.cpp
     src/multiply.cpp
     src/output.cpp
 )

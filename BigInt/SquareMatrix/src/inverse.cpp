@@ -8,7 +8,7 @@
 
 namespace BigInt {
 
-auto SquareMatrix::invert() const -> SquareMatrix {
+auto SquareMatrix::inverse() const -> SquareMatrix {
     SquareMatrix copy = *this;
     SquareMatrix inverse = identity(this->length);
 
