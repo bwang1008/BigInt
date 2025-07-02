@@ -20,6 +20,10 @@ class SquareMatrix {
 
     friend auto operator*(const SquareMatrix &left, const SquareMatrix &right)
         -> SquareMatrix;
+    friend auto operator==(const SquareMatrix &left, const SquareMatrix &right)
+        -> bool;
+    friend auto operator!=(const SquareMatrix &left, const SquareMatrix &right)
+        -> bool;
 
     static auto identity(std::size_t N) -> SquareMatrix;
 

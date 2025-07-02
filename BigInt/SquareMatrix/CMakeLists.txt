@@ -2,6 +2,7 @@ include (CTest)
 
 add_library(
     SquareMatrixLib
+    src/comparison.cpp
     src/constructor.cpp
     src/inverse.cpp
     src/multiply.cpp
@@ -10,6 +11,7 @@ add_library(
 
 add_executable(
     test_square_matrix
+    tests/test_comparison.cpp
     tests/test_constructor.cpp
     tests/test_multiply.cpp
 )
