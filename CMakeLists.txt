@@ -27,6 +27,7 @@ target_include_directories(Catch2 SYSTEM INTERFACE ${catch2_includes})
 ###################
 
 # build types have different flags
+# test coverage: see https://danielsieger.com/blog/2024/08/03/code-coverage-with-cmake.html
 set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g -fsanitize=address --coverage")
 set(CMAKE_CXX_FLAGS_RELEASE "-DNDEBUG -O2")
 
@@ -42,7 +43,7 @@ add_subdirectory(BigInt)
 
 include("cmake/warnings.cmake")
 
-foreach(TARG BigIntLib tests RationalLib test_rational)
+foreach(TARG BigIntLib test_bigint RationalLib test_rational SquareMatrixLib test_square_matrix)
   target_compile_features(${TARG} PUBLIC cxx_std_20)
   set_target_properties(${TARG} PROPERTIES CXX_EXTENSIONS OFF)
   target_compile_options(${TARG} PRIVATE "${WARNINGS}")

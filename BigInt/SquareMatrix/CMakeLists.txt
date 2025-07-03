@@ -1,33 +1,34 @@
-include(CTest)
+include (CTest)
 
 add_library(
-    RationalLib STATIC
-    src/arithmetic.cpp
+    SquareMatrixLib
     src/comparison.cpp
     src/constructor.cpp
+    src/inverse.cpp
+    src/multiply.cpp
     src/output.cpp
 )
 
 add_executable(
-    test_rational
-    tests/test_arithmetic.cpp
+    test_square_matrix
     tests/test_comparison.cpp
     tests/test_constructor.cpp
-    tests/test_output.cpp
+    tests/test_inverse.cpp
+    tests/test_multiply.cpp
 )
 
-add_test(NAME test_rational COMMAND test_rational)
+add_test(NAME test_square_matrix COMMAND test_square_matrix)
 
 target_include_directories(
-    RationalLib
+    SquareMatrixLib
     PUBLIC
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/include>
 )
 target_link_libraries(
-    RationalLib PUBLIC BigIntLib
+    SquareMatrixLib PUBLIC RationalLib
 )
 
 target_link_libraries(
-    test_rational PRIVATE Catch2::Catch2WithMain RationalLib
+    test_square_matrix PRIVATE Catch2::Catch2WithMain SquareMatrixLib
 )

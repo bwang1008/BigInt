@@ -16,7 +16,7 @@ add_library(
 )
 
 add_executable(
-	tests
+	test_bigint
 	tests/arithmetic/division/test_division.cpp
 	tests/arithmetic/division/test_remainder.cpp
 	tests/arithmetic/multiplication/test_karatsuba.cpp
@@ -27,7 +27,7 @@ add_executable(
 	tests/test_output.cpp
 )
 
-add_test(NAME tests COMMAND tests)
+add_test(NAME test_bigint COMMAND test_bigint)
 
 target_include_directories(
     BigIntLib
@@ -36,10 +36,4 @@ target_include_directories(
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/include>
 )
 
-# test coverage: see https://danielsieger.com/blog/2024/08/03/code-coverage-with-cmake.html
-target_link_options(tests PRIVATE
-    $<$<CONFIG:Debug>:
-        "-fsanitize=address" "--coverage"
-    >
-)
-target_link_libraries(tests PRIVATE Catch2::Catch2WithMain BigIntLib)
+target_link_libraries(test_bigint PRIVATE Catch2::Catch2WithMain BigIntLib)
