@@ -35,6 +35,7 @@ set(CMAKE_CXX_FLAGS_RELEASE "-DNDEBUG -O2")
 ### Main targets ###
 ####################
 
+enable_testing()
 add_subdirectory(BigInt)
 
 ##############################
