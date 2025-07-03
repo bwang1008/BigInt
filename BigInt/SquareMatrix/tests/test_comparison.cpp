@@ -28,3 +28,18 @@ TEST_CASE("equals", "[comparison]") {
     REQUIRE(mat1 != mat3);
     REQUIRE_FALSE(mat1 == mat3);
 }
+
+TEST_CASE("unequal-sizes", "[comparison]") {
+    const std::vector<std::vector<BigInt::Rational>> data1({
+        {BigInt::Rational(3), BigInt::Rational(2)},
+        {BigInt::Rational(7), BigInt::Rational(5)},
+    });
+    const std::vector<std::vector<BigInt::Rational>> data2({
+        {BigInt::Rational(3)},
+    });
+    const BigInt::SquareMatrix mat1{data1};
+    const BigInt::SquareMatrix mat2{data2};
+
+    REQUIRE(mat1 != mat2);
+    REQUIRE_FALSE(mat1 == mat2);
+}

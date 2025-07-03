@@ -13,7 +13,7 @@ auto SquareMatrix::inverse() const -> SquareMatrix {
     SquareMatrix inverse = identity(this->length);
 
     for(std::size_t row = 0; row < this->length; ++row) {
-        const std::size_t pivot_row = find_pivot(row);
+        const std::size_t pivot_row = copy.find_pivot(row);
         std::swap(copy.data[row], copy.data[pivot_row]);
         std::swap(inverse.data[row], inverse.data[pivot_row]);
 
@@ -41,7 +41,7 @@ auto SquareMatrix::inverse() const -> SquareMatrix {
 auto SquareMatrix::find_pivot(const std::size_t current_row) const
     -> std::size_t {
     for(std::size_t i = current_row; i < this->length; ++i) {
-        if(this->data[i][i] != Rational()) {
+        if(this->data[i][current_row] != Rational()) {
             return i;
         }
     }
