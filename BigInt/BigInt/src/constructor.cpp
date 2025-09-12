@@ -7,9 +7,9 @@
 
 namespace BigInt {
 
-auto divide_base10_string_by_2(const std::string& num) -> std::string;
+auto divide_base10_string_by_2(const std::string &num) -> std::string;
 
-auto divide_base10_string_by_2(const std::string& num) -> std::string {
+auto divide_base10_string_by_2(const std::string &num) -> std::string {
     std::vector<char> digits;
     int carry = 0;
     for(const char digit : num) {
@@ -32,12 +32,23 @@ BigInt::BigInt(std::string num) : negative(false) {
         num = num.substr(1);
     }
 
+    unsigned int num_iterations = 0;
+    unsigned int bucket = 0;
     while(!num.empty() && num != "0") {
-        const int bit = (num[num.size() - 1] - '0') % 2;
-        this->digits.push_back(bit);
+        ++num_iterations;
+        const unsigned int bit =
+            static_cast<unsigned int>(num[num.size() - 1] - '0') % 2;
+        bucket = 2 * bucket + bit;
+        if(num_iterations % BigInt::num_bits_per_bucket == 0) {
+            this->digits.push_back(bucket);
+            bucket = 0;
+        }
         num = divide_base10_string_by_2(num);
     }
-    
+    if(bucket > 0) {
+        this->digits.push_back(bucket);
+    }
+
     if(this->digits.size() == 1 && this->digits[0] == 0 && this->negative) {
         this->negative = false;
     }
@@ -47,9 +58,8 @@ BigInt::BigInt(const int64_t num) : BigInt(std::to_string(num)) {}
 
 BigInt::BigInt() : negative(false), digits{0} {}
 
-BigInt::BigInt(bool negative_, std::vector<int> digits_)
-    : negative(negative_), digits(std::move(digits_)) {
-}
+BigInt::BigInt(bool negative_, std::vector<unsigned int> digits_)
+    : negative(negative_), digits(std::move(digits_)) {}
 
 inline namespace literals {
 auto operator"" _b(const char *s) -> BigInt { return BigInt(s); }

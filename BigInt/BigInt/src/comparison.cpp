@@ -39,8 +39,8 @@ auto BigInt::compare(const BigInt &left, const BigInt &right) -> int {
     auto it2 = right.digits.crbegin();
 
     while(it1 != left.digits.crend() && it2 != right.digits.crend()) {
-        const int valLeft = *it1;
-        const int valRight = *it2;
+        const unsigned int valLeft = *it1;
+        const unsigned int valRight = *it2;
 
         if(valLeft < valRight) {
             return -1;

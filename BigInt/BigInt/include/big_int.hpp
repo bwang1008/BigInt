@@ -73,9 +73,12 @@ class BigInt {
 
   private:
     bool negative;
-    std::vector<int> digits{};
+    std::vector<unsigned int> digits{};
+    static constexpr unsigned int num_bits_per_bucket = 1;
+    static constexpr unsigned int bucket_mod =
+        (1U << BigInt::num_bits_per_bucket);
 
-    BigInt(bool negative_, std::vector<int> digits_);
+    BigInt(bool negative_, std::vector<unsigned int> digits_);
 
     [[nodiscard]] [[gnu::pure]] auto is_zero() const -> bool;
     [[nodiscard]] [[gnu::pure]] auto is_positive() const -> bool;

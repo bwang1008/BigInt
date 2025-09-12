@@ -46,11 +46,14 @@ auto BigInt::multiply_karatsuba_helper(const BigInt &left, const BigInt &right)
     auto bigger_mid = bigger.digits.begin();
     std::advance(bigger_mid, split_point);
 
-    const BigInt a(false, std::vector<int>(smaller_mid, smaller.digits.end()));
-    const BigInt b(false,
-                   std::vector<int>(smaller.digits.begin(), smaller_mid));
-    const BigInt c(false, std::vector<int>(bigger_mid, bigger.digits.end()));
-    const BigInt d(false, std::vector<int>(bigger.digits.begin(), bigger_mid));
+    const BigInt a(
+        false, std::vector<unsigned int>(smaller_mid, smaller.digits.end()));
+    const BigInt b(
+        false, std::vector<unsigned int>(smaller.digits.begin(), smaller_mid));
+    const BigInt c(false,
+                   std::vector<unsigned int>(bigger_mid, bigger.digits.end()));
+    const BigInt d(
+        false, std::vector<unsigned int>(bigger.digits.begin(), bigger_mid));
 
     const BigInt a_plus_b = a + b;
     const BigInt c_plus_d = c + d;
@@ -76,14 +79,14 @@ auto BigInt::multiply_karatsuba_helper(const BigInt &left, const BigInt &right)
 
     // do carry-overs
     for(std::size_t i = 0; i + 1 < product.size(); ++i) {
-        product[i + 1] += (product[i] / 2);
-        product[i] %= 2;
+        product[i + 1] += (product[i] / BigInt::bucket_mod);
+        product[i] %= BigInt::bucket_mod;
     }
 
     // convert to ints
-    std::vector<int> digits(product.size());
+    std::vector<unsigned int> digits(product.size());
     for(std::size_t i = 0; i < product.size(); ++i) {
-        digits[i] = static_cast<int>(product[i]);
+        digits[i] = static_cast<unsigned int>(product[i]);
     }
 
     return BigInt(false, digits);

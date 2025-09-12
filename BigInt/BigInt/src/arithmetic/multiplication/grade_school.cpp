@@ -19,23 +19,23 @@ auto BigInt::multiply_grade_school(const BigInt &left, const BigInt &right)
             const int64_t val2 = right.digits[j];
             const int64_t prod = val1 * val2;
 
-            product[i + j] += (prod % 2);
-            product[i + j + 1] += (prod / 2);
+            product[i + j] += (prod % BigInt::bucket_mod);
+            product[i + j + 1] += (prod / BigInt::bucket_mod);
 
             // resolve carries
-            product[i + j + 1] += (product[i + j] / 2);
-            product[i + j] %= 2;
+            product[i + j + 1] += (product[i + j] / BigInt::bucket_mod);
+            product[i + j] %= BigInt::bucket_mod;
         }
     }
 
     for(size_t i = 0; i + 1 < product.size(); ++i) {
-        product[i + 1] += (product[i] / 2);
-        product[i] %= 2;
+        product[i + 1] += (product[i] / BigInt::bucket_mod);
+        product[i] %= BigInt::bucket_mod;
     }
 
-    std::vector<int> digits(product.size());
+    std::vector<unsigned int> digits(product.size());
     for(size_t i = 0; i < product.size(); ++i) {
-        digits[i] = static_cast<int>(product[i]);
+        digits[i] = static_cast<unsigned int>(product[i]);
     }
 
     return BigInt(left.negative ^ right.negative, digits);

@@ -91,17 +91,18 @@ auto BigInt::subtract_helper(const BigInt &left, const BigInt &right)
 }
 
 auto BigInt::half_add(const BigInt &left, const BigInt &right) -> BigInt {
-    std::vector<int> summed_digits;
+    std::vector<unsigned int> summed_digits;
 
-    int carry = 0;
+    unsigned int carry = 0;
     for(size_t i = 0; i < std::max(left.digits.size(), right.digits.size());
         ++i) {
-        const int op1 = (i < left.digits.size()) ? left.digits[i] : 0;
-        const int op2 = (i < right.digits.size()) ? right.digits[i] : 0;
+        const unsigned int op1 = (i < left.digits.size()) ? left.digits[i] : 0;
+        const unsigned int op2 =
+            (i < right.digits.size()) ? right.digits[i] : 0;
 
-        const int bucketSum = op1 + op2 + carry;
-        carry = bucketSum / 2;
-        summed_digits.push_back(bucketSum % 2);
+        const unsigned int bucketSum = op1 + op2 + carry;
+        carry = bucketSum / BigInt::bucket_mod;
+        summed_digits.push_back(bucketSum % BigInt::bucket_mod);
     }
 
     summed_digits.push_back(carry);
@@ -111,13 +112,14 @@ auto BigInt::half_add(const BigInt &left, const BigInt &right) -> BigInt {
 auto BigInt::half_subtract(const BigInt &left, const BigInt &right) -> BigInt {
     // assume left >= right >= 0
 
-    std::vector<int> subtracted_digits;
+    std::vector<unsigned int> subtracted_digits;
     bool borrow = false;
 
     for(size_t i = 0; i < std::max(left.digits.size(), right.digits.size());
         ++i) {
-        int op1 = (i < left.digits.size()) ? left.digits[i] : 0;
-        const int op2 = (i < right.digits.size()) ? right.digits[i] : 0;
+        unsigned int op1 = (i < left.digits.size()) ? left.digits[i] : 0;
+        const unsigned int op2 =
+            (i < right.digits.size()) ? right.digits[i] : 0;
 
         if(borrow) {
             --op1;
@@ -126,7 +128,7 @@ auto BigInt::half_subtract(const BigInt &left, const BigInt &right) -> BigInt {
 
         if(op1 < op2) {
             borrow = true;
-            op1 += 2;
+            op1 += BigInt::bucket_mod;
         }
 
         subtracted_digits.push_back(op1 - op2);
