@@ -78,6 +78,8 @@ class BigInt {
     static constexpr unsigned int bucket_mod =
         (1U << BigInt::num_bits_per_bucket);
 
+    // Remove leading 0's; if no digits, initialize as 0; change -0 to 0
+    void normalize_digits();
     BigInt(bool negative_, std::vector<unsigned int> digits_);
 
     [[nodiscard]] [[gnu::pure]] auto is_zero() const -> bool;

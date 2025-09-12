@@ -111,7 +111,6 @@ auto BigInt::half_add(const BigInt &left, const BigInt &right) -> BigInt {
 
 auto BigInt::half_subtract(const BigInt &left, const BigInt &right) -> BigInt {
     // assume left >= right >= 0
-
     std::vector<unsigned int> subtracted_digits;
     bool borrow = false;
 
@@ -122,9 +121,14 @@ auto BigInt::half_subtract(const BigInt &left, const BigInt &right) -> BigInt {
             (i < right.digits.size()) ? right.digits[i] : 0;
 
         if(borrow) {
-            --op1;
+            if(op1 == 0) {
+                op1 = BigInt::bucket_mod - 1;
+                borrow = true;
+            } else {
+                --op1;
+                borrow = false;
+            }
         }
-        borrow = false;
 
         if(op1 < op2) {
             borrow = true;

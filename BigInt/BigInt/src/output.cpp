@@ -14,7 +14,7 @@ auto add_1_to_base10_string(const std::string &num) -> std::string;
 
 auto add_1_to_base10_string(const std::string &num) -> std::string {
     std::vector<char> digits;
-    int carry = 0;
+    int carry = 1;
     for(std::string::const_reverse_iterator it = num.crbegin();
         it != num.crend(); ++it) {
         const int digit = *it - '0';
