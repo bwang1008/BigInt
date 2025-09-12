@@ -13,7 +13,7 @@ class BigInt {
     // Constructors
 
     // takes in a string of digits in base 10 with optional negative sign
-    explicit BigInt(const std::string &num);
+    explicit BigInt(std::string num);
     explicit BigInt(int64_t num);
     BigInt();
 
@@ -74,13 +74,9 @@ class BigInt {
   private:
     bool negative;
     std::vector<int> digits{};
-    static constexpr int digits_per_bucket = 9;
-    static constexpr int bucket_mod = 1000000000;
 
     BigInt(bool negative_, std::vector<int> digits_);
 
-    // Remove leading 0's; if no digits, initialize as 0; change -0 to 0
-    void normalize_digits();
     [[nodiscard]] [[gnu::pure]] auto is_zero() const -> bool;
     [[nodiscard]] [[gnu::pure]] auto is_positive() const -> bool;
     [[nodiscard]] [[gnu::pure]] auto is_negative() const -> bool;

@@ -76,8 +76,8 @@ auto BigInt::multiply_karatsuba_helper(const BigInt &left, const BigInt &right)
 
     // do carry-overs
     for(std::size_t i = 0; i + 1 < product.size(); ++i) {
-        product[i + 1] += (product[i] / BigInt::bucket_mod);
-        product[i] %= BigInt::bucket_mod;
+        product[i + 1] += (product[i] / 2);
+        product[i] %= 2;
     }
 
     // convert to ints

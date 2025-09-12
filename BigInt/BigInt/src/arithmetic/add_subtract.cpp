@@ -100,8 +100,8 @@ auto BigInt::half_add(const BigInt &left, const BigInt &right) -> BigInt {
         const int op2 = (i < right.digits.size()) ? right.digits[i] : 0;
 
         const int bucketSum = op1 + op2 + carry;
-        carry = bucketSum / BigInt::bucket_mod;
-        summed_digits.push_back(bucketSum % BigInt::bucket_mod);
+        carry = bucketSum / 2;
+        summed_digits.push_back(bucketSum % 2);
     }
 
     summed_digits.push_back(carry);
@@ -126,7 +126,7 @@ auto BigInt::half_subtract(const BigInt &left, const BigInt &right) -> BigInt {
 
         if(op1 < op2) {
             borrow = true;
-            op1 += BigInt::bucket_mod;
+            op1 += 2;
         }
 
         subtracted_digits.push_back(op1 - op2);
