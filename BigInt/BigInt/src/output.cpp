@@ -10,23 +10,12 @@ constexpr int BASE10 = 10;
 
 namespace BigInt {
 
-auto add_1_to_base10_string(const std::string &num) -> std::string;
+auto add_1_to_even_base10_string(const std::string &num) -> std::string;
 
-auto add_1_to_base10_string(const std::string &num) -> std::string {
-    std::vector<char> digits;
-    int carry = 1;
-    for(std::string::const_reverse_iterator it = num.crbegin();
-        it != num.crend(); ++it) {
-        const int digit = *it - '0';
-        const int remainder = (digit + carry) % BASE10;
-        digits.push_back(static_cast<char>(remainder + '0'));
-        carry = (digit + carry) / BASE10;
-    }
-    if(carry != 0) {
-        digits.push_back(static_cast<char>(carry + '0'));
-    }
-
-    return std::string(digits.rbegin(), digits.rend());
+auto add_1_to_even_base10_string(const std::string &num) -> std::string {
+    const int last_num = num[num.size() - 1] - '0';
+    const char last_char = static_cast<char>(last_num + 1 + '0');
+    return num.substr(0, num.size() - 1) + std::string(1, last_char);
 }
 
 auto double_base10_string(const std::string &num) -> std::string;
@@ -69,7 +58,7 @@ auto operator<<(std::ostream &out, const BigInt &integer) -> std::ostream & {
             bucket /= 2;
             base10_repr = double_base10_string(base10_repr);
             if(bit != 0) {
-                base10_repr = add_1_to_base10_string(base10_repr);
+                base10_repr = add_1_to_even_base10_string(base10_repr);
             }
         }
     }

@@ -57,10 +57,6 @@ BigInt::BigInt(std::string num) : negative(false) {
         this->digits.push_back(bucket);
     }
 
-    if(this->digits.size() == 1 && this->digits[0] == 0 && this->negative) {
-        this->negative = false;
-    }
-
     normalize_digits();
 }
 
