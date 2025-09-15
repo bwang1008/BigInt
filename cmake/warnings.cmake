@@ -32,7 +32,7 @@ set(WARNINGS
 	-Wformat-signedness
 	-Wformat-truncation=1
 	-Wframe-address
-	-Winline
+	-Wno-inline
 	-Winvalid-pch
 	-Wlogical-op                  # warn about suspicious usages of logical operations ||, &&, ^
 	-Wno-missing-braces           # -Wmissing-braces was removed from -Wall
