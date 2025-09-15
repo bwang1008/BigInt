@@ -53,8 +53,10 @@ BigInt::BigInt(std::string num) : negative(false) {
         }
         num = divide_base10_string_by_2(num);
     }
-    if(bucket > 0) {
-        this->digits.push_back(bucket);
+    if constexpr(BigInt::num_bits_per_bucket > 1) {
+        if(bucket > 0) {
+            this->digits.push_back(bucket);
+        }
     }
 
     normalize_digits();
