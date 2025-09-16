@@ -32,21 +32,42 @@ auto multiplication_test_cases()
          "950160622046"}};
 }
 
+TEST_CASE("Grade-school multiplication small", "[mul]") {
+    auto i = GENERATE(range(0, 11));
+    auto j = GENERATE(range(0, 11));
+
+    const BigInt::BigInt x{i};
+    const BigInt::BigInt y{j};
+    const BigInt::BigInt result = BigInt::BigInt::multiply_grade_school(x, y);
+    REQUIRE(result.str() == std::to_string(i * j));
+}
+
+TEST_CASE("Grade-school multiplication", "[mul]") {
+    for(const auto &[a, b, c] : multiplication_test_cases()) {
+        const BigInt::BigInt x{a};
+        const BigInt::BigInt y{b};
+        const BigInt::BigInt result =
+            BigInt::BigInt::multiply_grade_school(x, y);
+        const BigInt::BigInt expected{c};
+        REQUIRE(result == expected);
+    }
+}
+
 TEST_CASE("Karatsuba multiplication small", "[mul]") {
     auto i = GENERATE(range(0, 11));
     auto j = GENERATE(range(0, 11));
 
     const BigInt::BigInt x{i};
     const BigInt::BigInt y{j};
-    const BigInt::BigInt z = x * y;
-    REQUIRE(z.str() == std::to_string(i * j));
+    const BigInt::BigInt result = BigInt::BigInt::multiply_karatsuba(x, y);
+    REQUIRE(result.str() == std::to_string(i * j));
 }
 
 TEST_CASE("Karatsuba multiplication", "[mul]") {
     for(const auto &[a, b, c] : multiplication_test_cases()) {
         const BigInt::BigInt x{a};
         const BigInt::BigInt y{b};
-        const BigInt::BigInt result = x * y;
+        const BigInt::BigInt result = BigInt::BigInt::multiply_karatsuba(x, y);
         const BigInt::BigInt expected{c};
         REQUIRE(result == expected);
     }
