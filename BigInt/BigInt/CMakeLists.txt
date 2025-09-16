@@ -19,7 +19,7 @@ add_executable(
 	test_bigint
 	tests/arithmetic/division/test_division.cpp
 	tests/arithmetic/division/test_remainder.cpp
-	tests/arithmetic/multiplication/test_karatsuba.cpp
+	tests/arithmetic/multiplication/test_multiplication.cpp
 	tests/arithmetic/test_add_subtract.cpp
 	tests/arithmetic/test_misc.cpp
 	tests/test_comparison.cpp
