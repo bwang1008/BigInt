@@ -22,6 +22,11 @@ class Multiplier {
     auto multiply(const BigInt &left, const BigInt &right) -> BigInt;
 
     /**
+     * Default constructor.
+     */
+    Multiplier() = default;
+
+    /**
      * Copy assignment operator.
      *
      * @param other Multiplier object to copy
