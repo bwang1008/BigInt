@@ -2,6 +2,7 @@ include(CTest)
 
 add_library(
     MultiplierLib STATIC
+    src/base_multiply.cpp
     src/grade_school.cpp
 )
 

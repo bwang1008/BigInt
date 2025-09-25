@@ -8,6 +8,9 @@
 #include <vector>
 
 namespace BigInt {
+
+class Multiplier;
+
 class BigInt {
   public:
     // Constructors
@@ -99,6 +102,8 @@ class BigInt {
                                           const BigInt &right) -> BigInt;
 
     static auto gcd_helper(const BigInt &left, const BigInt &right) -> BigInt;
+
+    friend class Multiplier;
 };
 
 // declare function so any file that uses this header can see it
