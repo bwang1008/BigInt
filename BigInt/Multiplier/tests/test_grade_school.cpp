@@ -1,7 +1,7 @@
-#include <catch2/catch_test_macros.hpp>
-
 #include "BigInt/BigInt/include/big_int.hpp"
 #include "BigInt/Multiplier/include/multiplier.hpp"
+
+#include <catch2/catch_test_macros.hpp>
 
 TEST_CASE("Grade school multiplication", "[mul]") {
     const BigInt::BigInt x{3};
