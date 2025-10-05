@@ -11,7 +11,7 @@ add_library(
 	src/arithmetic/multiplication/operators.cpp
 	src/comparison.cpp
 	src/constructor.cpp
-	src/misc.cpp
+	src/memory.cpp
 	src/output.cpp
 )
 
