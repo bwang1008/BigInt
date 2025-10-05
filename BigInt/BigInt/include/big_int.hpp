@@ -11,6 +11,7 @@ namespace BigInt {
 
 class Multiplier;
 class GradeSchoolMultiplier;
+class KaratsubaMultiplier;
 
 class BigInt {
   public:
@@ -98,15 +99,12 @@ class BigInt {
     static auto subtract_helper(const BigInt &left, const BigInt &right)
         -> BigInt;
 
-    // Karatsuba multiplication
-    static auto multiply_karatsuba_helper(const BigInt &left,
-                                          const BigInt &right) -> BigInt;
-
     static auto gcd_helper(const BigInt &left, const BigInt &right) -> BigInt;
 
     // Multiplier and its base classes can access a BigInt's internal attributes
     friend class Multiplier;
     friend class GradeSchoolMultiplier;
+    friend class KaratsubaMultiplier;
 };
 
 // declare function so any file that uses this header can see it

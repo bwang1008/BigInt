@@ -7,7 +7,7 @@ auto operator*(const BigInt &left, const BigInt &right) -> BigInt {
 }
 
 auto BigInt::operator*=(const BigInt &right) -> BigInt & {
-    BigInt product = BigInt::multiply_grade_school(*this, right);
+    BigInt product = BigInt::multiply_karatsuba(*this, right);
     swap(product);
     return *this;
 }

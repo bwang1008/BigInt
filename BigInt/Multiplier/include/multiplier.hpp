@@ -91,6 +91,19 @@ class GradeSchoolMultiplier : public Multiplier {
         const BigInt &left, const BigInt &right) override;
 };
 
+class KaratsubaMultiplier : public Multiplier {
+  protected:
+    /**
+     * Multiplies two positive BigInts using Karatsuba's algorithm.
+     *
+     * @param left First BigInt to be multiplied with. Must be positive.
+     * @param right Second BigInt to be multiplied with right. Must be positive.
+     * @return product of left and right
+     */
+    BigInt multiply_positive( // NOLINT(modernize-use-trailing-return-type)
+        const BigInt &left, const BigInt &right) override;
+};
+
 } // namespace BigInt
 
 #endif
