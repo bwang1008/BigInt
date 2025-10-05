@@ -22,10 +22,7 @@ target_include_directories(
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/include>
 )
-target_link_libraries(
-    MultiplierLib PUBLIC BigIntLib
-)
 
 target_link_libraries(
-    test_multiplier PRIVATE Catch2::Catch2WithMain MultiplierLib
+    test_multiplier PRIVATE Catch2::Catch2WithMain MultiplierLib BigIntLib
 )
