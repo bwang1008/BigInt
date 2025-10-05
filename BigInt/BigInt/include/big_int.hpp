@@ -70,6 +70,7 @@ class BigInt {
         -> std::ostream &;
 
     // arithmetic operations
+
     /**
      * Adds two BigInts.
      *
@@ -345,6 +346,7 @@ class BigInt {
 // (friend does not bring it into scope)
 
 // comparison functions
+
 /**
  * Returns boolean indicating if `left` has the same value as `right`.
  *
