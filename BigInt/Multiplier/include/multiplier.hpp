@@ -11,7 +11,7 @@ namespace BigInt {
 class Multiplier {
   public:
     /**
-     * Main multiplication method of two BigInt that users seee.
+     * Main multiplication method of two BigInt that users see.
      *
      * This function is a wrapper around multiply_positive that handles negative
      * and 0 cases of the two inputs first.
@@ -65,7 +65,7 @@ class Multiplier {
 
   protected:
     /**
-     * Multiplies two nonnegative BigInts.
+     * Multiplies two positive BigInts.
      *
      * Must be overrided by subclasses of Multiplier.
      * @param left First BigInt to be multiplied with. Must be positive.
@@ -80,7 +80,7 @@ class Multiplier {
 class GradeSchoolMultiplier : public Multiplier {
   protected:
     /**
-     * Multiplies two nonnegative BigInts using grade-school algorithm.
+     * Multiplies two positive BigInts using grade-school algorithm.
      *
      * @param left First BigInt to be multiplied with. Must be positive.
      * @param right Second BigInt to be multiplied with right. Must be

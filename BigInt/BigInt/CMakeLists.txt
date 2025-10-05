@@ -35,5 +35,10 @@ target_include_directories(
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/include>
 )
+target_link_libraries(
+	BigIntLib
+	PUBLIC
+	MultiplierLib
+)
 
 target_link_libraries(test_bigint PRIVATE Catch2::Catch2WithMain BigIntLib)

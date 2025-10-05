@@ -10,6 +10,7 @@
 namespace BigInt {
 
 class Multiplier;
+class GradeSchoolMultiplier;
 
 class BigInt {
   public:
@@ -103,7 +104,9 @@ class BigInt {
 
     static auto gcd_helper(const BigInt &left, const BigInt &right) -> BigInt;
 
+    // Multiplier and its base classes can access a BigInt's internal attributes
     friend class Multiplier;
+    friend class GradeSchoolMultiplier;
 };
 
 // declare function so any file that uses this header can see it
