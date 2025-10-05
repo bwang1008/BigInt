@@ -10,7 +10,7 @@ add_library(
 add_executable(
     test_multiplier
     tests/test_base_multiply.cpp
-    tests/test_grade_school.cpp
+    tests/test_multiplication_methods.cpp
 )
 add_test(
     NAME test_multiplier COMMAND test_multiplier
