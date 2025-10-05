@@ -77,6 +77,13 @@ class Multiplier {
         -> BigInt = 0;
 };
 
+/**
+ * Multiplier class that multiplies two BigInts using the grade-school
+ * algorithm.
+ *
+ * See
+ * https://en.wikipedia.org/wiki/Multiplication_algorithm#Long_multiplication
+ */
 class GradeSchoolMultiplier : public Multiplier {
   protected:
     /**
@@ -91,6 +98,11 @@ class GradeSchoolMultiplier : public Multiplier {
         const BigInt &left, const BigInt &right) override;
 };
 
+/**
+ * Multiplier class that multiplies two BigInts using Karatsuba's algorithm.
+ *
+ * See https://en.wikipedia.org/wiki/Karatsuba_algorithm
+ */
 class KaratsubaMultiplier : public Multiplier {
   protected:
     /**
