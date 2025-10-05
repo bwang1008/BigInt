@@ -16,8 +16,8 @@ class Multiplier {
      * This function is a wrapper around multiply_positive that handles negative
      * and 0 cases of the two inputs first.
      * @param left First BigInt to be multiplied with
-     * @param right Second BigInt to be multiplied with left
-     * @return product of left and right
+     * @param right Second BigInt to be multiplied with `left`
+     * @return product of `left` and `right`
      */
     auto multiply(const BigInt &left, const BigInt &right) -> BigInt;
 
@@ -30,7 +30,7 @@ class Multiplier {
      * Copy assignment operator.
      *
      * @param other Multiplier object to copy
-     * @return existing object
+     * @return reference to existing object
      */
     auto operator=(const Multiplier &other) -> Multiplier & = default;
 
@@ -45,7 +45,7 @@ class Multiplier {
      * Move assignment operator.
      *
      * @param other Multiplier rvalue reference to move to current object
-     * @return existing object
+     * @return reference to existing object
      */
     auto operator=(Multiplier &&other) -> Multiplier & = default;
 
@@ -68,10 +68,10 @@ class Multiplier {
      * Multiplies two positive BigInts.
      *
      * Must be overrided by subclasses of Multiplier.
-     * @param left First BigInt to be multiplied with. Must be positive.
-     * @param right Second BigInt to be multiplied with right. Must be
+     * @param left First BigInt to be multiplied with `right`. Must be positive.
+     * @param right Second BigInt to be multiplied with `left`. Must be
      * positive.
-     * @return product of left and right
+     * @return product of `left` and `right`
      */
     virtual auto multiply_positive(const BigInt &left, const BigInt &right)
         -> BigInt = 0;
@@ -89,10 +89,10 @@ class GradeSchoolMultiplier : public Multiplier {
     /**
      * Multiplies two positive BigInts using grade-school algorithm.
      *
-     * @param left First BigInt to be multiplied with. Must be positive.
-     * @param right Second BigInt to be multiplied with right. Must be
+     * @param left First BigInt to be multiplied with `right`. Must be positive.
+     * @param right Second BigInt to be multiplied with `left`. Must be
      * positive.
-     * @return product of left and right
+     * @return product of `left` and `right`
      */
     BigInt multiply_positive( // NOLINT(modernize-use-trailing-return-type)
         const BigInt &left, const BigInt &right) override;
@@ -108,9 +108,10 @@ class KaratsubaMultiplier : public Multiplier {
     /**
      * Multiplies two positive BigInts using Karatsuba's algorithm.
      *
-     * @param left First BigInt to be multiplied with. Must be positive.
-     * @param right Second BigInt to be multiplied with right. Must be positive.
-     * @return product of left and right
+     * @param left First BigInt to be multiplied with `right`. Must be positive.
+     * @param right Second BigInt to be multiplied with `left`. Must be
+     * positive.
+     * @return product of `left` and `right`
      */
     BigInt multiply_positive( // NOLINT(modernize-use-trailing-return-type)
         const BigInt &left, const BigInt &right) override;
