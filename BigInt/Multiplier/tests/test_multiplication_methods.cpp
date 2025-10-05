@@ -61,15 +61,17 @@ TEST_CASE("Karatsuba multiplication small", "[mul]") {
 
     const BigInt::BigInt x{i};
     const BigInt::BigInt y{j};
-    const BigInt::BigInt result = BigInt::BigInt::multiply_karatsuba(x, y);
+    BigInt::KaratsubaMultiplier multiplier;
+    const BigInt::BigInt result = multiplier.multiply(x, y);
     REQUIRE(result.str() == std::to_string(i * j));
 }
 
 TEST_CASE("Karatsuba multiplication", "[mul]") {
+    BigInt::KaratsubaMultiplier multiplier;
     for(const auto &[a, b, c] : multiplication_test_cases()) {
         const BigInt::BigInt x{a};
         const BigInt::BigInt y{b};
-        const BigInt::BigInt result = BigInt::BigInt::multiply_karatsuba(x, y);
+        const BigInt::BigInt result = multiplier.multiply(x, y);
         const BigInt::BigInt expected{c};
         REQUIRE(result == expected);
     }
