@@ -42,7 +42,8 @@ class Rational {
      * @param numerator_ value of numerator the Rational number should have,
      * subject to reducing by gcd
      * @param denominator_ value of denominator the Rational number should have,
-     * subject to reducing by gcd. Must not be 0.
+     * subject to reducing by gcd. If 0 is provided, then std::invalid_argument
+     * will be thrown
      */
     Rational(int numerator_, int denominator_);
     /**
@@ -52,7 +53,8 @@ class Rational {
      * @param numerator_ BigInt value of numerator the Rational number should
      * have, subject to reducing by gcd
      * @param denominator_ BigInt value of denominator the Rational number
-     * should have, subject to reducing by gcd. Must not be 0.
+     * should have, subject to reducing by gcd. If 0 is provided, then
+     * std::invalid_argument will be thrown
      */
     Rational(const BigInt &numerator_, const BigInt &denominator);
 
@@ -119,7 +121,8 @@ class Rational {
      * Divides two Rational numbers.
      *
      * @param left First Rational to be divided
-     * @param right Rational amount that `left` should be divided by
+     * @param right Rational amount that `left` should be divided by. If 0 is
+     * provided, then std::invalid_argument will be thrown
      * @return division of `left` with `right`
      */
     friend auto operator/(const Rational &left, const Rational &right)
@@ -149,7 +152,8 @@ class Rational {
     /**
      * Update the current Rational value to be division of itself with `right`.
      *
-     * @param right amount to divide the current Rational value by
+     * @param right amount to divide the current Rational value by. If 0 is
+     * provided, then std::invalid_argument will be thrown
      * @return reference to current Rational
      */
     auto operator/=(const Rational &right) -> Rational &;
@@ -238,7 +242,8 @@ class Rational {
      * Static method that divides two Rational numbers.
      *
      * @param left First Rational to be divided
-     * @param right Rational amount that `left` should be divided by
+     * @param right Rational amount that `left` should be divided by. If 0 is
+     * provided, then std::invalid_argument will be thrown
      * @return division of `left` with `right`
      */
     static auto divide(const Rational &left, const Rational &right) -> Rational;
