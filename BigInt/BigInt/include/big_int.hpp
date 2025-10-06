@@ -84,7 +84,7 @@ class BigInt {
      *
      * @param left BigInt to be subtracted from
      * @param right BigInt amount to subtract from `left`
-     * @return the difference between `left` and `right`.
+     * @return the difference between `left` and `right`
      */
     friend auto operator-(const BigInt &left, const BigInt &right) -> BigInt;
     /**
@@ -103,7 +103,7 @@ class BigInt {
      * This matches the division of int primitives.
      * @param left First BigInt to be divided
      * @param right BigInt amount that `left` should be divided by
-     * @return the floor of abs(`left`) / abs(`right`), corrected for sign.
+     * @return the floor of abs(`left`) / abs(`right`), corrected for sign
      */
     friend auto operator/(const BigInt &left, const BigInt &right) -> BigInt;
     /**
