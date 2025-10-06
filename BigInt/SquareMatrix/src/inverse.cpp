@@ -2,7 +2,7 @@
 
 #include "BigInt/Rational/include/rational.hpp"
 
-#include <cstdint>   // std::size_t
+#include <cstddef>   // std::size_t
 #include <stdexcept> // std::runtime_error
 #include <utility>   // std::swap
 
