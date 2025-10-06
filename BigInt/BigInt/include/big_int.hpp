@@ -69,6 +69,62 @@ class BigInt {
     friend auto operator<<(std::ostream &out, const BigInt &integer)
         -> std::ostream &;
 
+    // comparison functions
+
+    /**
+     * Returns boolean indicating if `left` has the same value as `right`.
+     *
+     * @param left BigInt to be compared with `right`
+     * @param right BigInt to be compared with `left`
+     * @return true if `left` has the same value as `right`, otherwise false
+     */
+    friend auto operator==(const BigInt &left, const BigInt &right) -> bool;
+    /**
+     * Returns boolean indicating if `left` has a different value from `right`.
+     *
+     * @param left BigInt to be compared with `right`
+     * @param right BigInt to be compared with `left`
+     * @return true if `left` has a different value as `right`, false if they
+     * have the same value
+     */
+    friend auto operator!=(const BigInt &left, const BigInt &right) -> bool;
+    /**
+     * Returns boolean indicating if `left` has a smaller value than `right`.
+     *
+     * @param left BigInt to be compared with `right`
+     * @param right BigInt to be compared with `left`
+     * @return true if `left` has a smaller value than `right`, otherwise false
+     */
+    friend auto operator<(const BigInt &left, const BigInt &right) -> bool;
+    /**
+     * Returns boolean indicating if `left` has a greater value than `right`.
+     *
+     * @param left BigInt to be compared with `right`
+     * @param right BigInt to be compared with `left`
+     * @return true if `left` has a greater value than `right`, otherwise false
+     */
+    friend auto operator>(const BigInt &left, const BigInt &right) -> bool;
+    /**
+     * Returns boolean indicating if `left` has a smaller or equal value to
+     * `right`.
+     *
+     * @param left BigInt to be compared with `right`
+     * @param right BigInt to be compared with `left`
+     * @return true if `left` has a smaller or equal value to `right`, otherwise
+     * false
+     */
+    friend auto operator<=(const BigInt &left, const BigInt &right) -> bool;
+    /**
+     * Returns boolean indicating if `left` has a greater or equal value to
+     * `right`.
+     *
+     * @param left BigInt to be compared with `right`
+     * @param right BigInt to be compared with `left`
+     * @return true if `left` has a greater or equal value to `right`, otherwise
+     * false
+     */
+    friend auto operator>=(const BigInt &left, const BigInt &right) -> bool;
+
     // arithmetic operations
 
     /**
@@ -341,63 +397,6 @@ class BigInt {
     friend class GradeSchoolMultiplier;
     friend class KaratsubaMultiplier;
 };
-
-// declare function so any file that uses this header can see and use it
-// (friend does not bring it into scope)
-
-// comparison functions
-
-/**
- * Returns boolean indicating if `left` has the same value as `right`.
- *
- * @param left BigInt to be compared with `right`
- * @param right BigInt to be compared with `left`
- * @return true if `left` has the same value as `right`, otherwise false
- */
-auto operator==(const BigInt &left, const BigInt &right) -> bool;
-/**
- * Returns boolean indicating if `left` has a different value from `right`.
- *
- * @param left BigInt to be compared with `right`
- * @param right BigInt to be compared with `left`
- * @return true if `left` has a different value as `right`, false if they have
- * the same value
- */
-auto operator!=(const BigInt &left, const BigInt &right) -> bool;
-/**
- * Returns boolean indicating if `left` has a smaller value than `right`.
- *
- * @param left BigInt to be compared with `right`
- * @param right BigInt to be compared with `left`
- * @return true if `left` has a smaller value than `right`, otherwise false
- */
-auto operator<(const BigInt &left, const BigInt &right) -> bool;
-/**
- * Returns boolean indicating if `left` has a greater value than `right`.
- *
- * @param left BigInt to be compared with `right`
- * @param right BigInt to be compared with `left`
- * @return true if `left` has a greater value than `right`, otherwise false
- */
-auto operator>(const BigInt &left, const BigInt &right) -> bool;
-/**
- * Returns boolean indicating if `left` has a smaller or equal value to `right`.
- *
- * @param left BigInt to be compared with `right`
- * @param right BigInt to be compared with `left`
- * @return true if `left` has a smaller or equal value to `right`, otherwise
- * false
- */
-auto operator<=(const BigInt &left, const BigInt &right) -> bool;
-/**
- * Returns boolean indicating if `left` has a greater or equal value to `right`.
- *
- * @param left BigInt to be compared with `right`
- * @param right BigInt to be compared with `left`
- * @return true if `left` has a greater or equal value to `right`, otherwise
- * false
- */
-auto operator>=(const BigInt &left, const BigInt &right) -> bool;
 
 /**
  * Namespace that allows users to construct a BigInt using a user-defined
