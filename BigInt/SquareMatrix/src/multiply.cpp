@@ -2,9 +2,15 @@
 
 #include "BigInt/Rational/include/rational.hpp"
 
+#include <stdexcept> // std::invalid_argument
+
 namespace BigInt {
 
 auto SquareMatrix::multiply(const SquareMatrix &right) const -> SquareMatrix {
+    if(this->length != right.length) {
+        throw std::invalid_argument(
+            "Matrices of two different lengths cannot be multiplied together");
+    }
     SquareMatrix ans(this->length);
     for(std::size_t row = 0; row < this->length; ++row) {
         for(std::size_t col = 0; col < this->length; ++col) {
