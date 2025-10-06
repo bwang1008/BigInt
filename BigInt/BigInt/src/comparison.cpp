@@ -56,39 +56,45 @@ auto BigInt::compare(const BigInt &left, const BigInt &right) -> int {
     return 0;
 }
 
-[[nodiscard]] [[gnu::pure]] auto BigInt::is_zero() const -> bool {
+auto BigInt::is_zero() const -> bool {
     return this->digits.size() == 1 && this->digits[0] == 0;
 }
 
-[[nodiscard]] [[gnu::pure]] auto BigInt::is_positive() const -> bool {
+auto BigInt::is_positive() const -> bool {
     return !this->is_zero() && !this->negative;
 }
 
-[[nodiscard]] [[gnu::pure]] auto BigInt::is_negative() const -> bool {
+auto BigInt::is_negative() const -> bool {
     return !this->is_zero() && this->negative;
 }
 
-auto operator==(const BigInt &left, const BigInt &right) -> bool {
+[[nodiscard, gnu::pure]] auto operator==(const BigInt &left,
+                                         const BigInt &right) -> bool {
     return BigInt::compare(left, right) == 0;
 }
 
-auto operator!=(const BigInt &left, const BigInt &right) -> bool {
+[[nodiscard, gnu::pure]] auto operator!=(const BigInt &left,
+                                         const BigInt &right) -> bool {
     return !(left == right);
 }
 
-auto operator<(const BigInt &left, const BigInt &right) -> bool {
+[[nodiscard, gnu::pure]] auto operator<(const BigInt &left, const BigInt &right)
+    -> bool {
     return BigInt::compare(left, right) < 0;
 }
 
-auto operator>(const BigInt &left, const BigInt &right) -> bool {
+[[nodiscard, gnu::pure]] auto operator>(const BigInt &left, const BigInt &right)
+    -> bool {
     return BigInt::compare(left, right) > 0;
 }
 
-auto operator<=(const BigInt &left, const BigInt &right) -> bool {
+[[nodiscard, gnu::pure]] auto operator<=(const BigInt &left,
+                                         const BigInt &right) -> bool {
     return BigInt::compare(left, right) <= 0;
 }
 
-auto operator>=(const BigInt &left, const BigInt &right) -> bool {
+[[nodiscard, gnu::pure]] auto operator>=(const BigInt &left,
+                                         const BigInt &right) -> bool {
     return BigInt::compare(left, right) >= 0;
 }
 

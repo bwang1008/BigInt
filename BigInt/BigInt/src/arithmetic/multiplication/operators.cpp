@@ -2,7 +2,8 @@
 
 namespace BigInt {
 
-auto operator*(const BigInt &left, const BigInt &right) -> BigInt {
+[[nodiscard, gnu::pure]] auto operator*(const BigInt &left, const BigInt &right)
+    -> BigInt {
     return BigInt::multiply_karatsuba(left, right);
 }
 

@@ -43,14 +43,14 @@ class BigInt {
     /**
      * Return a BigInt with a value of the opposite sign.
      */
-    auto operator-() const -> BigInt;
+    [[nodiscard, gnu::pure]] auto operator-() const -> BigInt;
 
     /**
      * Return string representation of the BigInt value.
      *
      * @return string representation of BigInt value in base-10.
      */
-    [[nodiscard]] auto str() const -> std::string;
+    [[nodiscard, gnu::pure]] auto str() const -> std::string;
 
     // friend functions
 
@@ -220,7 +220,8 @@ class BigInt {
      * @return -1 if (`left` < `right`), 0 if `left` equals `right`, and 1 if
      * `left` > `right`
      */
-    static auto compare(const BigInt &left, const BigInt &right) -> int;
+    [[nodiscard, gnu::pure]] static auto compare(const BigInt &left,
+                                                 const BigInt &right) -> int;
     /**
      * Multiplies two BigInts using the grade-school multiplication algorithm.
      *
@@ -228,8 +229,8 @@ class BigInt {
      * @param right Second BigInt to be multiplied with `left`
      * @return product of `left` and `right`
      */
-    static auto multiply_grade_school(const BigInt &left, const BigInt &right)
-        -> BigInt;
+    [[nodiscard, gnu::pure]] static auto
+    multiply_grade_school(const BigInt &left, const BigInt &right) -> BigInt;
     /**
      * Multiplies two BigInts using Karatsuba's algorithm.
      *
@@ -237,7 +238,8 @@ class BigInt {
      * @param right Second BigInt to be multiplied with `left`
      * @return product of `left` and `right`
      */
-    static auto multiply_karatsuba(const BigInt &left, const BigInt &right)
+    [[nodiscard, gnu::pure]] static auto multiply_karatsuba(const BigInt &left,
+                                                            const BigInt &right)
         -> BigInt;
 
     /**
@@ -250,8 +252,8 @@ class BigInt {
      * @return a tuple of two elements, the first being the result of (`left` /
      * `right`), the second being the result of (`left` % `right`)
      */
-    static auto quotient_and_remainder_grade_school(const BigInt &left,
-                                                    const BigInt &right)
+    [[nodiscard, gnu::pure]] static auto
+    quotient_and_remainder_grade_school(const BigInt &left, const BigInt &right)
         -> std::pair<BigInt, BigInt>;
 
     /**
@@ -262,8 +264,8 @@ class BigInt {
      * @param right BigInt amount that `left` should be divided by
      * @return the floor of abs(`left`) / abs(`right`), corrected for sign.
      */
-    static auto divide_grade_school(const BigInt &left, const BigInt &right)
-        -> BigInt;
+    [[nodiscard, gnu::pure]] static auto
+    divide_grade_school(const BigInt &left, const BigInt &right) -> BigInt;
     /**
      * Find remainder when two BigInts are divided.
      *
@@ -272,8 +274,8 @@ class BigInt {
      * @param right BigInt amount that `left` should be divided by
      * @return `left` - (`right` * (`left` / `right`))
      */
-    static auto remainder_grade_school(const BigInt &left, const BigInt &right)
-        -> BigInt;
+    [[nodiscard, gnu::pure]] static auto
+    remainder_grade_school(const BigInt &left, const BigInt &right) -> BigInt;
 
     /**
      * Return a BigInt with the same absolute value as the current, but
@@ -281,7 +283,7 @@ class BigInt {
      *
      * @return non-negative BigInt with same absolute value as the current
      */
-    [[nodiscard]] auto abs() const -> BigInt;
+    [[nodiscard, gnu::pure]] auto abs() const -> BigInt;
 
     /**
      * Returns the greatest common divisor (GCD) of two BigInts.
@@ -290,7 +292,8 @@ class BigInt {
      * @param right Second BigInt to get greatest common divisor with `left`
      * @return the greatest common divisor of `left` and `right`
      */
-    static auto gcd(const BigInt &left, const BigInt &right) -> BigInt;
+    [[nodiscard, gnu::pure]] static auto gcd(const BigInt &left,
+                                             const BigInt &right) -> BigInt;
 
     /**
      * Swaps the values of the current BigInt with other.
@@ -333,13 +336,13 @@ class BigInt {
 
     /// @brief Return boolean indicating if BigInt value is zero.
     /// @return true if current BigInt value is zero, false if not
-    [[nodiscard]] [[gnu::pure]] auto is_zero() const -> bool;
+    [[nodiscard, gnu::pure]] auto is_zero() const -> bool;
     /// @brief Return boolean indicating if BigInt value is positive.
     /// @return  true if current BigInt value is positive, false if not
-    [[nodiscard]] [[gnu::pure]] auto is_positive() const -> bool;
+    [[nodiscard, gnu::pure]] auto is_positive() const -> bool;
     /// @brief  Return boolean indicating if BigInt value is negative.
     /// @return true if current BigInt value is negative, false if not
-    [[nodiscard]] [[gnu::pure]] auto is_negative() const -> bool;
+    [[nodiscard, gnu::pure]] auto is_negative() const -> bool;
     /**
      * Add two non-negative BigInts.
      *
@@ -347,7 +350,9 @@ class BigInt {
      * @param right Second BigInt to be added with `left`. Must be non-negative
      * @return sum of `left` and `right`
      */
-    static auto half_add(const BigInt &left, const BigInt &right) -> BigInt;
+    [[nodiscard, gnu::pure]] static auto half_add(const BigInt &left,
+                                                  const BigInt &right)
+        -> BigInt;
     /**
      * Add two BigInts.
      *
@@ -357,7 +362,9 @@ class BigInt {
      * @param right Second BigInt to be added with `left`
      * @return sum of `left` and `right`
      */
-    static auto add_helper(const BigInt &left, const BigInt &right) -> BigInt;
+    [[nodiscard, gnu::pure]] static auto add_helper(const BigInt &left,
+                                                    const BigInt &right)
+        -> BigInt;
     /**
      * Subtracts `right` from `left`, where `left` >= `right`.
      *
@@ -367,7 +374,8 @@ class BigInt {
      * than `left`
      * @return the difference between `left` and `right`
      */
-    static auto half_subtract(const BigInt &left, const BigInt &right)
+    [[nodiscard, gnu::pure]] static auto half_subtract(const BigInt &left,
+                                                       const BigInt &right)
         -> BigInt;
     /**
      * Subtracts two BigInts.
@@ -378,7 +386,8 @@ class BigInt {
      * @param right BigInt amount to subtract from `left`
      * @return the difference between `left` and `right`
      */
-    static auto subtract_helper(const BigInt &left, const BigInt &right)
+    [[nodiscard, gnu::pure]] static auto subtract_helper(const BigInt &left,
+                                                         const BigInt &right)
         -> BigInt;
 
     /**
@@ -390,7 +399,9 @@ class BigInt {
      * Must be non-negative
      * @return the greatest common divisor of `left` and `right`
      */
-    static auto gcd_helper(const BigInt &left, const BigInt &right) -> BigInt;
+    [[nodiscard, gnu::pure]] static auto gcd_helper(const BigInt &left,
+                                                    const BigInt &right)
+        -> BigInt;
 
     // Multiplier and its base classes can access a BigInt's internal attributes
     friend class Multiplier;

@@ -2,7 +2,8 @@
 
 namespace BigInt {
 
-auto operator/(const BigInt &left, const BigInt &right) -> BigInt {
+[[nodiscard, gnu::pure]] auto operator/(const BigInt &left, const BigInt &right)
+    -> BigInt {
     return BigInt::divide_grade_school(left, right);
 }
 
@@ -12,7 +13,8 @@ auto BigInt::operator/=(const BigInt &right) -> BigInt & {
     return *this;
 }
 
-auto operator%(const BigInt &left, const BigInt &right) -> BigInt {
+[[nodiscard, gnu::pure]] auto operator%(const BigInt &left, const BigInt &right)
+    -> BigInt {
     return BigInt::remainder_grade_school(left, right);
 }
 

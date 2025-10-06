@@ -5,7 +5,8 @@
 
 namespace BigInt {
 
-auto operator+(const BigInt &left, const BigInt &right) -> BigInt {
+[[nodiscard, gnu::pure]] auto operator+(const BigInt &left, const BigInt &right)
+    -> BigInt {
     return BigInt::add_helper(left, right);
 }
 
@@ -17,7 +18,8 @@ auto BigInt::operator+=(const BigInt &right) -> BigInt & {
 
 auto BigInt::operator-() const -> BigInt { return BigInt(!negative, digits); }
 
-auto operator-(const BigInt &left, const BigInt &right) -> BigInt {
+[[nodiscard, gnu::pure]] auto operator-(const BigInt &left, const BigInt &right)
+    -> BigInt {
     return BigInt::subtract_helper(left, right);
 }
 
