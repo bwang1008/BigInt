@@ -86,7 +86,7 @@ class Multiplier {
  * See
  * https://en.wikipedia.org/wiki/Multiplication_algorithm#Long_multiplication
  */
-class GradeSchoolMultiplier : public Multiplier {
+class GradeSchoolMultiplier final : public Multiplier {
   protected:
     /**
      * Multiplies two positive BigInts using grade-school algorithm.
@@ -106,7 +106,7 @@ class GradeSchoolMultiplier : public Multiplier {
  *
  * See https://en.wikipedia.org/wiki/Karatsuba_algorithm
  */
-class KaratsubaMultiplier : public Multiplier {
+class KaratsubaMultiplier final : public Multiplier {
   protected:
     /**
      * Multiplies two positive BigInts using Karatsuba's algorithm.
