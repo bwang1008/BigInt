@@ -3,7 +3,9 @@
 #include "BigInt/Rational/include/rational.hpp"
 
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/matchers/catch_matchers_exception.hpp>
 
+#include <stdexcept> // std::invalid_argument
 #include <vector>
 
 TEST_CASE("zero", "[constructor]") {
@@ -24,6 +26,25 @@ TEST_CASE("custom data", "[constructor]") {
     REQUIRE(mat.get(0, 1) == BigInt::Rational(7, 1));
     REQUIRE(mat.get(1, 0) == BigInt::Rational(-2, 9));
     REQUIRE(mat.get(1, 1) == BigInt::Rational());
+}
+
+TEST_CASE("Constructor fails on size 0", "[constructor]") {
+    REQUIRE_THROWS_MATCHES(BigInt::SquareMatrix(0), std::invalid_argument,
+                           Catch::Matchers::Message("N must be positive"));
+}
+
+TEST_CASE("Constructor fails on size 0 for custom data", "[constructor]") {
+    const std::vector<std::vector<BigInt::Rational>> data;
+    REQUIRE_THROWS_MATCHES(BigInt::SquareMatrix(data), std::invalid_argument,
+                           Catch::Matchers::Message("N must be positive"));
+}
+
+TEST_CASE("Constructor fails on non-square custom data", "[constructor]") {
+    const std::vector<std::vector<BigInt::Rational>> data(
+        {{BigInt::Rational(3, 5)}, {BigInt::Rational(-2, 9)}});
+    REQUIRE_THROWS_MATCHES(
+        BigInt::SquareMatrix(data), std::invalid_argument,
+        Catch::Matchers::Message("input_data must be square"));
 }
 
 TEST_CASE("identity", "[identity]") {

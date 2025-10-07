@@ -20,3 +20,12 @@ TEST_CASE("Test multiplication methods match", "[mul]") {
     const BigInt::BigInt result3 = BigInt::BigInt::multiply_karatsuba(x, y);
     REQUIRE(result3.str() == expected_result);
 }
+
+TEST_CASE("Multiplication equals operator", "[mul]") {
+    const int a = 5;
+    const int b = 3;
+    BigInt::BigInt x{a};
+    const BigInt::BigInt y{b};
+    x *= y;
+    REQUIRE(x.str() == "15");
+}
