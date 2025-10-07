@@ -63,20 +63,20 @@ class Rational {
      *
      * @return numerator of current Rational number
      */
-    [[nodiscard]] auto get_numerator() const -> BigInt;
+    [[nodiscard, gnu::pure]] auto get_numerator() const -> BigInt;
     /**
      * Return denominator of Rational number.
      *
      * @return denominator of current Rational number
      */
-    [[nodiscard]] auto get_denominator() const -> BigInt;
+    [[nodiscard, gnu::pure]] auto get_denominator() const -> BigInt;
     /**
      * String representation of Rational number.
      *
      * @return string of numerator, concatted with forward slash, concatted with
      * denominator
      */
-    [[nodiscard]] auto str() const -> std::string;
+    [[nodiscard, gnu::pure]] auto str() const -> std::string;
 
     /**
      * Friend function overload of << that allows printing of Rational number.
@@ -219,7 +219,8 @@ class Rational {
      * @param right Second Rational to be added with
      * @return sum of `left` and `right`
      */
-    static auto add(const Rational &left, const Rational &right) -> Rational;
+    [[nodiscard, gnu::pure]] static auto add(const Rational &left,
+                                             const Rational &right) -> Rational;
     /**
      * Static method that subtracts two Rational numbers.
      *
@@ -227,7 +228,8 @@ class Rational {
      * @param right Rational amount to subtract from `left`
      * @return the difference between `left` and `right`
      */
-    static auto subtract(const Rational &left, const Rational &right)
+    [[nodiscard, gnu::pure]] static auto subtract(const Rational &left,
+                                                  const Rational &right)
         -> Rational;
     /**
      * Static method that multiplies two Rational numbers.
@@ -236,7 +238,8 @@ class Rational {
      * @param right Second Rational to be multiplied with `left`
      * @return product of `left` and `right`
      */
-    static auto multiply(const Rational &left, const Rational &right)
+    [[nodiscard, gnu::pure]] static auto multiply(const Rational &left,
+                                                  const Rational &right)
         -> Rational;
     /**
      * Static method that divides two Rational numbers.
@@ -246,7 +249,9 @@ class Rational {
      * provided, then std::invalid_argument will be thrown
      * @return division of `left` with `right`
      */
-    static auto divide(const Rational &left, const Rational &right) -> Rational;
+    [[nodiscard, gnu::pure]] static auto divide(const Rational &left,
+                                                const Rational &right)
+        -> Rational;
 
   private:
     /// @brief Numerator of the fraction this Rational represents

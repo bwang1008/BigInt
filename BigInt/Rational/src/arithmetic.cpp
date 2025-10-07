@@ -2,7 +2,8 @@
 
 namespace BigInt {
 
-auto operator+(const Rational &left, const Rational &right) -> Rational {
+[[nodiscard, gnu::pure]] auto operator+(const Rational &left,
+                                        const Rational &right) -> Rational {
     return Rational::add(left, right);
 }
 
@@ -13,7 +14,8 @@ auto Rational::operator+=(const Rational &right) -> Rational & {
     return *this;
 }
 
-auto operator-(const Rational &left, const Rational &right) -> Rational {
+[[nodiscard, gnu::pure]] auto operator-(const Rational &left,
+                                        const Rational &right) -> Rational {
     return Rational::subtract(left, right);
 }
 
@@ -24,7 +26,8 @@ auto Rational::operator-=(const Rational &right) -> Rational & {
     return *this;
 }
 
-auto operator*(const Rational &left, const Rational &right) -> Rational {
+[[nodiscard, gnu::pure]] auto operator*(const Rational &left,
+                                        const Rational &right) -> Rational {
     return Rational::multiply(left, right);
 }
 
@@ -35,7 +38,8 @@ auto Rational::operator*=(const Rational &right) -> Rational & {
     return *this;
 }
 
-auto operator/(const Rational &left, const Rational &right) -> Rational {
+[[nodiscard, gnu::pure]] auto operator/(const Rational &left,
+                                        const Rational &right) -> Rational {
     return Rational::divide(left, right);
 }
 
