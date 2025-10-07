@@ -25,8 +25,8 @@ auto SquareMatrix::multiply(const SquareMatrix &right) const -> SquareMatrix {
     return ans;
 }
 
-auto operator*(const SquareMatrix &left, const SquareMatrix &right)
-    -> SquareMatrix {
+[[nodiscard]] auto operator*(const SquareMatrix &left,
+                             const SquareMatrix &right) -> SquareMatrix {
     return left.multiply(right);
 }
 

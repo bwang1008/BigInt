@@ -6,7 +6,8 @@
 
 namespace BigInt {
 
-auto operator==(const SquareMatrix &left, const SquareMatrix &right) -> bool {
+[[nodiscard]] auto operator==(const SquareMatrix &left,
+                              const SquareMatrix &right) -> bool {
     if(left.length != right.length) {
         return false;
     }
@@ -22,7 +23,8 @@ auto operator==(const SquareMatrix &left, const SquareMatrix &right) -> bool {
     return true;
 }
 
-auto operator!=(const SquareMatrix &left, const SquareMatrix &right) -> bool {
+[[nodiscard]] auto operator!=(const SquareMatrix &left,
+                              const SquareMatrix &right) -> bool {
     return !(left == right);
 }
 

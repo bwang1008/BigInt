@@ -94,7 +94,7 @@ class SquareMatrix {
      * @param N number of rows of identity matrix
      * @return SquareMatrix that is the identity matrix of size `N` by `N`
      */
-    static auto identity(std::size_t N) -> SquareMatrix;
+    [[nodiscard]] static auto identity(std::size_t N) -> SquareMatrix;
 
   private:
     /// @brief number of rows (and also number of columns) of SquareMatrix
