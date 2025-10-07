@@ -19,7 +19,8 @@ class Multiplier {
      * @param right Second BigInt to be multiplied with `left`
      * @return product of `left` and `right`
      */
-    auto multiply(const BigInt &left, const BigInt &right) -> BigInt;
+    [[nodiscard]] auto multiply(const BigInt &left, const BigInt &right)
+        -> BigInt;
 
     /**
      * Default constructor.
@@ -73,7 +74,8 @@ class Multiplier {
      * positive.
      * @return product of `left` and `right`
      */
-    virtual auto multiply_positive(const BigInt &left, const BigInt &right)
+    [[nodiscard]] virtual auto multiply_positive(const BigInt &left,
+                                                 const BigInt &right)
         -> BigInt = 0;
 };
 
@@ -94,7 +96,8 @@ class GradeSchoolMultiplier : public Multiplier {
      * positive.
      * @return product of `left` and `right`
      */
-    BigInt multiply_positive( // NOLINT(modernize-use-trailing-return-type)
+    [[nodiscard]] BigInt
+    multiply_positive( // NOLINT(modernize-use-trailing-return-type)
         const BigInt &left, const BigInt &right) override;
 };
 
@@ -113,7 +116,8 @@ class KaratsubaMultiplier : public Multiplier {
      * positive.
      * @return product of `left` and `right`
      */
-    BigInt multiply_positive( // NOLINT(modernize-use-trailing-return-type)
+    [[nodiscard]] BigInt
+    multiply_positive( // NOLINT(modernize-use-trailing-return-type)
         const BigInt &left, const BigInt &right) override;
 };
 
