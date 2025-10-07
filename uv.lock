@@ -11,7 +11,8 @@ name = "bigint"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
-    { name = "gcovr" },
+    { name = "gcovr", version = "8.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
+    { name = "gcovr", version = "8.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9'" },
     { name = "pre-commit", version = "3.5.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
     { name = "pre-commit", version = "4.3.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9'" },
     { name = "uv" },
@@ -19,9 +20,9 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "gcovr", specifier = "==8.2" },
-    { name = "pre-commit" },
-    { name = "uv" },
+    { name = "gcovr", specifier = ">=8.2" },
+    { name = "pre-commit", specifier = ">=3.5.0" },
+    { name = "uv", specifier = ">=0.8.24" },
 ]
 
 [[package]]
@@ -91,16 +92,38 @@ wheels = [
 name = "gcovr"
 version = "8.2"
 source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version < '3.9'",
+]
 dependencies = [
-    { name = "colorlog" },
-    { name = "jinja2" },
-    { name = "lxml" },
-    { name = "pygments" },
-    { name = "tomli", marker = "python_full_version < '3.11'" },
+    { name = "colorlog", marker = "python_full_version < '3.9'" },
+    { name = "jinja2", marker = "python_full_version < '3.9'" },
+    { name = "lxml", marker = "python_full_version < '3.9'" },
+    { name = "pygments", marker = "python_full_version < '3.9'" },
+    { name = "tomli", marker = "python_full_version < '3.9'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/32/21/7f9967a2d5a37d8f77e793ba4c173d0e1e59195028c997a9947b73b652f4/gcovr-8.2.tar.gz", hash = "sha256:9a1dddd4585d13ec77555db5d6b6a31ee81587ea6fc604ff9fcd232cb0782df5", size = 176540, upload-time = "2024-10-13T08:15:38.394Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/b5/72/514286de4b9b5990b7c3105d5ed8863b94ee1e2ed7df7b635fd04393e00b/gcovr-8.2-py2.py3-none-any.whl", hash = "sha256:bee23da2198bc1e0b9d0109018b9460df52355372319b5ddf81aca4e54f6bd61", size = 213313, upload-time = "2024-10-13T08:15:36.24Z" },
+]
+
+[[package]]
+name = "gcovr"
+version = "8.4"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version >= '3.9'",
+]
+dependencies = [
+    { name = "colorlog", marker = "python_full_version >= '3.9'" },
+    { name = "jinja2", marker = "python_full_version >= '3.9'" },
+    { name = "lxml", marker = "python_full_version >= '3.9'" },
+    { name = "pygments", marker = "python_full_version >= '3.9'" },
+    { name = "tomli", marker = "python_full_version >= '3.9' and python_full_version < '3.11'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/e4/ce/b7516854699f807f58c3c9801ad44de7f51a952be16b62a5948b358f1aa4/gcovr-8.4.tar.gz", hash = "sha256:8ea0cf23176b1029f28db679d712ca6477b3807097c3755c135bdc53b51cfa72", size = 188132, upload-time = "2025-09-27T22:13:28.882Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ae/50/b049fc9af7d3b0e4bd3af90ebba0e2f4ec42857674c8ba5ed15b5d719170/gcovr-8.4-py3-none-any.whl", hash = "sha256:1016d013d6c55225b1f716a4325e16ad5d626ff05b20b8a12d542e2d9a82ac21", size = 240591, upload-time = "2025-09-27T22:13:26.936Z" },
 ]
 
 [[package]]
