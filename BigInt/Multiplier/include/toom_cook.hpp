@@ -18,7 +18,7 @@ class ToomCookMultiplier final : public Multiplier {
      * Constructor that takes in a single positive integer.
      *
      * Toom-Cook's algorithm is parameterized by a positive integer, independent
-     * of the sizes of the two input.
+     * of the sizes of the two input. This must be at least 2.
      * @param k parameter of Toom-Cook's algorithm
      */
     explicit ToomCookMultiplier(const unsigned int k_);
