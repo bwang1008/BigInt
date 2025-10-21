@@ -79,6 +79,16 @@ class ToomCookMultiplier final : public Multiplier {
     [[nodiscard, gnu::pure]] static auto
     find_common_subwidth(const BigInt &left, const BigInt &right,
                          unsigned int k) -> std::size_t;
+
+    /**
+     * Evaluate polynomial at 2*k-1 evaluation points.
+     * 
+     * Multiplies left half of `evaluation_matrix` with coefficients interpreted as a vector in R^k.
+     * 
+     * @param coefficients vector of BigInt coefficients of length `k`, arranged from least-significant to most-significant
+     * @return vector of BigInt, the evaluation of polynomial represented by `coefficients` at `2k-1` points as defined by `evaluation_matrix`
+     */
+    [[nodiscard]] auto evaluate_polynomial(const std::vector<BigInt> &coefficients) -> std::vector<BigInt>;
 };
 
 } // namespace BigInt

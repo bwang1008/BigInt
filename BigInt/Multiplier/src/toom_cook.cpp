@@ -3,6 +3,7 @@
 #include "BigInt/Rational/include/rational.hpp"
 #include "BigInt/SquareMatrix/include/square_matrix.hpp"
 
+#include <algorithm>    // std::max
 #include <cstddef>   // std::size_t
 #include <stdexcept> // std::invalid_argument
 #include <vector>
@@ -61,20 +62,8 @@ ToomCookMultiplier::ToomCookMultiplier(const unsigned int k_)
             "Parameter to Toom-Cook algorithm must be at least 2");
     }
 
-    const SquareMatrix initial_evaluation_matrix =
-        get_evaluation_matrix(this->k);
-    this->interpolation_matrix = initial_evaluation_matrix.inverse();
-
-    // get left half of evaluation matrix, first k cols
-    std::vector<std::vector<Rational>> left_evaluation_data(
-        2 * k - 1, std::vector<Rational>(2 * k - 1));
-    for(unsigned int row = 0; row < 2 * this->k - 1; ++row) {
-        for(unsigned int col = 0; col < this->k; ++col) {
-            left_evaluation_data[row][col] =
-                initial_evaluation_matrix.get(row, col);
-        }
-    }
-    this->evaluation_matrix = SquareMatrix(left_evaluation_data);
+    this->evaluation_matrix = get_evaluation_matrix(this->k);
+    this->interpolation_matrix = this->evaluation_matrix.inverse();
 }
 
 auto ToomCookMultiplier::partition_bigint_digits(const BigInt &n,
@@ -113,14 +102,31 @@ auto ToomCookMultiplier::find_common_subwidth(const BigInt &left,
     return std::max(candidate1, candidate2) + 1;
 }
 
+auto ToomCookMultiplier::evaluate_polynomial(const std::vector<BigInt> &coefficients) -> std::vector<BigInt> {
+    const std::size_t num_evaluation_points = 2 * this->k - 1;
+    std::vector<BigInt> evaluations(num_evaluation_points);
+    for(std::size_t evaluation_index = 0; evaluation_index < num_evaluation_points; ++evaluation_index) {
+        for(std::size_t coefficient_index = 0; coefficient_index < coefficients.size(); ++coefficient_index) {
+            const BigInt subproduct = this->evaluation_matrix.get(evaluation_index, coefficient_index) * coefficients[coefficient_index];
+            evaluations[coefficient_index] += subproduct;
+        }
+    }
+
+    return evaluations;
+}
+
 auto ToomCookMultiplier::multiply_positive(const BigInt &left,
                                            const BigInt &right) -> BigInt {
+    // splitting
     const auto subwidth =
         static_cast<unsigned int>(find_common_subwidth(left, right, this->k));
     const std::vector<BigInt> left_split =
         partition_bigint_digits(left, this->k, subwidth);
     const std::vector<BigInt> right_split =
         partition_bigint_digits(right, this->k, subwidth);
+    
+    // evaluation
+
 }
 
 } // namespace BigInt
