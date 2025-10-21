@@ -1,9 +1,10 @@
 #include "BigInt/Multiplier/include/toom_cook.hpp"
 #include "BigInt/BigInt/include/big_int.hpp"
+#include "BigInt/Multiplier/include/multiplier.hpp" // GradeSchoolMultiplier
 #include "BigInt/Rational/include/rational.hpp"
 #include "BigInt/SquareMatrix/include/square_matrix.hpp"
 
-#include <algorithm>    // std::max
+#include <algorithm> // std::max
 #include <cstddef>   // std::size_t
 #include <stdexcept> // std::invalid_argument
 #include <vector>
@@ -102,17 +103,35 @@ auto ToomCookMultiplier::find_common_subwidth(const BigInt &left,
     return std::max(candidate1, candidate2) + 1;
 }
 
-auto ToomCookMultiplier::evaluate_polynomial(const std::vector<BigInt> &coefficients) -> std::vector<BigInt> {
+auto ToomCookMultiplier::evaluate_polynomial(
+    const std::vector<BigInt> &coefficients) -> std::vector<BigInt> {
     const std::size_t num_evaluation_points = 2 * this->k - 1;
     std::vector<BigInt> evaluations(num_evaluation_points);
-    for(std::size_t evaluation_index = 0; evaluation_index < num_evaluation_points; ++evaluation_index) {
-        for(std::size_t coefficient_index = 0; coefficient_index < coefficients.size(); ++coefficient_index) {
-            const BigInt subproduct = this->evaluation_matrix.get(evaluation_index, coefficient_index) * coefficients[coefficient_index];
+    for(std::size_t evaluation_index = 0;
+        evaluation_index < num_evaluation_points; ++evaluation_index) {
+        for(std::size_t coefficient_index = 0;
+            coefficient_index < coefficients.size(); ++coefficient_index) {
+            const BigInt subproduct = this->evaluation_matrix.get(
+                                          evaluation_index, coefficient_index) *
+                                      coefficients[coefficient_index];
             evaluations[coefficient_index] += subproduct;
         }
     }
 
     return evaluations;
+}
+
+auto ToomCookMultiplier::pointwise_multiplication(
+    const std::vector<BigInt> &left, const std::vector<BigInt> &right)
+    -> std::vector<BigInt> {
+    // for now, don't recurse for ease of debugging
+    std::vector<BigInt> products(left.size());
+    GradeSchoolMultiplier grade_school_multiplier;
+    for(std::size_t i = 0; i < left.size(); ++i) {
+        products[i] = grade_school_multiplier.multiply(left[i], right[i]);
+    }
+
+    return products;
 }
 
 auto ToomCookMultiplier::multiply_positive(const BigInt &left,
@@ -124,9 +143,14 @@ auto ToomCookMultiplier::multiply_positive(const BigInt &left,
         partition_bigint_digits(left, this->k, subwidth);
     const std::vector<BigInt> right_split =
         partition_bigint_digits(right, this->k, subwidth);
-    
-    // evaluation
 
+    // evaluation
+    const std::vector<BigInt> p_values = evaluate_polynomial(left_split);
+    const std::vector<BigInt> q_values = evaluate_polynomial(right_split);
+
+    // pointwise multiplication / recursive step
+    const std::vector<BigInt> r_values =
+        pointwise_multiplication(p_values, q_values);
 }
 
 } // namespace BigInt

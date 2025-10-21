@@ -47,6 +47,22 @@ class ToomCookMultiplier final : public Multiplier {
     SquareMatrix interpolation_matrix;
 
     /**
+     * Find a common subwidth to split both inputs by.
+     *
+     * Refer to
+     * https://en.wikipedia.org/wiki/Toom%E2%80%93Cook_multiplication#Splitting
+     *
+     * @param left First BigInt to be multiplied with `right`
+     * @param right Second BigInt to be multiplied with `left`
+     * @param k number of pieces to split into
+     * @return integer representing number of digits each of the `k` pieces of
+     * `left` and `right` should have
+     */
+    [[nodiscard, gnu::pure]] static auto
+    find_common_subwidth(const BigInt &left, const BigInt &right,
+                         unsigned int k) -> std::size_t;
+
+    /**
      * Split the digits of `n` into `k` pieces, each of `subwidth` digits.
      *
      * Starts with least-significant digits of `n`, `subwidth` digits at a time.
@@ -65,30 +81,35 @@ class ToomCookMultiplier final : public Multiplier {
         -> std::vector<BigInt>;
 
     /**
-     * Find a common subwidth to split both inputs by.
+     * Evaluate polynomial at `2*k-1` evaluation points.
      *
-     * Refer to
-     * https://en.wikipedia.org/wiki/Toom%E2%80%93Cook_multiplication#Splitting
+     * Multiplies left half of `evaluation_matrix` with coefficients interpreted
+     * as a vector in `R^k`.
      *
-     * @param left First BigInt to be multiplied with `right`
-     * @param right Second BigInt to be multiplied with `left`
-     * @param k number of pieces to split into
-     * @return integer representing number of digits each of the `k` pieces of
-     * `left` and `right` should have
+     * @param coefficients vector of BigInt coefficients of length `k`, arranged
+     * from least-significant to most-significant
+     * @return vector of BigInt, the evaluation of polynomial represented by
+     * `coefficients` at `2k-1` points as defined by `evaluation_matrix`
      */
-    [[nodiscard, gnu::pure]] static auto
-    find_common_subwidth(const BigInt &left, const BigInt &right,
-                         unsigned int k) -> std::size_t;
+    [[nodiscard]] auto
+    evaluate_polynomial(const std::vector<BigInt> &coefficients)
+        -> std::vector<BigInt>;
 
     /**
-     * Evaluate polynomial at 2*k-1 evaluation points.
-     * 
-     * Multiplies left half of `evaluation_matrix` with coefficients interpreted as a vector in R^k.
-     * 
-     * @param coefficients vector of BigInt coefficients of length `k`, arranged from least-significant to most-significant
-     * @return vector of BigInt, the evaluation of polynomial represented by `coefficients` at `2k-1` points as defined by `evaluation_matrix`
+     * Multiply BigInts across two vectors together.
+     *
+     * At each index, the BigInts of each vector are multiplied together.
+     * Recursive step of multiply_positive.
+     *
+     * @param left vector of BigInts to multiply with `right`
+     * @param right vector of BigInts to multiply with `left`. Must be the same
+     * length as `left
+     * @return vector of BigInts of product of left and right at each index
      */
-    [[nodiscard]] auto evaluate_polynomial(const std::vector<BigInt> &coefficients) -> std::vector<BigInt>;
+    [[nodiscard]] auto
+    pointwise_multiplication(const std::vector<BigInt> &left,
+                             const std::vector<BigInt> &right)
+        -> std::vector<BigInt>;
 };
 
 } // namespace BigInt
