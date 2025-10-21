@@ -5,6 +5,7 @@ add_library(
     src/base_multiply.cpp
     src/grade_school.cpp
     src/karatsuba.cpp
+    src/toom_cook.cpp
 )
 
 add_executable(
