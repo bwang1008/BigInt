@@ -92,7 +92,7 @@ class ToomCookMultiplier final : public Multiplier {
      * `coefficients` at `2k-1` points as defined by `evaluation_matrix`
      */
     [[nodiscard]] auto
-    evaluate_polynomial(const std::vector<BigInt> &coefficients)
+    evaluate_polynomial(const std::vector<BigInt> &coefficients) const
         -> std::vector<BigInt>;
 
     /**
@@ -106,7 +106,7 @@ class ToomCookMultiplier final : public Multiplier {
      * length as `left
      * @return vector of BigInts of product of left and right at each index
      */
-    [[nodiscard]] auto
+    [[nodiscard]] static auto
     pointwise_multiplication(const std::vector<BigInt> &left,
                              const std::vector<BigInt> &right)
         -> std::vector<BigInt>;

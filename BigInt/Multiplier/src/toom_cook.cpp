@@ -104,21 +104,27 @@ auto ToomCookMultiplier::find_common_subwidth(const BigInt &left,
 }
 
 auto ToomCookMultiplier::evaluate_polynomial(
-    const std::vector<BigInt> &coefficients) -> std::vector<BigInt> {
+    const std::vector<BigInt> &coefficients) const -> std::vector<BigInt> {
     const std::size_t num_evaluation_points = 2 * this->k - 1;
-    std::vector<BigInt> evaluations(num_evaluation_points);
+    std::vector<Rational> evaluations(num_evaluation_points);
     for(std::size_t evaluation_index = 0;
         evaluation_index < num_evaluation_points; ++evaluation_index) {
         for(std::size_t coefficient_index = 0;
             coefficient_index < coefficients.size(); ++coefficient_index) {
-            const BigInt subproduct = this->evaluation_matrix.get(
-                                          evaluation_index, coefficient_index) *
-                                      coefficients[coefficient_index];
+            const Rational subproduct =
+                this->evaluation_matrix.get(evaluation_index,
+                                            coefficient_index) *
+                Rational(coefficients[coefficient_index]);
             evaluations[coefficient_index] += subproduct;
         }
     }
 
-    return evaluations;
+    std::vector<BigInt> evaluations_integral(evaluations.size());
+    for(std::size_t i = 0; i < evaluations.size(); ++i) {
+        evaluations_integral[i] = evaluations[i].get_numerator();
+    }
+
+    return evaluations_integral;
 }
 
 auto ToomCookMultiplier::pointwise_multiplication(
