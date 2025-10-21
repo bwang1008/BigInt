@@ -21,32 +21,6 @@ constexpr auto get_evaluation_point(const unsigned int n) -> int {
     return (n % 2 == 0) ? abs_value : -abs_value;
 }
 
-/**
- * Split interval of [0, n) into k pieces of roughly the same size.
- *
- * For example, splitting n=8 into 3 pieces would return [3, 6, 8] because [0,
- * 3), [3, 6], and [6, 8) split the interval [0, 8] into 3 subsequences of
- * approximately the same size.
- *
- * @param vec n size of interval
- * @param k number of subsequences to split n into
- * @return indices of right-hand side of intervals of subsequences
- */
-[[nodiscard, gnu::const]] auto get_split_right_indices(const std::size_t n,
-                                                       const unsigned int k)
-    -> std::vector<std::size_t>;
-
-auto get_split_right_indices(const std::size_t n, const std::size_t k)
-    -> std::vector<std::size_t> {
-    std::vector<std::size_t> right_indices;
-    for(std::size_t i = 1; i <= k; ++i) {
-        const std::size_t numerator = n * i;
-        const std::size_t additional = (i <= numerator % k) ? 1 : 0;
-        right_indices.push_back(numerator / k + additional);
-    }
-    return right_indices;
-}
-
 namespace BigInt {
 
 /**
@@ -58,7 +32,7 @@ namespace BigInt {
  * @return matrix, where matrix[0][0] = matrix[last][last] = 1, and the other
  * rows are the powers of the evaluation points
  */
-[[nodiscard]] auto get_evaluation_matrix(const unsigned int k) -> SquareMatrix;
+[[nodiscard]] auto get_evaluation_matrix(unsigned int k) -> SquareMatrix;
 
 auto get_evaluation_matrix(const unsigned int k) -> SquareMatrix {
     std::vector<std::vector<Rational>> evaluation_data(
@@ -91,22 +65,50 @@ ToomCookMultiplier::ToomCookMultiplier(const unsigned int k_)
     this->interpolation_matrix = this->evaluation_matrix.inverse();
 }
 
-/**
- * Split the digits of n into k pieces, each roughly the same amount of digits.
- *
- * @param n BigInt whose digits we want to split
- * @param k number of pieces to split into
- * @return list of BigInts, the pieces of n to split into k parts. Ordered from
- * least significant to most significant
- */
-[[nodiscard]] auto partition_bigint_digits(const BigInt &n,
-                                           const unsigned int k)
-    -> std::vector<BigInt>;
+auto ToomCookMultiplier::partition_bigint_digits(const BigInt &n,
+                                                 const unsigned int k,
+                                                 const unsigned int subwidth)
+    -> std::vector<BigInt> {
+    std::vector<BigInt> sub_bigint;
+    for(unsigned int i = 0; i < k; ++i) {
+        const std::size_t candidate_left_index = subwidth * i;
+        const std::size_t candidate_right_index = subwidth * (1 + i);
+        const std::vector<unsigned int>::difference_type left_index =
+            (candidate_left_index >= n.digits.size())
+                ? static_cast<std::vector<unsigned int>::difference_type>(
+                      n.digits.size())
+                : static_cast<std::vector<unsigned int>::difference_type>(
+                      candidate_left_index);
+        const std::vector<unsigned int>::difference_type right_index =
+            (candidate_right_index >= n.digits.size())
+                ? static_cast<std::vector<unsigned int>::difference_type>(
+                      n.digits.size())
+                : static_cast<std::vector<unsigned int>::difference_type>(
+                      candidate_right_index);
+        const std::vector<unsigned int> subdigits(
+            n.digits.begin() + left_index, n.digits.begin() + right_index);
+        sub_bigint.push_back(BigInt(false, subdigits));
+    }
+    return sub_bigint;
+}
 
-auto partition_bigint_digits(const BigInt &n, const unsigned int k)
-    -> std::vector<BigInt> {}
+auto ToomCookMultiplier::find_common_subwidth(const BigInt &left,
+                                              const BigInt &right,
+                                              const unsigned int k)
+    -> std::size_t {
+    const std::size_t candidate1 = (left.digits.size() - 1) / k;
+    const std::size_t candidate2 = (right.digits.size() - 1) / k;
+    return std::max(candidate1, candidate2) + 1;
+}
 
 auto ToomCookMultiplier::multiply_positive(const BigInt &left,
-                                           const BigInt &right) -> BigInt {}
+                                           const BigInt &right) -> BigInt {
+    const auto subwidth =
+        static_cast<unsigned int>(find_common_subwidth(left, right, this->k));
+    const std::vector<BigInt> left_split =
+        partition_bigint_digits(left, this->k, subwidth);
+    const std::vector<BigInt> right_split =
+        partition_bigint_digits(right, this->k, subwidth);
+}
 
 } // namespace BigInt

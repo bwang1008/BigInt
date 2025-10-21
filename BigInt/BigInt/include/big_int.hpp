@@ -12,6 +12,7 @@ namespace BigInt {
 class Multiplier;
 class GradeSchoolMultiplier;
 class KaratsubaMultiplier;
+class ToomCookMultiplier;
 
 /**
  * Class that represents arbitrary-precision integers.
@@ -407,6 +408,7 @@ class BigInt {
     friend class Multiplier;
     friend class GradeSchoolMultiplier;
     friend class KaratsubaMultiplier;
+    friend class ToomCookMultiplier;
 };
 
 /**
