@@ -61,8 +61,20 @@ ToomCookMultiplier::ToomCookMultiplier(const unsigned int k_)
             "Parameter to Toom-Cook algorithm must be at least 2");
     }
 
-    this->evaluation_matrix = get_evaluation_matrix(this->k);
-    this->interpolation_matrix = this->evaluation_matrix.inverse();
+    const SquareMatrix initial_evaluation_matrix =
+        get_evaluation_matrix(this->k);
+    this->interpolation_matrix = initial_evaluation_matrix.inverse();
+
+    // get left half of evaluation matrix, first k cols
+    std::vector<std::vector<Rational>> left_evaluation_data(
+        2 * k - 1, std::vector<Rational>(2 * k - 1));
+    for(unsigned int row = 0; row < 2 * this->k - 1; ++row) {
+        for(unsigned int col = 0; col < this->k; ++col) {
+            left_evaluation_data[row][col] =
+                initial_evaluation_matrix.get(row, col);
+        }
+    }
+    this->evaluation_matrix = SquareMatrix(left_evaluation_data);
 }
 
 auto ToomCookMultiplier::partition_bigint_digits(const BigInt &n,
