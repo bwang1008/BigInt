@@ -110,6 +110,16 @@ class ToomCookMultiplier final : public Multiplier {
     pointwise_multiplication(const std::vector<BigInt> &left,
                              const std::vector<BigInt> &right)
         -> std::vector<BigInt>;
+
+    /**
+     * Retrieve coefficients of polynomial of degree `2k-2` given `2k-1`
+     * evaluation points.
+     *
+     * @param y_values y values of interpolation points. Length `2k-1`
+     * @return `2k-1` values representing polynomial of degree `2k-2`
+     */
+    [[nodiscard]] auto interpolate(const std::vector<BigInt> &y_values) const
+        -> std::vector<BigInt>;
 };
 
 } // namespace BigInt

@@ -140,6 +140,21 @@ auto ToomCookMultiplier::pointwise_multiplication(
     return products;
 }
 
+auto ToomCookMultiplier::interpolate(const std::vector<BigInt> &y_values) const
+    -> std::vector<BigInt> {
+    std::vector<BigInt> results(2 * this->k - 1, BigInt());
+    for(std::size_t i = 0; i < 2 * this->k - 1; ++i) {
+        Rational total;
+        for(std::size_t j = 0; j < 2 * this->k - 1; ++j) {
+            total +=
+                this->interpolation_matrix.get(i, j) * Rational(y_values[j]);
+        }
+        results[i] = total.get_numerator();
+    }
+
+    return results;
+}
+
 auto ToomCookMultiplier::multiply_positive(const BigInt &left,
                                            const BigInt &right) -> BigInt {
     // splitting
@@ -157,6 +172,9 @@ auto ToomCookMultiplier::multiply_positive(const BigInt &left,
     // pointwise multiplication / recursive step
     const std::vector<BigInt> r_values =
         pointwise_multiplication(p_values, q_values);
+
+    // interpolation
+    const std::vector<BigInt> r_coefficients = interpolate(r_values);
 }
 
 } // namespace BigInt
