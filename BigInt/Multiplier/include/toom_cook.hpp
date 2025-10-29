@@ -120,6 +120,17 @@ class ToomCookMultiplier final : public Multiplier {
      */
     [[nodiscard]] auto interpolate(const std::vector<BigInt> &y_values) const
         -> std::vector<BigInt>;
+
+    /**
+     * Recomposes coefficients of polynomial product into single BigInt.
+     *
+     * @param r_coefficients coefficients of polynomial of degree `2k-2`
+     * @param subwidth number of digits of each piece; "base" of polynomial
+     * @return single BigInt, representing evaluating polynomial at base
+     */
+    [[nodiscard]] static auto
+    recompose(const std::vector<BigInt> &r_coefficients, std::size_t subwidth)
+        -> BigInt;
 };
 
 } // namespace BigInt

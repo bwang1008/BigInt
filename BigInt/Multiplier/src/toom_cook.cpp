@@ -155,6 +155,35 @@ auto ToomCookMultiplier::interpolate(const std::vector<BigInt> &y_values) const
     return results;
 }
 
+auto ToomCookMultiplier::recompose(const std::vector<BigInt> &r_coefficients,
+                                   const std::size_t subwidth) -> BigInt {
+    std::size_t max_coefficient_size = 1;
+    for(const BigInt &r_coefficient : r_coefficients) {
+        max_coefficient_size =
+            std::max(r_coefficient.digits.size(), max_coefficient_size);
+    }
+    const std::size_t product_num_digits =
+        subwidth * (r_coefficients.size() - 1) + max_coefficient_size + 2;
+
+    std::vector<unsigned int> product_digits(product_num_digits);
+    unsigned int carry = 0;
+
+    for(std::size_t i = 0; i < r_coefficients.size(); ++i) {
+        const BigInt r_coefficient = r_coefficients[i];
+        for(std::size_t digit_index = 0;
+            digit_index < r_coefficient.digits.size(); ++digit_index) {
+            const unsigned int sum =
+                product_digits[subwidth * i + digit_index] +
+                r_coefficient.digits[digit_index] + carry;
+            product_digits[subwidth * i + digit_index] =
+                sum % BigInt::bucket_mod;
+            carry = sum / BigInt::bucket_mod;
+        }
+    }
+
+    return BigInt(false, product_digits);
+}
+
 auto ToomCookMultiplier::multiply_positive(const BigInt &left,
                                            const BigInt &right) -> BigInt {
     // splitting
@@ -175,6 +204,10 @@ auto ToomCookMultiplier::multiply_positive(const BigInt &left,
 
     // interpolation
     const std::vector<BigInt> r_coefficients = interpolate(r_values);
+
+    // recompose
+    BigInt answer = recompose(r_coefficients, subwidth);
+    return answer;
 }
 
 } // namespace BigInt
