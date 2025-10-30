@@ -20,7 +20,7 @@
 
 constexpr auto get_evaluation_point(const unsigned int n) -> int {
     const int abs_value = static_cast<int>((n + 1) / 2);
-    return (n % 2 == 0) ? abs_value : -abs_value;
+    return (n % 2 == 1) ? abs_value : -abs_value;
 }
 
 namespace BigInt {
@@ -111,11 +111,16 @@ auto ToomCookMultiplier::evaluate_polynomial(
         evaluation_index < num_evaluation_points; ++evaluation_index) {
         for(std::size_t coefficient_index = 0;
             coefficient_index < coefficients.size(); ++coefficient_index) {
+            const Rational evaluation_matrix_value =
+                (evaluation_index + 1 == num_evaluation_points &&
+                 coefficient_index + 1 == coefficients.size())
+                    ? Rational(1)
+                    : this->evaluation_matrix.get(evaluation_index,
+                                                  coefficient_index);
             const Rational subproduct =
-                this->evaluation_matrix.get(evaluation_index,
-                                            coefficient_index) *
+                evaluation_matrix_value *
                 Rational(coefficients[coefficient_index]);
-            evaluations[coefficient_index] += subproduct;
+            evaluations[evaluation_index] += subproduct;
         }
     }
 
@@ -179,6 +184,10 @@ auto ToomCookMultiplier::recompose(const std::vector<BigInt> &r_coefficients,
                 sum % BigInt::bucket_mod;
             carry = sum / BigInt::bucket_mod;
         }
+        if(carry > 0) {
+            product_digits[subwidth * i + r_coefficient.digits.size()] = 1;
+            carry = 0;
+        }
     }
 
     return BigInt(false, product_digits);
@@ -189,6 +198,7 @@ auto ToomCookMultiplier::multiply_positive(const BigInt &left,
     // splitting
     const auto subwidth =
         static_cast<unsigned int>(find_common_subwidth(left, right, this->k));
+
     const std::vector<BigInt> left_split =
         partition_bigint_digits(left, this->k, subwidth);
     const std::vector<BigInt> right_split =

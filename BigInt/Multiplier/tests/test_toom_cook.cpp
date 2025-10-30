@@ -5,8 +5,8 @@
 
 TEST_CASE("small test case", "[mul]") {
     BigInt::ToomCookMultiplier multiplier(3);
-    const int a = 55;
-    const int b = 46;
+    const int a = 55; // 110111_2
+    const int b = 46; // 101110_2
 
     const BigInt::BigInt a2(a);
     const BigInt::BigInt b2(b);
