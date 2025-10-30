@@ -12,6 +12,7 @@ add_executable(
     test_multiplier
     tests/test_base_multiply.cpp
     tests/test_multiplication_methods.cpp
+    tests/test_toom_cook.cpp
 )
 add_test(
     NAME test_multiplier COMMAND test_multiplier
@@ -25,5 +26,5 @@ target_include_directories(
 )
 
 target_link_libraries(
-    test_multiplier PRIVATE Catch2::Catch2WithMain MultiplierLib BigIntLib
+    test_multiplier PRIVATE Catch2::Catch2WithMain MultiplierLib BigIntLib RationalLib SquareMatrixLib
 )
