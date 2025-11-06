@@ -36,3 +36,15 @@ TEST_CASE("medium test case", "[mul]") {
     const BigInt::BigInt product = multiplier.multiply(a2, b2);
     REQUIRE(product == BigInt::BigInt(a * b));
 }
+
+TEST_CASE("different sizes", "[mul]") {
+    BigInt::ToomCookMultiplier multiplier(3);
+    const int a = 2730; // 101010101010_2
+    const int b = 13;   // 1101_2
+
+    const BigInt::BigInt a2(a);
+    const BigInt::BigInt b2(b);
+
+    const BigInt::BigInt product = multiplier.multiply(a2, b2);
+    REQUIRE(product == BigInt::BigInt(a * b));
+}
