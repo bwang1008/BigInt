@@ -1,7 +1,17 @@
 #include "BigInt/BigInt/include/big_int.hpp"       // BigInt
 #include "BigInt/Multiplier/include/toom_cook.hpp" // ToomCookMultiplier
 
+#include <stdexcept> // std::invalid_argument
+
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/matchers/catch_matchers_exception.hpp>
+
+TEST_CASE("invalid Toom-Cook parameter", "[mul]") {
+    REQUIRE_THROWS_MATCHES(
+        BigInt::ToomCookMultiplier(1), std::invalid_argument,
+        Catch::Matchers::Message(
+            "Parameter to Toom-Cook algorithm must be at least 2"));
+}
 
 TEST_CASE("small test case", "[mul]") {
     BigInt::ToomCookMultiplier multiplier(3);
