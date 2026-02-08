@@ -2,6 +2,7 @@
 #include "BigInt/Multiplier/include/toom_cook.hpp" // ToomCookMultiplier
 
 #include <stdexcept> // std::invalid_argument
+#include <string>
 
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_exception.hpp>
@@ -18,8 +19,8 @@ TEST_CASE("small test case", "[mul]") {
     const int a = 55; // 110111_2
     const int b = 46; // 101110_2
 
-    const BigInt::BigInt a2(a);
-    const BigInt::BigInt b2(b);
+    const BigInt::BigInt a2{a};
+    const BigInt::BigInt b2{b};
 
     const BigInt::BigInt product = multiplier.multiply(a2, b2);
     REQUIRE(product == BigInt::BigInt(a * b));
@@ -30,8 +31,8 @@ TEST_CASE("medium test case", "[mul]") {
     const int a = 2730; // 101010101010_2
     const int b = 2205; // 100010011101_2
 
-    const BigInt::BigInt a2(a);
-    const BigInt::BigInt b2(b);
+    const BigInt::BigInt a2{a};
+    const BigInt::BigInt b2{b};
 
     const BigInt::BigInt product = multiplier.multiply(a2, b2);
     REQUIRE(product == BigInt::BigInt(a * b));
@@ -42,9 +43,21 @@ TEST_CASE("different sizes", "[mul]") {
     const int a = 2730; // 101010101010_2
     const int b = 13;   // 1101_2
 
-    const BigInt::BigInt a2(a);
-    const BigInt::BigInt b2(b);
+    const BigInt::BigInt a2{a};
+    const BigInt::BigInt b2{b};
 
     const BigInt::BigInt product = multiplier.multiply(a2, b2);
     REQUIRE(product == BigInt::BigInt(a * b));
+}
+
+TEST_CASE("large test case", "[mul]") {
+    BigInt::ToomCookMultiplier multiplier(3);
+    const std::string a = "123456789123456789";
+    const std::string b = "987654321987654321";
+    const std::string expected_product = "121932631356500531347203169112635269";
+
+    const BigInt::BigInt a2{a};
+    const BigInt::BigInt b2{b};
+    const BigInt::BigInt product = multiplier.multiply(a2, b2);
+    REQUIRE(product == BigInt::BigInt(expected_product));
 }
