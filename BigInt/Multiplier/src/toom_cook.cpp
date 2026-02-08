@@ -4,7 +4,7 @@
 #include "BigInt/Rational/include/rational.hpp"
 #include "BigInt/SquareMatrix/include/square_matrix.hpp"
 
-#include <algorithm> // std::max
+#include <algorithm> // std::max, std::min
 #include <cstddef>   // std::size_t
 #include <stdexcept> // std::invalid_argument
 #include <vector>
@@ -135,11 +135,11 @@ auto ToomCookMultiplier::evaluate_polynomial(
 auto ToomCookMultiplier::pointwise_multiplication(
     const std::vector<BigInt> &left, const std::vector<BigInt> &right)
     -> std::vector<BigInt> {
-    // for now, don't recurse for ease of debugging
     std::vector<BigInt> products(left.size());
     GradeSchoolMultiplier grade_school_multiplier;
     for(std::size_t i = 0; i < left.size(); ++i) {
-        products[i] = grade_school_multiplier.multiply(left[i], right[i]);
+        // recursive step; multiplicands could be negative
+        products[i] = multiply(left[i], right[i]);
     }
 
     return products;
@@ -198,6 +198,19 @@ auto ToomCookMultiplier::multiply_positive(const BigInt &left,
     // splitting
     const auto subwidth =
         static_cast<unsigned int>(find_common_subwidth(left, right, this->k));
+
+    // determine whether to use another multiplication method more suited for
+    // smaller values
+    const unsigned int largest_evaluation_point = this->k - 1;
+    // if evaluation points are greater or equal to multiplying out polynomial
+    // directly, then use simpler multiplication method
+    const bool switch_to_base_case =
+        ((1U << (BigInt::num_bits_per_bucket * subwidth)) <=
+         largest_evaluation_point);
+    if(switch_to_base_case) {
+        GradeSchoolMultiplier grade_school_multiplier;
+        return grade_school_multiplier.multiply(left, right);
+    }
 
     const std::vector<BigInt> left_split =
         partition_bigint_digits(left, this->k, subwidth);

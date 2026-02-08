@@ -106,7 +106,7 @@ class ToomCookMultiplier final : public Multiplier {
      * length as `left
      * @return vector of BigInts of product of left and right at each index
      */
-    [[nodiscard]] static auto
+    [[nodiscard]] auto
     pointwise_multiplication(const std::vector<BigInt> &left,
                              const std::vector<BigInt> &right)
         -> std::vector<BigInt>;
