@@ -7,7 +7,7 @@ auto Multiplier::multiply(const BigInt &left, const BigInt &right) -> BigInt {
     if(left.is_zero() || right.is_zero()) {
         return BigInt();
     }
-    BigInt nonnegative_product = multiply_positive(left, right);
+    BigInt nonnegative_product = multiply_positive(left.abs(), right.abs());
     nonnegative_product.negative = left.negative ^ right.negative;
     return nonnegative_product;
 }
