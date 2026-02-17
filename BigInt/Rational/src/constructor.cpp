@@ -16,6 +16,12 @@ auto reduce(const BigInt &numerator, const BigInt &denominator)
     }
     const bool signs_flipped = (denominator < BigInt());
     const BigInt g = BigInt::gcd(numerator, denominator);
+    if(g == BigInt(1)) {
+        if(signs_flipped) {
+            return std::pair<BigInt, BigInt>(-numerator, -denominator);
+        }
+        return std::pair<BigInt, BigInt>(numerator, denominator);
+    }
     const BigInt numerator_reduced = numerator / g;
     const BigInt denominator_reduced = denominator / g;
     return std::pair<BigInt, BigInt>(

@@ -202,9 +202,12 @@ auto ToomCookMultiplier::multiply_positive(const BigInt &left,
     // determine whether to use another multiplication method more suited for
     // smaller values
     const unsigned int largest_evaluation_point = this->k - 1;
-    // if evaluation points are greater or equal to multiplying out polynomial
-    // directly, then use simpler multiplication method
+    // if splitting a 1-bit number, results in constant polynomial;
+    // i.e. the evaluation point isn't even used. Use base case for this.
+    // Otherwise, if evaluation points are greater or equal to multiplying
+    // out polynomial directly, then use simpler multiplication method
     const bool switch_to_base_case =
+        (std::max(left.digits.size(), right.digits.size()) <= 1) ||
         ((1U << (BigInt::num_bits_per_bucket * subwidth)) <=
          largest_evaluation_point);
     if(switch_to_base_case) {

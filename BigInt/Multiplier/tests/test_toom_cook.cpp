@@ -5,6 +5,7 @@
 #include <string>
 
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/generators/catch_generators_range.hpp>
 #include <catch2/matchers/catch_matchers_exception.hpp>
 
 TEST_CASE("invalid Toom-Cook parameter", "[mul]") {
@@ -60,4 +61,15 @@ TEST_CASE("large test case", "[mul]") {
     const BigInt::BigInt b2{b};
     const BigInt::BigInt product = multiplier.multiply(a2, b2);
     REQUIRE(product == BigInt::BigInt(expected_product));
+}
+
+TEST_CASE("other-k-values", "[mul]") {
+    const unsigned int k = static_cast<unsigned int>(GENERATE(range(2, 5)));
+    BigInt::ToomCookMultiplier multiplier(k);
+    const BigInt::BigInt a{"123456789123456789"};
+    const BigInt::BigInt b{"987654321987654321"};
+    const BigInt::BigInt expected_product{
+        "121932631356500531347203169112635269"};
+    const BigInt::BigInt product = multiplier.multiply(a, b);
+    REQUIRE(product == expected_product);
 }
