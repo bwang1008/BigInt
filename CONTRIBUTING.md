@@ -46,7 +46,8 @@ pip3 install gcovr==8.2  # Last version that supports Python 3.8
 
 ```sh
 cd build-debug
-gcovr -r .. --object-directory . --exclude _deps/catch2-src --html-theme github.dark-blue --html-details --output example_html.details.html
+gcovr --gcov-executable /usr/bin/gcov-13 -r .. --exclude-throw-branches --exclude-lines '^\s*\}$'  --exclude _deps/catch2-src   --html-theme github.dark-blue   --html-details   --output example_html.
+details.html
 ```
 then open file `example_html.details.html` in a browser.
 
