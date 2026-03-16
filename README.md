@@ -42,6 +42,7 @@ The string representation is used when put in an output stream:
 
 ```cpp
 #include <iostream>
+#include "BigInt/BigInt/include/big_int.hpp"
 
 BigInt::BigInt x{123};
 std::cout << "Value of x = " << x << std::endl;
@@ -210,6 +211,6 @@ std::cout << "1) Greatest common divisor of x and y: " << g << std::endl;
 
 Output:
 
-```cpp
+```txt
 1) Greatest common divisor of x and y: 7
 ```
