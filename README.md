@@ -214,3 +214,76 @@ Output:
 ```txt
 1) Greatest common divisor of x and y: 7
 ```
+
+### Multiplier class
+
+Base class for different integer multiplication algorithms. The below lists the implemented subclasses:
+
+#### GradeSchoolMultiplier
+
+See [Wikipedia](https://en.wikipedia.org/wiki/Multiplication_algorithm#Long_multiplication).
+
+This is what the `*` operator uses.
+
+Example usage:
+
+```cpp
+#include "BigInt/BigInt/include/big_int.hpp"
+#include "BigInt/Multiplier/include/multiplier.hpp"
+
+const BigInt::BigInt x{3};
+const BigInt::BigInt y{5};
+BigInt::GradeSchoolMultiplier multiplier;
+BigInt::BigInt product = multiplier.multiply(x, y);
+std::cout << "1) Product of x and y: " << product << std::endl;
+```
+
+Output:
+
+```txt
+1) Product of x and y: 15
+```
+
+#### KaratsubaMultiplier
+
+See [Wikipedia](https://en.wikipedia.org/wiki/Karatsuba_algorithm).
+
+```cpp
+#include "BigInt/BigInt/include/big_int.hpp"
+#include "BigInt/Multiplier/include/multiplier.hpp"
+
+const BigInt::BigInt x{3};
+const BigInt::BigInt y{5};
+BigInt::KaratsubaMultiplier multiplier;
+BigInt::BigInt product = multiplier.multiply(x, y);
+std::cout << "1) Product of x and y: " << product << std::endl;
+```
+
+Output:
+
+```txt
+1) Product of x and y: 15
+```
+
+#### ToomCookMultiplier
+
+See [Wikipedia](https://en.wikipedia.org/wiki/Toom%E2%80%93Cook_multiplication).
+
+This multiplier requires a non-negative integer bigger than 1 as a parameter.
+
+```cpp
+#include "BigInt/BigInt/include/big_int.hpp"
+#include "BigInt/Multiplier/include/multiplier.hpp"
+
+const BigInt::BigInt x{3};
+const BigInt::BigInt y{5};
+BigInt::ToomCookMultiplier multiplier{3};
+BigInt::BigInt product = multiplier.multiply(x, y);
+std::cout << "1) Product of x and y: " << product << std::endl;
+```
+
+Output:
+
+```txt
+1) Product of x and y: 15
+```
